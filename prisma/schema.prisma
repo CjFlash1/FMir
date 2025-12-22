@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String   // Hashed
+  role      String   @default("ADMIN")
+  name      String?
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id             Int         @id @default(autoincrement())
+  orderNumber    String      @unique // e.g., "ORD-1001"
+  status         String      @default("PENDING") // PENDING, PROCESSING, COMPLETED, CANCELLED
+  totalAmount    Float
+  customerName   String
+  customerPhone  String
+  customerEmail  String?
+  deliveryAddress String?
+  deliveryMethod String      @default("PICKUP") // PICKUP, POST
+  
+  items          OrderItem[]
+  
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+}
+
+model OrderItem {
+  id          Int      @id @default(autoincrement())
+  orderId     Int
+  order       Order    @relation(fields: [orderId], references: [id])
+  
+  type        String   // "PRINT", "SHOP_ITEM"
+  name        String   // "10x15 Glossy" or "Photo Album"
+  
+  quantity    Int
+  price       Float    // Price per unit at time of order
+  subtotal    Float
+  
+  // Specifics for Prints
+  size        String?  // "10x15"
+  paper       String?  // "Glossy", "Matte"
+  files       String?  // JSON string of file names/paths ["img1.jpg", "img2.jpg"]
+  
+  createdAt   DateTime @default(now())
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String   // "10x15" or "Wooden Frame"
+  type        String   // "PRINT_SIZE", "SHOP_ITEM"
+  description String?
+  basePrice   Float
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  
+  priceRules  PriceRule[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PriceRule {
+  id          Int      @id @default(autoincrement())
+  productId   Int
+  product     Product  @relation(fields: [productId], references: [id])
+  
+  minQuantity Int      // e.g. 10
+  price       Float    // e.g. 4.50 (discounted price)
+  
+  createdAt   DateTime @default(now())
+}
+
+model Setting {
+  key         String   @id
+  value       String
+  description String?
+}
