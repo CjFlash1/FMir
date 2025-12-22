@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Upload, X, FileImage, Settings, ArrowRight, Copy } from "lucide-react";
+import { Upload, X, FileImage, Settings, ArrowRight, Copy, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -185,6 +185,17 @@ export default function UploadPage() {
                                             title="Duplicate"
                                         >
                                             <Copy className="w-4 h-4" />
+                                        </button>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                const nid = cloneItem(file.id);
+                                                if (nid) setEditingFileId(nid);
+                                            }}
+                                            className="p-1.5 bg-white text-slate-900 rounded-full hover:bg-slate-100"
+                                            title="Add Another Size"
+                                        >
+                                            <Plus className="w-4 h-4" />
                                         </button>
                                         <button
                                             onClick={(e) => {

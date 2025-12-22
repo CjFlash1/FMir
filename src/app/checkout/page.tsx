@@ -69,6 +69,25 @@ export default function CheckoutPage() {
         setIsSubmitting(true);
 
         try {
+            // 1. Upload unique files
+            const uploadedFilesMap = new Map<File, string>(); // File object -> serverFileName
+            const uniqueFiles = Array.from(new Set(items.map(i => i.file).filter(Boolean))) as File[];
+
+            for (const file of uniqueFiles) {
+                const formData = new FormData();
+                formData.append("file", file);
+
+                const uploadRes = await fetch("/api/upload", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!uploadRes.ok) throw new Error(`Upload failed for ${file.name}`);
+                const { fileName } = await uploadRes.json();
+                uploadedFilesMap.set(file, fileName);
+            }
+
+            // 2. Create Order
             const response = await fetch("/api/orders", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -78,7 +97,8 @@ export default function CheckoutPage() {
                         id: item.id,
                         options: item.options,
                         fileName: item.file?.name,
-                        priceSnapshot: calculateItemUnitPrice(item), // Real Unit price after discounts
+                        serverFileName: item.file ? uploadedFilesMap.get(item.file) : null,
+                        priceSnapshot: calculateItemUnitPrice(item),
                     })),
                     total: totalAmount
                 }),

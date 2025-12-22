@@ -30,7 +30,10 @@ export async function POST(request: Request) {
                         size: item.options.size,
                         paper: item.options.paper,
                         options: JSON.stringify(item.options.options || {}),
-                        files: JSON.stringify([item.fileName]),
+                        files: JSON.stringify([{
+                            original: item.fileName,
+                            server: item.serverFileName
+                        }]),
                     }))
                 }
             },

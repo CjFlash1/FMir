@@ -130,3 +130,14 @@ model Setting {
   value       String
   description String?
 }
+
+model Page {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  content     String   // HTML or Markdown content
+  description String?  // Meta description
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

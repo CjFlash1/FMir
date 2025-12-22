@@ -18,7 +18,7 @@ export default function GiftsConfig() {
 
     const fetchGifts = async () => {
         try {
-            const res = await fetch("/api/admin/config/gifts");
+            const res = await fetch("/api/fujiadmin/config/gifts");
             const data = await res.json();
             setGifts(data);
         } catch (e) {
@@ -31,7 +31,7 @@ export default function GiftsConfig() {
     const handleUpdate = async (gift: any) => {
         setSaving(gift.id);
         try {
-            await fetch("/api/admin/config/gifts", {
+            await fetch("/api/fujiadmin/config/gifts", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(gift),
@@ -48,7 +48,7 @@ export default function GiftsConfig() {
         if (!newGift.minAmount || !newGift.giftName) return;
         setSaving(0);
         try {
-            await fetch("/api/admin/config/gifts", {
+            await fetch("/api/fujiadmin/config/gifts", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newGift),
@@ -65,7 +65,7 @@ export default function GiftsConfig() {
     const handleDelete = async (id: number) => {
         if (!confirm("Are you sure?")) return;
         try {
-            await fetch(`/api/admin/config/gifts?id=${id}`, { method: "DELETE" });
+            await fetch(`/api/fujiadmin/config/gifts?id=${id}`, { method: "DELETE" });
             fetchGifts();
         } catch (e) {
             console.error(e);

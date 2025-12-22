@@ -20,8 +20,8 @@ export default function DiscountsConfig() {
     const fetchInitialData = async () => {
         try {
             const [dRes, sRes] = await Promise.all([
-                fetch("/api/admin/config/discounts"),
-                fetch("/api/admin/config/sizes")
+                fetch("/api/fujiadmin/config/discounts"),
+                fetch("/api/fujiadmin/config/sizes")
             ]);
             setDiscounts(await dRes.json());
             setSizes(await sRes.json());
@@ -35,7 +35,7 @@ export default function DiscountsConfig() {
     const handleUpdate = async (discount: any) => {
         setSaving(discount.id);
         try {
-            await fetch("/api/admin/config/discounts", {
+            await fetch("/api/fujiadmin/config/discounts", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(discount),
@@ -52,7 +52,7 @@ export default function DiscountsConfig() {
         if (!newDiscount.printSizeId || !newDiscount.minQuantity || !newDiscount.price) return;
         setSaving(0);
         try {
-            await fetch("/api/admin/config/discounts", {
+            await fetch("/api/fujiadmin/config/discounts", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newDiscount),
@@ -69,7 +69,7 @@ export default function DiscountsConfig() {
     const handleDelete = async (id: number) => {
         if (!confirm("Are you sure?")) return;
         try {
-            await fetch(`/api/admin/config/discounts?id=${id}`, { method: "DELETE" });
+            await fetch(`/api/fujiadmin/config/discounts?id=${id}`, { method: "DELETE" });
             fetchInitialData();
         } catch (e) {
             console.error(e);

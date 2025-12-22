@@ -5,10 +5,12 @@ import Link from "next/link";
 import { Menu, X, Camera } from "lucide-react";
 import { Button } from "./ui/button";
 import { useTranslation } from "@/lib/i18n";
+import { useSettings } from "@/lib/settings-context";
 
 export function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const { t, lang, setLang } = useTranslation();
+    const { getSetting } = useSettings();
 
     return (
         <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
@@ -19,7 +21,9 @@ export function Navbar() {
                             <div className="bg-emerald-600 text-white p-1 rounded">
                                 <Camera size={24} />
                             </div>
-                            <span className="font-bold text-xl tracking-tight text-slate-900">Fujimir</span>
+                            <span className="font-bold text-xl tracking-tight text-slate-900">
+                                {getSetting('site_name', 'Fujimir')}
+                            </span>
                         </Link>
                     </div>
 

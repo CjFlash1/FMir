@@ -34,7 +34,7 @@ interface CartState {
     addItem: (file: File, defaultOptions: PrintOptions) => void;
     updateItem: (id: string, options: Partial<PrintOptions>) => void;
     removeItem: (id: string) => void;
-    cloneItem: (id: string) => void;
+    cloneItem: (id: string) => string;
     bulkCloneItems: (ids: string[]) => void;
     clearCart: () => void;
 }
@@ -61,18 +61,22 @@ export const useCartStore = create<CartState>()(
                         item.id === id ? { ...item, options: { ...item.options, ...newOptions } } : item
                     ),
                 })),
-            cloneItem: (id) =>
+            cloneItem: (id) => {
+                let newId = "";
                 set((state) => {
                     const itemToClone = state.items.find((item) => item.id === id);
                     if (!itemToClone) return state;
+                    newId = `${itemToClone.id}-copy-${Math.random().toString(36).substring(7)}`;
                     const clonedItem = {
                         ...itemToClone,
-                        id: `${itemToClone.id}-copy-${Math.random().toString(36).substring(7)}`,
-                        file: itemToClone.file, // Keep file reference if available
+                        id: newId,
+                        file: itemToClone.file,
                         preview: itemToClone.preview,
                     };
                     return { items: [...state.items, clonedItem] };
-                }),
+                });
+                return newId;
+            },
             bulkCloneItems: (ids) =>
                 set((state) => {
                     const itemsToClone = state.items.filter((item) => ids.includes(item.id));

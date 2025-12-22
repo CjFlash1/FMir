@@ -4,43 +4,45 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash2, Edit2, Check, X } from "lucide-react";
 
-interface PaperType {
+interface PrintSize {
     id: number;
     name: string;
     slug: string;
-    description: string | null;
+    widthMm: number;
+    heightMm: number;
+    basePrice: number;
     isActive: boolean;
 }
 
-export default function PaperPage() {
-    const [papers, setPapers] = useState<PaperType[]>([]);
+export default function SizesPage() {
+    const [sizes, setSizes] = useState<PrintSize[]>([]);
     const [editingId, setEditingId] = useState<number | null>(null);
-    const [editForm, setEditForm] = useState<Partial<PaperType>>({});
+    const [editForm, setEditForm] = useState<Partial<PrintSize>>({});
 
     useEffect(() => {
-        fetch('/api/admin/config/paper')
+        fetch('/api/fujiadmin/config/sizes')
             .then(res => res.json())
-            .then(setPapers);
+            .then(setSizes);
     }, []);
 
-    const handleEdit = (paper: PaperType) => {
-        setEditingId(paper.id);
-        setEditForm(paper);
+    const handleEdit = (size: PrintSize) => {
+        setEditingId(size.id);
+        setEditForm(size);
     };
 
     const handleSave = async () => {
         const isNew = editingId === -1;
         const method = isNew ? 'POST' : 'PUT';
-        const res = await fetch('/api/admin/config/paper', {
+        const res = await fetch('/api/fujiadmin/config/sizes', {
             method,
             body: JSON.stringify(editForm),
         });
         if (res.ok) {
             const updated = await res.json();
             if (isNew) {
-                setPapers([...papers, updated]);
+                setSizes([...sizes, updated].sort((a, b) => a.basePrice - b.basePrice));
             } else {
-                setPapers(papers.map(p => p.id === updated.id ? updated : p));
+                setSizes(sizes.map(s => s.id === updated.id ? updated : s));
             }
             setEditingId(null);
             setEditForm({});
@@ -49,23 +51,23 @@ export default function PaperPage() {
 
     const handleDelete = async (id: number) => {
         if (!confirm('Are you sure?')) return;
-        const res = await fetch(`/api/admin/config/paper?id=${id}`, {
+        const res = await fetch(`/api/fujiadmin/config/sizes?id=${id}`, {
             method: 'DELETE',
         });
         if (res.ok) {
-            setPapers(papers.filter(p => p.id !== id));
+            setSizes(sizes.filter(s => s.id !== id));
         }
     };
 
     return (
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
             <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-                <h3 className="font-semibold text-slate-800">Paper Types</h3>
+                <h3 className="font-semibold text-slate-800">Available Sizes</h3>
                 <Button size="sm" className="gap-2" onClick={() => {
                     setEditingId(-1);
-                    setEditForm({ name: '', slug: '', description: '', isActive: true });
+                    setEditForm({ name: '', slug: '', widthMm: 0, heightMm: 0, basePrice: 0, isActive: true });
                 }}>
-                    <Plus className="w-4 h-4" /> Add Paper
+                    <Plus className="w-4 h-4" /> Add Size
                 </Button>
             </div>
             <div className="overflow-x-auto">
@@ -74,7 +76,8 @@ export default function PaperPage() {
                         <tr className="bg-slate-50 text-slate-500 text-xs font-medium uppercase tracking-wider">
                             <th className="px-6 py-3">Name</th>
                             <th className="px-6 py-3">Slug</th>
-                            <th className="px-6 py-3">Description</th>
+                            <th className="px-6 py-3">Dimensions (mm)</th>
+                            <th className="px-6 py-3">Base Price</th>
                             <th className="px-6 py-3">Status</th>
                             <th className="px-6 py-3 text-right">Actions</th>
                         </tr>
@@ -84,7 +87,14 @@ export default function PaperPage() {
                             <tr className="bg-primary-50">
                                 <td className="px-6 py-4"><input className="w-full text-sm p-1 border rounded" placeholder="Name" value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} /></td>
                                 <td className="px-6 py-4"><input className="w-full text-sm p-1 border rounded" placeholder="slug" value={editForm.slug} onChange={e => setEditForm({ ...editForm, slug: e.target.value })} /></td>
-                                <td className="px-6 py-4"><input className="w-full text-sm p-1 border rounded" placeholder="Description" value={editForm.description || ''} onChange={e => setEditForm({ ...editForm, description: e.target.value })} /></td>
+                                <td className="px-6 py-4">
+                                    <div className="flex items-center gap-1">
+                                        <input className="w-16 text-sm p-1 border rounded" placeholder="W" value={editForm.widthMm} onChange={e => setEditForm({ ...editForm, widthMm: parseInt(e.target.value) })} />
+                                        x
+                                        <input className="w-16 text-sm p-1 border rounded" placeholder="H" value={editForm.heightMm} onChange={e => setEditForm({ ...editForm, heightMm: parseInt(e.target.value) })} />
+                                    </div>
+                                </td>
+                                <td className="px-6 py-4"><input className="w-20 text-sm p-1 border rounded" placeholder="Price" value={editForm.basePrice} onChange={e => setEditForm({ ...editForm, basePrice: parseFloat(e.target.value) })} /></td>
                                 <td className="px-6 py-4">New</td>
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-2">
@@ -94,25 +104,40 @@ export default function PaperPage() {
                                 </td>
                             </tr>
                         )}
-                        {papers.map((paper) => (
-                            <tr key={paper.id} className="hover:bg-slate-50 transition-colors">
+                        {sizes.map((size) => (
+                            <tr key={size.id} className="hover:bg-slate-50 transition-colors group">
                                 <td className="px-6 py-4">
-                                    {editingId === paper.id ? (
-                                        <input className="w-full p-1 border rounded" value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
+                                    {editingId === size.id ? (
+                                        <input
+                                            className="w-full p-1 border rounded"
+                                            value={editForm.name}
+                                            onChange={e => setEditForm({ ...editForm, name: e.target.value })}
+                                        />
                                     ) : (
-                                        <div className="font-medium text-slate-900">{paper.name}</div>
+                                        <div className="font-medium text-slate-900">{size.name}</div>
                                     )}
                                 </td>
-                                <td className="px-6 py-4 text-slate-500 font-mono text-xs">{paper.slug}</td>
-                                <td className="px-6 py-4 text-slate-500 text-sm">
-                                    {editingId === paper.id ? (
-                                        <input className="w-full p-1 border rounded" value={editForm.description || ''} onChange={e => setEditForm({ ...editForm, description: e.target.value })} />
+                                <td className="px-6 py-4 text-slate-500 font-mono text-xs">{size.slug}</td>
+                                <td className="px-6 py-4 text-slate-500">
+                                    {editingId === size.id ? (
+                                        <div className="flex items-center gap-1">
+                                            <input className="w-16 p-1 border rounded" value={editForm.widthMm} onChange={e => setEditForm({ ...editForm, widthMm: parseInt(e.target.value) })} />
+                                            x
+                                            <input className="w-16 p-1 border rounded" value={editForm.heightMm} onChange={e => setEditForm({ ...editForm, heightMm: parseInt(e.target.value) })} />
+                                        </div>
                                     ) : (
-                                        paper.description
+                                        `${size.widthMm}x${size.heightMm}`
                                     )}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {paper.isActive ? (
+                                    {editingId === size.id ? (
+                                        <input className="w-20 p-1 border rounded" value={editForm.basePrice} onChange={e => setEditForm({ ...editForm, basePrice: parseFloat(e.target.value) })} />
+                                    ) : (
+                                        <span className="font-semibold">{size.basePrice} ₴</span>
+                                    )}
+                                </td>
+                                <td className="px-6 py-4">
+                                    {size.isActive ? (
                                         <span className="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded-full">ACTIVE</span>
                                     ) : (
                                         <span className="px-2 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold rounded-full">INACTIVE</span>
@@ -120,15 +145,15 @@ export default function PaperPage() {
                                 </td>
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-2">
-                                        {editingId === paper.id ? (
+                                        {editingId === size.id ? (
                                             <>
                                                 <button onClick={handleSave} className="p-1.5 text-green-600 hover:bg-green-50 rounded transition-colors"><Check className="w-4 h-4" /></button>
                                                 <button onClick={() => setEditingId(null)} className="p-1.5 text-slate-400 hover:bg-slate-100 rounded transition-colors"><X className="w-4 h-4" /></button>
                                             </>
                                         ) : (
                                             <>
-                                                <button onClick={() => handleEdit(paper)} className="p-1.5 text-slate-400 hover:text-primary-600 hover:bg-slate-100 rounded transition-colors"><Edit2 className="w-4 h-4" /></button>
-                                                <button onClick={() => handleDelete(paper.id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"><Trash2 className="w-4 h-4" /></button>
+                                                <button onClick={() => handleEdit(size)} className="p-1.5 text-slate-400 hover:text-primary-600 hover:bg-slate-100 rounded transition-colors"><Edit2 className="w-4 h-4" /></button>
+                                                <button onClick={() => handleDelete(size.id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"><Trash2 className="w-4 h-4" /></button>
                                             </>
                                         )}
                                     </div>

@@ -9,12 +9,18 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-export const metadata: Metadata = {
-  title: "Fujimir | Online Photo Printing",
-  description: "Professional photo printing service in Ukraine. High quality prints, fast delivery.",
-};
+import { prisma } from "@/lib/prisma";
+
+export async function generateMetadata() {
+  const siteName = await prisma.setting.findUnique({ where: { key: 'site_name' } });
+  return {
+    title: siteName?.value || "Fujimir | Online Photo Printing",
+    description: "Professional photo printing service in Ukraine. High quality prints, fast delivery.",
+  };
+}
 
 import { TranslationProvider } from "@/lib/i18n";
+import { SettingsProvider } from "@/lib/settings-context";
 
 export default function RootLayout({
   children,
@@ -26,11 +32,13 @@ export default function RootLayout({
       <body
         className={`${inter.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
-        <TranslationProvider>
-          <Navbar />
-          {children}
-          <Footer />
-        </TranslationProvider>
+        <SettingsProvider>
+          <TranslationProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </TranslationProvider>
+        </SettingsProvider>
       </body>
     </html>
   );

@@ -20,7 +20,7 @@ export function ServerStats() {
 
     useEffect(() => {
         const fetchStats = () => {
-            fetch("/api/admin/stats")
+            fetch("/api/fujiadmin/stats")
                 .then(res => res.json())
                 .then(setStats)
                 .catch(console.error);

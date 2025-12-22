@@ -18,13 +18,13 @@ export default function TranslationsPage() {
     const [filter, setFilter] = useState('');
 
     useEffect(() => {
-        fetch('/api/admin/config/translations')
+        fetch('/api/fujiadmin/config/translations')
             .then(res => res.json())
             .then(setTranslations);
     }, []);
 
     const handleSave = async () => {
-        const res = await fetch('/api/admin/config/translations', {
+        const res = await fetch('/api/fujiadmin/config/translations', {
             method: 'POST',
             body: JSON.stringify(editForm),
         });
@@ -46,7 +46,7 @@ export default function TranslationsPage() {
 
     const handleDelete = async (id: number) => {
         if (!confirm('Are you sure?')) return;
-        const res = await fetch(`/api/admin/config/translations?id=${id}`, {
+        const res = await fetch(`/api/fujiadmin/config/translations?id=${id}`, {
             method: 'DELETE',
         });
         if (res.ok) {
@@ -115,7 +115,7 @@ export default function TranslationsPage() {
                                 <td className="px-6 py-4 font-mono text-xs text-slate-600">{t.key}</td>
                                 <td className="px-6 py-4">
                                     <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${t.lang === 'uk' ? 'bg-blue-100 text-blue-700' :
-                                            t.lang === 'ru' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
+                                        t.lang === 'ru' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
                                         }`}>
                                         {t.lang.toUpperCase()}
                                     </span>

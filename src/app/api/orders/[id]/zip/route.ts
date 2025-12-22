@@ -1,14 +1,17 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import JSZip from "jszip";
+import { readFile } from "fs/promises";
+import { join } from "path";
 
 export async function GET(
     request: Request,
     { params }: { params: { id: string } }
 ) {
     try {
+        const orderId = parseInt(params.id);
         const order = await prisma.order.findUnique({
-            where: { id: parseInt(params.id) },
+            where: { id: orderId },
             include: { items: true },
         });
 
@@ -34,16 +37,22 @@ export async function GET(
             }
 
             const itemFolder = orderFolder?.folder(folderName);
-            const fileList = JSON.parse(item.files || "[]");
+            const fileMetaList = JSON.parse(item.files || "[]");
 
-            // In a real app, we would read the actual file from disk/S3 here
-            // const fileData = await fs.readFile(`./uploads/${order.id}/${fileName}`);
-            // For this demo, we'll create a text file as a placeholder
-            for (const fileName of fileList) {
-                itemFolder?.file(
-                    fileName || "photo.jpg",
-                    `Dummy data for ${fileName}. In production, this would be the actual image buffer.`
-                );
+            for (const fileMeta of fileMetaList) {
+                const serverName = typeof fileMeta === 'string' ? fileMeta : fileMeta.server;
+                const originalName = typeof fileMeta === 'string' ? fileMeta : fileMeta.original;
+
+                if (!serverName) continue;
+
+                try {
+                    const filePath = join(process.cwd(), "public", "uploads", serverName);
+                    const fileData = await readFile(filePath);
+                    itemFolder?.file(originalName || "photo.jpg", fileData);
+                } catch (e) {
+                    console.error(`File missing: ${serverName}`);
+                    itemFolder?.file(`${originalName}_MISSING.txt`, "Original file was not found on the server.");
+                }
             }
         }
 

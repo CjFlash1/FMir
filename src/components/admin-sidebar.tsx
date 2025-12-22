@@ -14,12 +14,13 @@ import {
 import { cn } from "@/lib/utils";
 
 const navigation = [
-    { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
-    { name: "Orders", href: "/admin/orders", icon: ShoppingBag },
-    { name: "Media / Content", href: "/admin/content", icon: Image },
-    { name: "Users", href: "/admin/users", icon: Users },
-    { name: "Pages", href: "/admin/pages", icon: FileText },
-    { name: "System Config", href: "/admin/config/sizes", icon: Settings },
+    { name: "Dashboard", href: "/fujiadmin", icon: LayoutDashboard },
+    { name: "Orders", href: "/fujiadmin/orders", icon: ShoppingBag },
+    { name: "Media / Content", href: "/fujiadmin/content", icon: Image },
+    { name: "Users", href: "/fujiadmin/users", icon: Users },
+    { name: "Pages", href: "/fujiadmin/pages", icon: FileText },
+    { name: "Global Settings", href: "/fujiadmin/settings", icon: Settings },
+    { name: "System Config", href: "/fujiadmin/config/sizes", icon: Settings },
 ];
 
 export function AdminSidebar() {

@@ -4,45 +4,44 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash2, Edit2, Check, X } from "lucide-react";
 
-interface PrintSize {
+interface PrintOption {
     id: number;
     name: string;
     slug: string;
-    widthMm: number;
-    heightMm: number;
-    basePrice: number;
+    priceType: string;
+    price: number;
     isActive: boolean;
 }
 
-export default function SizesPage() {
-    const [sizes, setSizes] = useState<PrintSize[]>([]);
+export default function OptionsPage() {
+    const [options, setOptions] = useState<PrintOption[]>([]);
     const [editingId, setEditingId] = useState<number | null>(null);
-    const [editForm, setEditForm] = useState<Partial<PrintSize>>({});
+    const [editForm, setEditForm] = useState<Partial<PrintOption>>({});
 
     useEffect(() => {
-        fetch('/api/admin/config/sizes')
+        fetch('/api/fujiadmin/config/options')
             .then(res => res.json())
-            .then(setSizes);
+            .then(setOptions);
     }, []);
 
-    const handleEdit = (size: PrintSize) => {
-        setEditingId(size.id);
-        setEditForm(size);
+    const handleEdit = (option: PrintOption) => {
+        setEditingId(option.id);
+        setEditForm(option);
     };
 
     const handleSave = async () => {
         const isNew = editingId === -1;
         const method = isNew ? 'POST' : 'PUT';
-        const res = await fetch('/api/admin/config/sizes', {
+        const res = await fetch('/api/fujiadmin/config/options', {
             method,
             body: JSON.stringify(editForm),
         });
         if (res.ok) {
             const updated = await res.json();
             if (isNew) {
-                setSizes([...sizes, updated].sort((a, b) => a.basePrice - b.basePrice));
+                setOptions([...options, updated]);
             } else {
-                setSizes(sizes.map(s => s.id === updated.id ? updated : s));
+                setOptions(options.map(o => o.id === updated.id ? updated : o));
             }
             setEditingId(null);
             setEditForm({});
@@ -51,23 +50,23 @@ export default function SizesPage() {
 
     const handleDelete = async (id: number) => {
         if (!confirm('Are you sure?')) return;
-        const res = await fetch(`/api/admin/config/sizes?id=${id}`, {
+        const res = await fetch(`/api/fujiadmin/config/options?id=${id}`, {
             method: 'DELETE',
         });
         if (res.ok) {
-            setSizes(sizes.filter(s => s.id !== id));
+            setOptions(options.filter(o => o.id !== id));
         }
     };
 
     return (
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
             <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-                <h3 className="font-semibold text-slate-800">Available Sizes</h3>
+                <h3 className="font-semibold text-slate-800">Extra Options</h3>
                 <Button size="sm" className="gap-2" onClick={() => {
                     setEditingId(-1);
-                    setEditForm({ name: '', slug: '', widthMm: 0, heightMm: 0, basePrice: 0, isActive: true });
+                    setEditForm({ name: '', slug: '', priceType: 'FIXED', price: 0, isActive: true });
                 }}>
-                    <Plus className="w-4 h-4" /> Add Size
+                    <Plus className="w-4 h-4" /> Add Option
                 </Button>
             </div>
             <div className="overflow-x-auto">
@@ -76,8 +75,8 @@ export default function SizesPage() {
                         <tr className="bg-slate-50 text-slate-500 text-xs font-medium uppercase tracking-wider">
                             <th className="px-6 py-3">Name</th>
                             <th className="px-6 py-3">Slug</th>
-                            <th className="px-6 py-3">Dimensions (mm)</th>
-                            <th className="px-6 py-3">Base Price</th>
+                            <th className="px-6 py-3">Price Type</th>
+                            <th className="px-6 py-3">Price</th>
                             <th className="px-6 py-3">Status</th>
                             <th className="px-6 py-3 text-right">Actions</th>
                         </tr>
@@ -88,13 +87,12 @@ export default function SizesPage() {
                                 <td className="px-6 py-4"><input className="w-full text-sm p-1 border rounded" placeholder="Name" value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} /></td>
                                 <td className="px-6 py-4"><input className="w-full text-sm p-1 border rounded" placeholder="slug" value={editForm.slug} onChange={e => setEditForm({ ...editForm, slug: e.target.value })} /></td>
                                 <td className="px-6 py-4">
-                                    <div className="flex items-center gap-1">
-                                        <input className="w-16 text-sm p-1 border rounded" placeholder="W" value={editForm.widthMm} onChange={e => setEditForm({ ...editForm, widthMm: parseInt(e.target.value) })} />
-                                        x
-                                        <input className="w-16 text-sm p-1 border rounded" placeholder="H" value={editForm.heightMm} onChange={e => setEditForm({ ...editForm, heightMm: parseInt(e.target.value) })} />
-                                    </div>
+                                    <select className="w-full text-sm p-1 border rounded" value={editForm.priceType} onChange={e => setEditForm({ ...editForm, priceType: e.target.value })}>
+                                        <option value="FIXED">FIXED</option>
+                                        <option value="PERCENTAGE">PERCENTAGE</option>
+                                    </select>
                                 </td>
-                                <td className="px-6 py-4"><input className="w-20 text-sm p-1 border rounded" placeholder="Price" value={editForm.basePrice} onChange={e => setEditForm({ ...editForm, basePrice: parseFloat(e.target.value) })} /></td>
+                                <td className="px-6 py-4"><input className="w-full text-sm p-1 border rounded" placeholder="Price" value={editForm.price} onChange={e => setEditForm({ ...editForm, price: parseFloat(e.target.value) })} /></td>
                                 <td className="px-6 py-4">New</td>
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-2">
@@ -104,40 +102,35 @@ export default function SizesPage() {
                                 </td>
                             </tr>
                         )}
-                        {sizes.map((size) => (
-                            <tr key={size.id} className="hover:bg-slate-50 transition-colors group">
+                        {options.map((option) => (
+                            <tr key={option.id} className="hover:bg-slate-50 transition-colors">
                                 <td className="px-6 py-4">
-                                    {editingId === size.id ? (
-                                        <input
-                                            className="w-full p-1 border rounded"
-                                            value={editForm.name}
-                                            onChange={e => setEditForm({ ...editForm, name: e.target.value })}
-                                        />
+                                    {editingId === option.id ? (
+                                        <input className="w-full p-1 border rounded" value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
                                     ) : (
-                                        <div className="font-medium text-slate-900">{size.name}</div>
+                                        <div className="font-medium text-slate-900">{option.name}</div>
                                     )}
                                 </td>
-                                <td className="px-6 py-4 text-slate-500 font-mono text-xs">{size.slug}</td>
-                                <td className="px-6 py-4 text-slate-500">
-                                    {editingId === size.id ? (
-                                        <div className="flex items-center gap-1">
-                                            <input className="w-16 p-1 border rounded" value={editForm.widthMm} onChange={e => setEditForm({ ...editForm, widthMm: parseInt(e.target.value) })} />
-                                            x
-                                            <input className="w-16 p-1 border rounded" value={editForm.heightMm} onChange={e => setEditForm({ ...editForm, heightMm: parseInt(e.target.value) })} />
-                                        </div>
+                                <td className="px-6 py-4 text-slate-500 font-mono text-xs">{option.slug}</td>
+                                <td className="px-6 py-4 text-slate-500 text-sm">
+                                    {editingId === option.id ? (
+                                        <select className="w-full p-1 border rounded" value={editForm.priceType} onChange={e => setEditForm({ ...editForm, priceType: e.target.value })}>
+                                            <option value="FIXED">FIXED</option>
+                                            <option value="PERCENTAGE">PERCENTAGE</option>
+                                        </select>
                                     ) : (
-                                        `${size.widthMm}x${size.heightMm}`
+                                        option.priceType
                                     )}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {editingId === size.id ? (
-                                        <input className="w-20 p-1 border rounded" value={editForm.basePrice} onChange={e => setEditForm({ ...editForm, basePrice: parseFloat(e.target.value) })} />
+                                    {editingId === option.id ? (
+                                        <input className="w-24 p-1 border rounded" value={editForm.price} onChange={e => setEditForm({ ...editForm, price: parseFloat(e.target.value) })} />
                                     ) : (
-                                        <span className="font-semibold">{size.basePrice} ₴</span>
+                                        <span className="font-semibold">{option.price} {option.priceType === 'FIXED' ? '₴' : '%'}</span>
                                     )}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {size.isActive ? (
+                                    {option.isActive ? (
                                         <span className="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded-full">ACTIVE</span>
                                     ) : (
                                         <span className="px-2 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold rounded-full">INACTIVE</span>
@@ -145,15 +138,15 @@ export default function SizesPage() {
                                 </td>
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-2">
-                                        {editingId === size.id ? (
+                                        {editingId === option.id ? (
                                             <>
                                                 <button onClick={handleSave} className="p-1.5 text-green-600 hover:bg-green-50 rounded transition-colors"><Check className="w-4 h-4" /></button>
                                                 <button onClick={() => setEditingId(null)} className="p-1.5 text-slate-400 hover:bg-slate-100 rounded transition-colors"><X className="w-4 h-4" /></button>
                                             </>
                                         ) : (
                                             <>
-                                                <button onClick={() => handleEdit(size)} className="p-1.5 text-slate-400 hover:text-primary-600 hover:bg-slate-100 rounded transition-colors"><Edit2 className="w-4 h-4" /></button>
-                                                <button onClick={() => handleDelete(size.id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"><Trash2 className="w-4 h-4" /></button>
+                                                <button onClick={() => handleEdit(option)} className="p-1.5 text-slate-400 hover:text-primary-600 hover:bg-slate-100 rounded transition-colors"><Edit2 className="w-4 h-4" /></button>
+                                                <button onClick={() => handleDelete(option.id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors"><Trash2 className="w-4 h-4" /></button>
                                             </>
                                         )}
                                     </div>

@@ -2,12 +2,12 @@ import Link from "next/link";
 import { Settings, Maximize, FileText, PlusCircle, Globe, Gift, Percent } from "lucide-react";
 
 const navItems = [
-    { name: 'Print Sizes', href: '/admin/config/sizes', icon: Maximize },
-    { name: 'Paper Types', href: '/admin/config/paper', icon: FileText },
-    { name: 'Extra Options', href: '/admin/config/options', icon: PlusCircle },
-    { name: 'Gifts', href: '/admin/config/gifts', icon: Gift },
-    { name: 'Discounts', href: '/admin/config/discounts', icon: Percent },
-    { name: 'Translations', href: '/admin/config/translations', icon: Globe },
+    { name: 'Print Sizes', href: '/fujiadmin/config/sizes', icon: Maximize },
+    { name: 'Paper Types', href: '/fujiadmin/config/paper', icon: FileText },
+    { name: 'Extra Options', href: '/fujiadmin/config/options', icon: PlusCircle },
+    { name: 'Gifts', href: '/fujiadmin/config/gifts', icon: Gift },
+    { name: 'Discounts', href: '/fujiadmin/config/discounts', icon: Percent },
+    { name: 'Translations', href: '/fujiadmin/config/translations', icon: Globe },
 ];
 
 export default function ConfigLayout({ children }: { children: React.ReactNode }) {
