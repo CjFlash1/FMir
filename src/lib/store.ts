@@ -2,9 +2,15 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export type ProductConfig = {
-    sizes: { id: number; name: string; basePrice: number }[];
+    sizes: {
+        id: number;
+        name: string;
+        basePrice: number;
+        discounts: { minQuantity: number; price: number }[];
+    }[];
     papers: { id: number; name: string; slug: string }[];
     options: { id: number; name: string; slug: string; price: number }[];
+    gifts: { id: number; minAmount: number; giftName: string }[];
 };
 
 export type PrintOptions = {

@@ -24,25 +24,45 @@ export default function CheckoutPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [orderComplete, setOrderComplete] = useState<string | null>(null);
 
-    // Calculate Totals using Config
-    const calculateItemTotal = (item: any) => {
+    // Total calculation with dynamic pricing
+    const calculateItemUnitPrice = (item: any) => {
         if (!config) return 0;
         const sizeObj = config.sizes.find(s => s.name === item.options.size);
-        const basePrice = sizeObj ? sizeObj.basePrice : 0;
+        if (!sizeObj) return 0;
 
-        let extras = 0;
+        let unitPrice = sizeObj.basePrice;
+
+        // Apply volume discount
+        if (sizeObj.discounts && sizeObj.discounts.length > 0) {
+            const applicableDiscount = [...sizeObj.discounts]
+                .sort((a, b) => b.minQuantity - a.minQuantity)
+                .find(d => item.options.quantity >= d.minQuantity);
+
+            if (applicableDiscount) {
+                unitPrice = applicableDiscount.price;
+            }
+        }
+
         // Add option prices
         Object.entries(item.options.options || {}).forEach(([slug, isActive]) => {
             if (isActive) {
                 const opt = config.options.find(o => o.slug === slug);
-                if (opt) extras += opt.price;
+                if (opt) unitPrice += opt.price;
             }
         });
 
-        return (basePrice + extras) * item.options.quantity;
+        return unitPrice;
+    };
+
+    const calculateItemTotal = (item: any) => {
+        return calculateItemUnitPrice(item) * item.options.quantity;
     };
 
     const totalAmount = items.reduce((acc, item) => acc + calculateItemTotal(item), 0);
+
+    const activeGift = config?.gifts
+        ?.filter(g => totalAmount >= g.minAmount)
+        ?.sort((a, b) => b.minAmount - a.minAmount)[0];
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -58,7 +78,7 @@ export default function CheckoutPage() {
                         id: item.id,
                         options: item.options,
                         fileName: item.file?.name,
-                        priceSnapshot: calculateItemTotal(item) / item.options.quantity, // Unit price
+                        priceSnapshot: calculateItemUnitPrice(item), // Real Unit price after discounts
                     })),
                     total: totalAmount
                 }),
@@ -202,7 +222,7 @@ export default function CheckoutPage() {
                     <div className="md:col-span-1">
                         <Card>
                             <CardHeader>
-                                <CardTitle>Order Summary</CardTitle>
+                                <CardTitle>{t('checkout.summary')}</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="space-y-2">
@@ -215,9 +235,15 @@ export default function CheckoutPage() {
                                             <span>{calculateItemTotal(item).toFixed(2)} ₴</span>
                                         </div>
                                     ))}
+                                    {activeGift && (
+                                        <div className="flex justify-between text-sm font-medium text-green-600 bg-green-50 p-2 rounded border border-green-200">
+                                            <span>{t('checkout.bonus')}: {activeGift.giftName}</span>
+                                            <span>{t('checkout.free')}</span>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="border-t pt-4 flex justify-between items-center">
-                                    <span className="font-semibold text-lg">Total</span>
+                                    <span className="font-semibold text-lg">{t('checkout.total')}</span>
                                     <span className="font-bold text-xl text-primary-600">{totalAmount.toFixed(2)} ₴</span>
                                 </div>
                             </CardContent>
@@ -231,10 +257,10 @@ export default function CheckoutPage() {
                                 >
                                     {isSubmitting ? (
                                         <>
-                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Processing
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" /> {t('common.processing') || 'Processing...'}
                                         </>
                                     ) : (
-                                        "Place Order"
+                                        t('checkout.placeOrder')
                                     )}
                                 </Button>
                             </CardFooter>

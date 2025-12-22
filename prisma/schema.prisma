@@ -65,6 +65,23 @@ model PrintSize {
   basePrice   Float
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
+  
+  discounts   VolumeDiscount[]
+}
+
+model VolumeDiscount {
+  id          Int       @id @default(autoincrement())
+  printSizeId Int
+  printSize   PrintSize @relation(fields: [printSizeId], references: [id])
+  minQuantity Int       // e.g., 51
+  price       Float     // e.g., 5.50
+}
+
+model GiftThreshold {
+  id          Int      @id @default(autoincrement())
+  minAmount   Float    // Order total threshold, e.g., 1000
+  giftName    String   // e.g., "Free 10x15 Print" or "10% Discount"
+  isActive    Boolean  @default(true)
 }
 
 model PaperType {
