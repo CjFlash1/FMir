@@ -11,6 +11,7 @@ export default function TranslationManager() {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [saving, setSaving] = useState<string | null>(null);
+    const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
 
     useEffect(() => {
         fetchTranslations();
@@ -31,12 +32,17 @@ export default function TranslationManager() {
 
     const handleSave = async (id: number, value: string) => {
         setSaving(id.toString());
+        setSaveSuccess(null);
         try {
-            await fetch("/api/fujiadmin/config/translations", {
+            const res = await fetch("/api/fujiadmin/config/translations", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id, value }),
             });
+            if (res.ok) {
+                setSaveSuccess(`Saved ID ${id}`);
+                setTimeout(() => setSaveSuccess(null), 3000);
+            }
         } catch (e) {
             console.error(e);
         } finally {
