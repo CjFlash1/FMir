@@ -3,10 +3,14 @@
 import { Users, ShoppingBag, DollarSign, TrendingUp } from "lucide-react";
 import { ServerStats } from "@/components/server-stats";
 
+import { useTranslation } from "@/lib/i18n";
+
 export default function AdminDashboard() {
+    const { t } = useTranslation();
+
     return (
         <div className="space-y-6">
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Dashboard</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900">{t("admin.dashboard")}</h1>
 
             <ServerStats />
 

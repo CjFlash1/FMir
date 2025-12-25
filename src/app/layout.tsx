@@ -28,8 +28,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`${manrope.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
         <SettingsProvider>

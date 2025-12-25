@@ -133,11 +133,62 @@ model Setting {
 
 model Page {
   id          Int      @id @default(autoincrement())
+  lang        String   @default("ru") // "uk", "ru", "en"
   title       String
-  slug        String   @unique
+  slug        String
   content     String   // HTML or Markdown content
   description String?  // Meta description
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@unique([slug, lang])
+}
+
+// --- Help Center ---
+
+model HelpCategory {
+  id           Int      @id @default(autoincrement())
+  slug         String   @unique
+  sortOrder    Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  translations HelpCategoryTranslation[]
+  articles     HelpArticle[]
+}
+
+model HelpCategoryTranslation {
+  id             Int          @id @default(autoincrement())
+  helpCategoryId Int
+  helpCategory   HelpCategory @relation(fields: [helpCategoryId], references: [id], onDelete: Cascade)
+  lang           String       // "uk", "ru", "en"
+  name           String
+
+  @@unique([helpCategoryId, lang])
+}
+
+model HelpArticle {
+  id             Int          @id @default(autoincrement())
+  helpCategoryId Int
+  helpCategory   HelpCategory @relation(fields: [helpCategoryId], references: [id], onDelete: Cascade)
+  slug           String       @unique
+  sortOrder      Int          @default(0)
+  isActive       Boolean      @default(true)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  translations   HelpArticleTranslation[]
+}
+
+model HelpArticleTranslation {
+  id            Int         @id @default(autoincrement())
+  helpArticleId Int
+  helpArticle   HelpArticle @relation(fields: [helpArticleId], references: [id], onDelete: Cascade)
+  lang          String      // "uk", "ru", "en"
+  title         String
+  content       String      // HTML
+
+  @@unique([helpArticleId, lang])
 }

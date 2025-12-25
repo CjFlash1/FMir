@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "@/lib/i18n";
 
 import { ImageOptionsModal } from "@/components/image-options";
 import { useCartStore, type PrintOptions } from "@/lib/store";
@@ -19,6 +20,7 @@ const DEFAULT_OPTIONS: PrintOptions = {
 };
 
 export default function UploadPage() {
+    const { t } = useTranslation();
     const router = useRouter();
     const { items: files, addItem, removeItem, updateItem: updateItemOptions, setConfig, cloneItem, bulkCloneItems } = useCartStore(); // Fix: updateItem named updateItemOptions via destructuring alias
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -231,21 +233,5 @@ export default function UploadPage() {
                 )}
             </div>
         </div>
-
-                {
-        (editingFile || isBulkEditing) && (
-            <ImageOptionsModal
-                isOpen={!!editingFile || isBulkEditing}
-                onClose={() => {
-                    setEditingFileId(null);
-                    setIsBulkEditing(false);
-                }}
-                currentOptions={isBulkEditing ? DEFAULT_OPTIONS : editingFile?.options}
-                onSave={handleSaveOptions}
-            />
-        )
-    }
-            </div >
-        </div >
     );
 }

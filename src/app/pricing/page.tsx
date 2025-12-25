@@ -62,7 +62,7 @@ export default function PricingPage() {
                                         </li>
                                     ))}
                                     {size.discounts?.length === 0 && (
-                                        <li className="text-sm text-slate-400 italic text-center py-4">
+                                        <li className="text-sm text-[#4c4c4c]/40 italic text-center py-4">
                                             {t('No bulk discounts available')}
                                         </li>
                                     )}

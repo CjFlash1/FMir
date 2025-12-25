@@ -10,9 +10,11 @@ import {
     Image,
     FileText,
     LogOut,
-    Globe
+    Globe,
+    HelpCircle
 } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
 export function AdminSidebar() {
     const pathname = usePathname();
@@ -23,6 +25,7 @@ export function AdminSidebar() {
         { name: t("admin.orders"), href: "/fujiadmin/orders", icon: ShoppingBag },
         { name: t("admin.content"), href: "/fujiadmin/content", icon: Image },
         { name: t("admin.users"), href: "/fujiadmin/users", icon: Users },
+        { name: t("admin.help", "Help Center"), href: "/fujiadmin/help", icon: HelpCircle },
         { name: t("admin.pages"), href: "/fujiadmin/pages", icon: FileText },
         { name: t("admin.translations"), href: "/fujiadmin/config/translations", icon: Globe },
         { name: t("admin.settings"), href: "/fujiadmin/settings", icon: Settings },

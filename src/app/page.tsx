@@ -33,7 +33,7 @@ export default function Home() {
                   </Button>
                 </Link>
                 <Link href="/pricing">
-                  <Button size="lg" variant="outline" className="text-white border-white/30 hover:bg-white/10 text-xl px-10 py-8 rounded-xl gap-2 font-black uppercase tracking-tighter">
+                  <Button size="lg" className="bg-white text-[#009846] hover:bg-white/90 text-xl px-10 py-8 rounded-xl gap-2 font-black uppercase tracking-tighter shadow-xl">
                     {t('nav.pricing')}
                     <ChevronRight size={24} />
                   </Button>
@@ -43,7 +43,7 @@ export default function Home() {
             <div className="flex-1 relative hidden lg:block">
               <div className="relative w-full aspect-square max-w-md ml-auto">
                 <div className="absolute inset-0 bg-white/10 rounded-full blur-3xl animate-pulse" />
-                <img src="/logo.png" alt="Promo" className="relative z-10 w-full h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-white p-8 rounded-3xl" />
+                <img src="/logo.png" alt="Promo" className="relative z-10 w-full h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-3xl" />
               </div>
             </div>
           </div>
@@ -58,9 +58,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {[
-              { title: "Premium Quality", desc: "Original Fuji Crystal Archive paper for brilliant colors and sharp details.", icon: <Check size={32} /> },
-              { title: "Auto Discounts", desc: "Order more, pay less. Discounts are applied automatically in your cart.", icon: <Check size={32} /> },
-              { title: "Fast Delivery", desc: "Production starts immediately after upload. Shipping across Ukraine.", icon: <Check size={32} /> }
+              { title: t("benefits.quality.title") || "Premium Quality", desc: t("benefits.quality.desc") || "Original Fuji Crystal Archive paper for brilliant colors and sharp details.", icon: <Check size={32} /> },
+              { title: t("benefits.discounts.title") || "Auto Discounts", desc: t("benefits.discounts.desc") || "Order more, pay less. Discounts are applied automatically in your cart.", icon: <Check size={32} /> },
+              { title: t("benefits.delivery.title") || "Fast Delivery", desc: t("benefits.delivery.desc") || "Production starts immediately after upload. Shipping across Ukraine.", icon: <Check size={32} /> }
             ].map((benefit, i) => (
               <div key={i} className="flex flex-col items-center text-center group bg-white p-10 rounded-3xl shadow-sm border border-[#c5b98e]/20 hover:shadow-xl hover:-translate-y-1 transition-all">
                 <div className="w-16 h-16 bg-[#009846] text-white rounded-2xl flex items-center justify-center mb-8 transform group-hover:rotate-12 transition-transform">

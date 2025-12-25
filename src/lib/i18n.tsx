@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 type TranslationContextType = {
-    t: (key: string) => string;
+    t: (key: string, defaultValue?: string) => string;
     lang: string;
     setLang: (lang: string) => void;
     isLoading: boolean;
@@ -43,8 +43,8 @@ export function TranslationProvider({ children }: { children: ReactNode }) {
             });
     }, [lang]);
 
-    const t = (key: string) => {
-        return translations[key] || key;
+    const t = (key: string, defaultValue?: string) => {
+        return translations[key] || defaultValue || key;
     };
 
     return (
