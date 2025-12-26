@@ -44,17 +44,17 @@ RUN groupadd --system --gid 1001 nodejs
 RUN useradd --system --uid 1001 nextjs
 
 # Create data directory for persistent storage (DB + uploads)
-# Railway only allows 1 volume, so we store everything in /app/data
 RUN mkdir -p /app/data/uploads && chown -R nextjs:nodejs /app/data
 
-# Copy public assets
-COPY --from=builder /app/public ./public
-# Create symlink for uploads to point to persistent volume
-RUN rm -rf ./public/uploads && ln -s /app/data/uploads ./public/uploads
-
-# Copy built app
+# Copy built app FIRST (before modifying public folder)
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Copy public assets (overwrite standalone's public)
+COPY --from=builder /app/public ./public
+
+# NOW create symlink for uploads to point to persistent volume
+RUN rm -rf ./public/uploads && ln -s /app/data/uploads ./public/uploads && chown -h nextjs:nodejs ./public/uploads
 
 # Copy Prisma schema and client for runtime
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
