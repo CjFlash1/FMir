@@ -256,7 +256,7 @@ export default function CheckoutPage() {
                 }
             }
 
-            // 4. Prepare order items - put magnet photo first if exists
+            // 4. Prepare order items - ALL original items with isGiftMagnet: false
             let orderItems = items.map(item => {
                 const fileData = item.file ? uploadedFilesMap.get(item.file) : null;
                 return {
@@ -265,20 +265,38 @@ export default function CheckoutPage() {
                     fileName: fileData?.original || item.file?.name,
                     serverFileName: fileData?.server,
                     priceSnapshot: config ? calculateItemPrice(item.options, config).unitPrice : 0,
-                    isGiftMagnet: magnetOption === 'existing' && magnetPhotoId === item.id,
+                    isGiftMagnet: false, // Original items are NEVER gift magnets
                 };
             });
 
-            // Add uploaded magnet as a separate item if uploaded
-            if (giftChoice === 'FREE_MAGNET' && magnetOption === 'upload' && magnetFileData) {
-                orderItems = [{
-                    id: 'gift-magnet-' + Date.now(),
-                    options: { size: '10x15', paper: 'glossy', quantity: 1, options: { magnetic: true } },
-                    fileName: magnetFileData.original,
-                    serverFileName: magnetFileData.server,
-                    priceSnapshot: 0,
-                    isGiftMagnet: true,
-                }, ...orderItems];
+            // Add gift magnet as SEPARATE item (copy of existing photo OR uploaded)
+            if (giftChoice === 'FREE_MAGNET') {
+                if (magnetOption === 'existing' && magnetPhotoId) {
+                    // Find the original item to copy
+                    const originalItem = items.find(i => i.id === magnetPhotoId);
+                    const fileData = originalItem?.file ? uploadedFilesMap.get(originalItem.file) : null;
+                    if (originalItem && fileData) {
+                        // Add COPY of the photo as gift magnet
+                        orderItems = [{
+                            id: 'gift-magnet-' + Date.now(),
+                            options: { size: '10x15', paper: 'glossy', quantity: 1, options: { magnetic: true } },
+                            fileName: fileData.original,
+                            serverFileName: fileData.server,
+                            priceSnapshot: 0,
+                            isGiftMagnet: true,
+                        }, ...orderItems];
+                    }
+                } else if (magnetOption === 'upload' && magnetFileData) {
+                    // Uploaded NEW magnet file
+                    orderItems = [{
+                        id: 'gift-magnet-' + Date.now(),
+                        options: { size: '10x15', paper: 'glossy', quantity: 1, options: { magnetic: true } },
+                        fileName: magnetFileData.original,
+                        serverFileName: magnetFileData.server,
+                        priceSnapshot: 0,
+                        isGiftMagnet: true,
+                    }, ...orderItems];
+                }
             }
 
             // 5. Create Order

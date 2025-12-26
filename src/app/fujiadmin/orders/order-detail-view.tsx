@@ -2,9 +2,9 @@
 
 import { useTranslation } from "@/lib/i18n";
 import Link from "next/link";
-import { ArrowLeft, Download, FileImage, CreditCard, Truck, User, Trash2, Archive, X, ChevronDown, Gift } from "lucide-react";
+import { ArrowLeft, Download, FileImage, CreditCard, Truck, User, Trash2, Archive, X, ChevronDown, Gift, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
 interface DownloadPart {
@@ -78,6 +78,103 @@ export function OrderDetailView({ order }: { order: any }) {
             // Single part - download directly
             handleDownloadPart(1);
         }
+    };
+
+    // Calculate order summary for print
+    const orderSummary = useMemo(() => {
+        const sizes: Record<string, number> = {};
+        const papers: Record<string, number> = {};
+        let magnets = 0;
+        let borders = 0;
+        let totalPhotos = 0;
+
+        order.items.forEach((item: any) => {
+            const qty = item.options?.quantity || 1;
+            totalPhotos += qty;
+
+            // Sizes
+            const size = item.options?.size || item.size || 'Unknown';
+            sizes[size] = (sizes[size] || 0) + qty;
+
+            // Papers
+            const paper = item.options?.paper || item.paper || 'Unknown';
+            papers[paper] = (papers[paper] || 0) + qty;
+
+            // Options
+            if (item.options?.options?.magnetic) magnets += qty;
+            if (item.options?.options?.border) borders += qty;
+        });
+
+        return { sizes, papers, magnets, borders, totalPhotos };
+    }, [order.items]);
+
+    const handlePrint = () => {
+        const printWindow = window.open('', '_blank', 'width=800,height=600');
+        if (!printWindow) return;
+
+        const sizesStr = Object.entries(orderSummary.sizes).map(([s, c]) => s + ': ' + c).join(', ');
+        const papersStr = Object.entries(orderSummary.papers).map(([p, c]) => p + ': ' + c).join(', ');
+        const optionsArr: string[] = [];
+        if (orderSummary.magnets > 0) optionsArr.push('Магн: ' + orderSummary.magnets);
+        if (orderSummary.borders > 0) optionsArr.push('Борд: ' + orderSummary.borders);
+        const optionsStr = optionsArr.length > 0 ? optionsArr.join(', ') : '-';
+
+        const deliveryMethodDisplay = order.deliveryMethod === 'PICKUP' ? 'Самовивіз' : order.deliveryMethod;
+
+        const giftSection = order.notes ?
+            '<div class="gift"><b>🎁</b> ' + order.notes + '</div>' : '';
+
+        const html = '<!DOCTYPE html>' +
+            '<html>' +
+            '<head>' +
+            '<title>Заказ #' + order.orderNumber + '</title>' +
+            '<style>' +
+            '* { margin: 0; padding: 0; box-sizing: border-box; }' +
+            'body { font-family: Arial, sans-serif; font-size: 11px; padding: 8px; max-width: 380px; }' +
+            '.header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 6px; }' +
+            '.order-num { font-size: 20px; font-weight: bold; }' +
+            '.date { font-size: 9px; color: #555; }' +
+            '.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px; }' +
+            '.box { border: 1px solid #ccc; padding: 5px; border-radius: 3px; }' +
+            '.box-title { font-size: 9px; font-weight: bold; color: #555; text-transform: uppercase; margin-bottom: 3px; }' +
+            '.row { margin-bottom: 1px; }' +
+            '.gift { background: #e8f5e9; border: 1px solid #4caf50; padding: 5px; border-radius: 3px; margin-bottom: 6px; font-size: 10px; }' +
+            '.summary { background: #f5f5f5; padding: 5px; border-radius: 3px; margin-bottom: 6px; }' +
+            '.summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; font-size: 10px; }' +
+            '.summary-label { font-size: 9px; color: #666; }' +
+            '.summary-value { font-weight: bold; }' +
+            '.total-row { display: flex; justify-content: space-between; border-top: 1px solid #000; padding-top: 5px; font-weight: bold; font-size: 12px; }' +
+            '</style>' +
+            '</head>' +
+            '<body>' +
+            '<div class="header"><div class="order-num">#' + order.orderNumber + '</div>' +
+            '<div class="date">' + new Date(order.createdAt).toLocaleString('uk-UA') + '</div></div>' +
+
+            '<div class="grid">' +
+            '<div class="box"><div class="box-title">👤 Клієнт</div>' +
+            '<div class="row"><b>' + order.customerName + '</b></div>' +
+            '<div class="row">' + order.customerPhone + '</div>' +
+            (order.customerEmail ? '<div class="row">' + order.customerEmail + '</div>' : '') +
+            '</div>' +
+            '<div class="box"><div class="box-title">🚚 Доставка</div>' +
+            '<div class="row"><b>' + deliveryMethodDisplay + '</b></div>' +
+            (order.deliveryAddress ? '<div class="row">' + order.deliveryAddress + '</div>' : '') +
+            '</div></div>' +
+            giftSection +
+
+            '<div class="summary"><div class="summary-grid">' +
+            '<div><span class="summary-label">Розміри:</span><br><span class="summary-value">' + sizesStr + '</span></div>' +
+            '<div><span class="summary-label">Папір:</span><br><span class="summary-value">' + papersStr + '</span></div>' +
+            '<div><span class="summary-label">Опції:</span><br><span class="summary-value">' + optionsStr + '</span></div>' +
+            '<div><span class="summary-label">ВСЬОГО:</span><br><span class="summary-value" style="font-size:13px;">' + orderSummary.totalPhotos + ' шт.</span></div>' +
+            '</div></div>' +
+            '<div class="total-row"><span>Сума:</span><span>' + order.totalAmount.toFixed(2) + ' грн</span></div>' +
+            '<script>window.onload=function(){window.print();}</script>' +
+            '</body>' +
+            '</html>';
+
+        printWindow.document.write(html);
+        printWindow.document.close();
     };
 
     return (
@@ -160,6 +257,10 @@ export function OrderDetailView({ order }: { order: any }) {
                             </div>
                         )}
                     </div>
+                    <Button onClick={handlePrint} variant="outline" className="gap-2">
+                        <Printer className="w-4 h-4" />
+                        {t('Print')}
+                    </Button>
                     <Button variant="destructive" onClick={handleDelete} disabled={isDeleting} className="gap-2">
                         {isDeleting ? t('admin.deleting') : (
                             <>
