@@ -23,6 +23,9 @@ ENV DATABASE_URL="file:./dev.db"
 RUN npx prisma generate
 RUN npx prisma db push
 
+# Seed database with initial data
+RUN npx tsx prisma/seed.ts
+
 # Build Next.js
 RUN npm run build
 
@@ -48,6 +51,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy Prisma schema and client for runtime
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder --chown=nextjs:nodejs /app/dev.db ./dev.db
+
+# Database URL for runtime
+ENV DATABASE_URL="file:./dev.db"
 
 # Set user
 USER nextjs
