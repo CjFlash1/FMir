@@ -397,10 +397,10 @@ export function OrderDetailView({ order }: { order: any }) {
                                             {firstFile ? (
                                                 <div
                                                     className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden relative cursor-pointer group"
-                                                    onClick={() => setPreviewImage(`/uploads/${firstFile.server}`)}
+                                                    onClick={() => setPreviewImage(`/api/uploads/${firstFile.server}`)}
                                                 >
                                                     <img
-                                                        src={`/uploads/${firstFile.server}`}
+                                                        src={`/api/uploads/${firstFile.server}`}
                                                         alt="Preview"
                                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform"
                                                     />
@@ -457,7 +457,7 @@ export function OrderDetailView({ order }: { order: any }) {
                                         <td className="px-3 md:px-6 py-4 text-right">
                                             {firstFile && (
                                                 <a
-                                                    href={`/uploads/${firstFile.server}`}
+                                                    href={`/api/uploads/${firstFile.server}`}
                                                     download={firstFile.original || 'photo.jpg'}
                                                     target="_blank"
                                                     className="inline-flex items-center justify-center px-2 md:px-4 py-2 border border-slate-200 shadow-sm text-xs md:text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"

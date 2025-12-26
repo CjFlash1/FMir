@@ -39,6 +39,7 @@ interface PricingData {
     magnetPrices: MagnetPrice[];
     deliveryOptions: DeliveryOption[];
     discounts: VolumeDiscount[];
+    giftThreshold?: { minAmount: number; isActive: boolean } | null;
 }
 
 const DELIVERY_TRANSLATIONS: any = {
@@ -257,13 +258,18 @@ export default function PricingPage() {
                 </div>
 
                 {/* Promo Banner */}
-                <div className="mt-8 bg-gradient-to-r from-green-50 to-emerald-100 p-6 rounded-2xl border-2 border-green-300 text-center">
-                    <div className="flex items-center justify-center gap-2 text-green-700 font-bold text-lg mb-2">
-                        <Gift className="w-6 h-6" />
-                        {t('pricing.promo_title')}
+                {/* Promo Banner */}
+                {data?.giftThreshold && data.giftThreshold.isActive && (
+                    <div className="mt-8 bg-gradient-to-r from-green-50 to-emerald-100 p-6 rounded-2xl border-2 border-green-300 text-center">
+                        <div className="flex items-center justify-center gap-2 text-green-700 font-bold text-lg mb-2">
+                            <Gift className="w-6 h-6" />
+                            {t('pricing.promo_title')}
+                        </div>
+                        <p className="text-green-600">
+                            {t('gift.promo_text').replace('{amount}', String(data.giftThreshold.minAmount))}
+                        </p>
                     </div>
-                    <p className="text-green-600">{t('pricing.promo_desc')}</p>
-                </div>
+                )}
 
             </div>
         </div>
