@@ -3,6 +3,9 @@ set -e
 
 echo "Starting FujiMir..."
 
+# Ensure uploads directory exists in volume
+mkdir -p /app/data/uploads
+
 # Check if database exists in volume, if not copy template
 if [ ! -f "/app/data/production.db" ]; then
     echo "Database not found in volume, copying template..."
@@ -17,6 +20,9 @@ if [ ! -f "/app/data/production.db" ]; then
 else
     echo "Database found at /app/data/production.db"
 fi
+
+echo "Uploads directory: /app/data/uploads"
+echo "Ready to serve!"
 
 # Execute the main command
 exec "$@"

@@ -42,13 +42,14 @@ ENV NODE_ENV=production
 RUN groupadd --system --gid 1001 nodejs
 RUN useradd --system --uid 1001 nextjs
 
-# Create data directory for persistent database
-RUN mkdir -p /app/data && chown nextjs:nodejs /app/data
+# Create data directory for persistent storage (DB + uploads)
+# Railway only allows 1 volume, so we store everything in /app/data
+RUN mkdir -p /app/data/uploads && chown -R nextjs:nodejs /app/data
 
-# Copy public assets (including logo.png etc)
+# Copy public assets
 COPY --from=builder /app/public ./public
-# Create uploads dir for persistent storage (will be mounted as volume)
-RUN mkdir -p ./public/uploads && chown -R nextjs:nodejs ./public
+# Create symlink for uploads to point to persistent volume
+RUN rm -rf ./public/uploads && ln -s /app/data/uploads ./public/uploads
 
 # Copy built app
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
