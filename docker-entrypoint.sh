@@ -3,7 +3,7 @@ set -e
 
 echo "Starting FujiMir..."
 
-# Ensure uploads directory exists in volume
+# Ensure uploads directory exists in volume (now running as root, so this will succeed)
 mkdir -p /app/data/uploads
 
 # Check if database exists in volume, if not copy template

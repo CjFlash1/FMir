@@ -39,39 +39,40 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Don't run as root
+# Don't run as root - group/user creation kept for reference/file ownership
 RUN groupadd --system --gid 1001 nodejs
 RUN useradd --system --uid 1001 nextjs
 
-# Create data directory for persistent storage (DB + uploads)
-RUN mkdir -p /app/data/uploads && chown -R nextjs:nodejs /app/data
+# Copy built app FIRST
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
-# Copy built app FIRST (before modifying public folder)
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-# Copy public assets (overwrite standalone's public)
+# Copy public assets
 COPY --from=builder /app/public ./public
 
-# NOW create symlink for uploads to point to persistent volume
-RUN rm -rf ./public/uploads && ln -s /app/data/uploads ./public/uploads && chown -h nextjs:nodejs ./public/uploads
+# Create uploads directory structure correctly
+# We are running as ROOT now to fix permission issues with Railway volumes
+RUN mkdir -p /app/data/uploads
+
+# Create symlink for uploads
+RUN rm -rf ./public/uploads && ln -s /app/data/uploads ./public/uploads
 
 # Copy Prisma schema and client for runtime
-COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 
-# Copy template database (will be used if no persistent volume is mounted)
-COPY --from=builder --chown=nextjs:nodejs /app/template.db ./template.db
+# Copy template database
+COPY --from=builder /app/template.db ./template.db
 
 # Copy startup script
-COPY --chown=nextjs:nodejs docker-entrypoint.sh ./
+COPY docker-entrypoint.sh ./
 RUN chmod +x docker-entrypoint.sh
 
 # Database URL - points to volume mount
 ENV DATABASE_URL="file:/app/data/production.db"
 
-# Set user
-USER nextjs
+# Commented out USER nextjs to run as root and avoid Permission denied on Volume
+# USER nextjs
 
 EXPOSE 3000
 ENV PORT=3000
