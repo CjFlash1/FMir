@@ -19,7 +19,8 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Generate Prisma Client and create database schema
-ENV DATABASE_URL="file:./build.db"
+# Use absolute path to ensure database is in known location
+ENV DATABASE_URL="file:/app/prisma/build.db"
 RUN npx prisma generate
 RUN npx prisma db push
 
@@ -30,7 +31,7 @@ RUN npx tsx prisma/seed.ts
 RUN npm run build
 
 # Rename build database to template db that will be copied if no volume exists
-RUN mv build.db template.db
+RUN mv /app/prisma/build.db /app/template.db
 
 # Production image, copy all the files and run next
 FROM base AS runner
