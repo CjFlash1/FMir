@@ -40,7 +40,40 @@ export function OrderDetailView({ order }: { order: any }) {
     const [partsInfo, setPartsInfo] = useState<PartsInfo | null>(null);
     const [showPartsDropdown, setShowPartsDropdown] = useState(false);
     const [itemsToShow, setItemsToShow] = useState(50); // Pagination for items
+    const [currentStatus, setCurrentStatus] = useState(order.status);
+    const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
     const ITEMS_PER_PAGE = 50;
+
+    // Status color mapping
+    const STATUS_COLORS: Record<string, { bg: string; text: string; label: string }> = {
+        DRAFT: { bg: "bg-slate-100", text: "text-slate-600", label: "admin.status.draft" },
+        PENDING: { bg: "bg-red-100", text: "text-red-700", label: "admin.status.pending" },
+        PROCESSING: { bg: "bg-orange-100", text: "text-orange-700", label: "admin.status.processing" },
+        COMPLETED: { bg: "bg-green-100", text: "text-green-700", label: "admin.status.completed" },
+        CANCELLED: { bg: "bg-gray-200", text: "text-gray-600", label: "admin.status.cancelled" },
+    };
+
+    const handleStatusChange = async (newStatus: string) => {
+        setIsUpdatingStatus(true);
+        try {
+            const res = await fetch(`/api/fujiadmin/orders/${order.id}/status`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: newStatus })
+            });
+            if (res.ok) {
+                setCurrentStatus(newStatus);
+                router.refresh();
+            } else {
+                alert(t("admin.status_update_failed"));
+            }
+        } catch (error) {
+            console.error("Status update failed:", error);
+            alert(t("admin.status_update_failed"));
+        } finally {
+            setIsUpdatingStatus(false);
+        }
+    };
 
     // Fetch parts info on mount
     useEffect(() => {
@@ -227,9 +260,18 @@ export function OrderDetailView({ order }: { order: any }) {
                     <div>
                         <div className="flex flex-wrap items-center gap-2">
                             <h1 className="text-xl md:text-2xl font-bold text-slate-900">{t('admin.order_number')} #{order.orderNumber}</h1>
-                            <span className="bg-yellow-100 text-yellow-800 text-xs md:text-sm font-medium px-2 md:px-3 py-1 rounded-full uppercase tracking-wide">
-                                {t(order.status)}
-                            </span>
+                            <select
+                                value={currentStatus}
+                                onChange={(e) => handleStatusChange(e.target.value)}
+                                disabled={isUpdatingStatus}
+                                className={`text-xs md:text-sm font-medium px-2 md:px-3 py-1 rounded-full uppercase tracking-wide border-0 cursor-pointer ${STATUS_COLORS[currentStatus]?.bg || 'bg-yellow-100'} ${STATUS_COLORS[currentStatus]?.text || 'text-yellow-800'}`}
+                            >
+                                <option value="DRAFT" className="bg-slate-100 text-slate-600">{t('admin.status.draft')}</option>
+                                <option value="PENDING" className="bg-red-100 text-red-700">{t('admin.status.pending')}</option>
+                                <option value="PROCESSING" className="bg-orange-100 text-orange-700">{t('admin.status.processing')}</option>
+                                <option value="COMPLETED" className="bg-green-100 text-green-700">{t('admin.status.completed')}</option>
+                                <option value="CANCELLED" className="bg-gray-200 text-gray-600">{t('admin.status.cancelled')}</option>
+                            </select>
                         </div>
                         <div className="text-sm text-slate-500 mt-1">
                             {new Date(order.createdAt).toLocaleString()}

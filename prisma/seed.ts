@@ -73,6 +73,33 @@ async function main() {
         { key: 'admin.settings', val: { uk: 'Налаштування', en: 'Global Settings', ru: 'Настройки' } },
         { key: 'admin.config', val: { uk: 'Конфігурація', en: 'System Config', ru: 'Конфигурация' } },
 
+        // Order Statuses
+        { key: 'admin.status.draft', val: { uk: 'Чернетка', en: 'Draft', ru: 'Черновик' } },
+        { key: 'admin.status.pending', val: { uk: 'Новий', en: 'New', ru: 'Новый' } },
+        { key: 'admin.status.processing', val: { uk: 'Виконується', en: 'Processing', ru: 'Выполняется' } },
+        { key: 'admin.status.completed', val: { uk: 'Виконано', en: 'Completed', ru: 'Выполнен' } },
+        { key: 'admin.status.cancelled', val: { uk: 'Скасовано', en: 'Cancelled', ru: 'Отменен' } },
+        { key: 'admin.status_update_failed', val: { uk: 'Не вдалося оновити статус', en: 'Failed to update status', ru: 'Не удалось обновить статус' } },
+
+        // Dashboard Statistics
+        { key: 'admin.stats.pending', val: { uk: 'Нові замовлення', en: 'New Orders', ru: 'Новые заказы' } },
+        { key: 'admin.stats.processing', val: { uk: 'В обробці', en: 'Processing', ru: 'В обработке' } },
+        { key: 'admin.stats.completed', val: { uk: 'Виконано', en: 'Completed', ru: 'Выполнено' } },
+        { key: 'admin.stats.draft', val: { uk: 'Чернетки', en: 'Drafts', ru: 'Черновики' } },
+        { key: 'admin.stats.new_orders', val: { uk: 'Очікують обробки', en: 'Awaiting processing', ru: 'Ожидают обработки' } },
+        { key: 'admin.stats.in_progress', val: { uk: 'Зараз виконуються', en: 'Currently in progress', ru: 'Сейчас выполняются' } },
+        { key: 'admin.stats.done', val: { uk: 'Успішно завершені', en: 'Successfully completed', ru: 'Успешно завершены' } },
+        { key: 'admin.stats.not_submitted', val: { uk: 'Не оформлені', en: 'Not submitted', ru: 'Не оформлены' } },
+        { key: 'admin.stats.total_orders', val: { uk: 'Всього замовлень', en: 'Total Orders', ru: 'Всего заказов' } },
+        { key: 'admin.stats.this_week', val: { uk: 'За тиждень', en: 'This Week', ru: 'За неделю' } },
+        { key: 'admin.stats.revenue', val: { uk: 'Дохід', en: 'Revenue', ru: 'Доход' } },
+        { key: 'admin.selected', val: { uk: 'Обрано', en: 'Selected', ru: 'Выбрано' } },
+        { key: 'admin.showing', val: { uk: 'Показано', en: 'Showing', ru: 'Показано' } },
+        { key: 'admin.of', val: { uk: 'з', en: 'of', ru: 'из' } },
+        { key: 'admin.prev', val: { uk: 'Назад', en: 'Previous', ru: 'Назад' } },
+        { key: 'admin.next', val: { uk: 'Далі', en: 'Next', ru: 'Далее' } },
+        { key: 'bulk.delete', val: { uk: 'Видалити', en: 'Delete', ru: 'Удалить' } },
+
         // Config Submenu
         { key: 'config.sizes', val: { uk: 'Розміри', en: 'Print Sizes', ru: 'Размеры' } },
         { key: 'config.papers', val: { uk: 'Типи паперу', en: 'Paper Types', ru: 'Типы бумаги' } },

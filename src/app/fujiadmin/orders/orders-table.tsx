@@ -4,7 +4,7 @@ import { useTranslation } from "@/lib/i18n";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Trash2, ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface OrdersTableProps {
@@ -13,11 +13,23 @@ interface OrdersTableProps {
 
 const ORDERS_PER_PAGE = 20;
 
+// Status color mapping
+const STATUS_COLORS: Record<string, { bg: string; text: string; label: string }> = {
+    DRAFT: { bg: "bg-slate-100", text: "text-slate-600", label: "admin.status.draft" },
+    PENDING: { bg: "bg-red-100", text: "text-red-700", label: "admin.status.pending" },
+    PROCESSING: { bg: "bg-orange-100", text: "text-orange-700", label: "admin.status.processing" },
+    COMPLETED: { bg: "bg-green-100", text: "text-green-700", label: "admin.status.completed" },
+    CANCELLED: { bg: "bg-gray-200", text: "text-gray-600", label: "admin.status.cancelled" },
+};
+
+const STATUSES = ["PENDING", "PROCESSING", "COMPLETED", "CANCELLED"];
+
 export function OrdersTable({ orders }: OrdersTableProps) {
     const { t } = useTranslation();
     const router = useRouter();
     const [selectedOrders, setSelectedOrders] = useState<Set<number>>(new Set());
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
     // Pagination calculations
@@ -26,10 +38,10 @@ export function OrdersTable({ orders }: OrdersTableProps) {
     const paginatedOrders = orders.slice(startIndex, startIndex + ORDERS_PER_PAGE);
 
     const toggleSelectAll = () => {
-        if (selectedOrders.size === orders.length) {
+        if (selectedOrders.size === paginatedOrders.length) {
             setSelectedOrders(new Set());
         } else {
-            setSelectedOrders(new Set(orders.map(o => o.id)));
+            setSelectedOrders(new Set(paginatedOrders.map(o => o.id)));
         }
     };
 
@@ -41,6 +53,34 @@ export function OrdersTable({ orders }: OrdersTableProps) {
             newSelected.add(id);
         }
         setSelectedOrders(newSelected);
+    };
+
+    const handleBulkStatusChange = async (newStatus: string) => {
+        if (selectedOrders.size === 0) return;
+
+        setIsUpdatingStatus(true);
+        try {
+            const res = await fetch("/api/fujiadmin/orders/bulk-status", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    orderIds: Array.from(selectedOrders),
+                    status: newStatus
+                })
+            });
+
+            if (res.ok) {
+                router.refresh();
+                setSelectedOrders(new Set());
+            } else {
+                alert(t("admin.status_update_failed"));
+            }
+        } catch (error) {
+            console.error("Bulk status update failed", error);
+            alert(t("admin.status_update_failed"));
+        } finally {
+            setIsUpdatingStatus(false);
+        }
     };
 
     const handleBulkDelete = async () => {
@@ -56,7 +96,7 @@ export function OrdersTable({ orders }: OrdersTableProps) {
 
             const failedCount = results.filter(r => !r).length;
             if (failedCount > 0) {
-                alert(`Failed to delete ${failedCount} orders. Check console for details.`);
+                alert(`Failed to delete ${failedCount} orders.`);
             }
             router.refresh();
             setSelectedOrders(new Set());
@@ -68,17 +108,52 @@ export function OrdersTable({ orders }: OrdersTableProps) {
         }
     };
 
+    const getStatusStyle = (status: string) => {
+        return STATUS_COLORS[status] || STATUS_COLORS.PENDING;
+    };
+
     return (
         <div className="space-y-6">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h1 className="text-3xl font-bold tracking-tight text-slate-900">{t('admin.orders')}</h1>
+
                 {selectedOrders.size > 0 && (
-                    <Button variant="destructive" onClick={handleBulkDelete} disabled={isDeleting} className="gap-2">
-                        <Trash2 className="w-4 h-4" />
-                        {t('bulk.delete')} ({selectedOrders.size})
-                    </Button>
+                    <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-sm text-slate-600 mr-2">
+                            {t('admin.selected')}: {selectedOrders.size}
+                        </span>
+
+                        {/* Status change buttons */}
+                        <div className="flex items-center gap-1 bg-white border border-slate-200 rounded-lg p-1">
+                            {STATUSES.map(status => {
+                                const style = getStatusStyle(status);
+                                return (
+                                    <button
+                                        key={status}
+                                        onClick={() => handleBulkStatusChange(status)}
+                                        disabled={isUpdatingStatus}
+                                        className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${style.bg} ${style.text} hover:opacity-80 disabled:opacity-50`}
+                                    >
+                                        {t(style.label)}
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={handleBulkDelete}
+                            disabled={isDeleting}
+                            className="gap-1"
+                        >
+                            <Trash2 className="w-4 h-4" />
+                            {t('bulk.delete')}
+                        </Button>
+                    </div>
                 )}
             </div>
+
             <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left">
@@ -88,7 +163,7 @@ export function OrdersTable({ orders }: OrdersTableProps) {
                                     <input
                                         type="checkbox"
                                         className="rounded border-gray-300"
-                                        checked={orders.length > 0 && selectedOrders.size === orders.length}
+                                        checked={paginatedOrders.length > 0 && selectedOrders.size === paginatedOrders.length}
                                         onChange={toggleSelectAll}
                                     />
                                 </th>
@@ -110,44 +185,47 @@ export function OrdersTable({ orders }: OrdersTableProps) {
                                     </td>
                                 </tr>
                             ) : (
-                                paginatedOrders.map((order) => (
-                                    <tr key={order.id} className="bg-white border-b border-slate-100 hover:bg-slate-50">
-                                        <td className="px-6 py-4">
-                                            <input
-                                                type="checkbox"
-                                                className="rounded border-gray-300"
-                                                checked={selectedOrders.has(order.id)}
-                                                onChange={() => toggleSelect(order.id)}
-                                            />
-                                        </td>
-                                        <td className="px-6 py-4 font-medium text-slate-900">{order.orderNumber}</td>
-                                        <td className="px-6 py-4 text-slate-500">
-                                            {new Date(order.createdAt).toLocaleString()}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="font-medium text-slate-900">{order.customerName}</div>
-                                            <div className="text-xs text-slate-500">{order.customerPhone}</div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${order.deliveryMethod === 'PICKUP' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
-                                                }`}>
-                                                {order.deliveryMethod}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4 text-slate-500">{order._count.items}</td>
-                                        <td className="px-6 py-4 font-medium text-slate-900">{order.totalAmount.toFixed(2)} {t('general.currency')}</td>
-                                        <td className="px-6 py-4">
-                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                {order.status}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <Link href={`/fujiadmin/orders/${order.id}`} className="text-primary-600 hover:text-primary-900 font-medium hover:underline">
-                                                {t('admin.view')}
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                ))
+                                paginatedOrders.map((order) => {
+                                    const statusStyle = getStatusStyle(order.status);
+                                    return (
+                                        <tr key={order.id} className="bg-white border-b border-slate-100 hover:bg-slate-50">
+                                            <td className="px-6 py-4">
+                                                <input
+                                                    type="checkbox"
+                                                    className="rounded border-gray-300"
+                                                    checked={selectedOrders.has(order.id)}
+                                                    onChange={() => toggleSelect(order.id)}
+                                                />
+                                            </td>
+                                            <td className="px-6 py-4 font-medium text-slate-900">{order.orderNumber}</td>
+                                            <td className="px-6 py-4 text-slate-500">
+                                                {new Date(order.createdAt).toLocaleString()}
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="font-medium text-slate-900">{order.customerName || "—"}</div>
+                                                <div className="text-xs text-slate-500">{order.customerPhone || "—"}</div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${order.deliveryMethod === 'PICKUP' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
+                                                    }`}>
+                                                    {order.deliveryMethod}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4 text-slate-500">{order._count?.items || 0}</td>
+                                            <td className="px-6 py-4 font-medium text-slate-900">{order.totalAmount?.toFixed(2) || "0.00"} {t('general.currency')}</td>
+                                            <td className="px-6 py-4">
+                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusStyle.bg} ${statusStyle.text}`}>
+                                                    {t(statusStyle.label)}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <Link href={`/fujiadmin/orders/${order.id}`} className="text-primary-600 hover:text-primary-900 font-medium hover:underline">
+                                                    {t('admin.view')}
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
                             )}
                         </tbody>
                     </table>
@@ -156,7 +234,7 @@ export function OrdersTable({ orders }: OrdersTableProps) {
                 {totalPages > 1 && (
                     <div className="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
                         <div className="text-sm text-slate-500">
-                            Показано {startIndex + 1}–{Math.min(startIndex + ORDERS_PER_PAGE, orders.length)} из {orders.length} заказов
+                            {t('admin.showing')} {startIndex + 1}–{Math.min(startIndex + ORDERS_PER_PAGE, orders.length)} {t('admin.of')} {orders.length}
                         </div>
                         <div className="flex items-center gap-2">
                             <Button
@@ -167,7 +245,7 @@ export function OrdersTable({ orders }: OrdersTableProps) {
                                 className="gap-1"
                             >
                                 <ChevronLeft className="w-4 h-4" />
-                                Назад
+                                {t('admin.prev')}
                             </Button>
                             <div className="flex items-center gap-1">
                                 {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
@@ -186,8 +264,8 @@ export function OrdersTable({ orders }: OrdersTableProps) {
                                             key={pageNum}
                                             onClick={() => setCurrentPage(pageNum)}
                                             className={`w-8 h-8 text-sm font-medium rounded ${currentPage === pageNum
-                                                    ? 'bg-primary-600 text-white'
-                                                    : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                                                ? 'bg-primary-600 text-white'
+                                                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
                                                 }`}
                                         >
                                             {pageNum}
@@ -202,7 +280,7 @@ export function OrdersTable({ orders }: OrdersTableProps) {
                                 disabled={currentPage === totalPages}
                                 className="gap-1"
                             >
-                                Далі
+                                {t('admin.next')}
                                 <ChevronRight className="w-4 h-4" />
                             </Button>
                         </div>
