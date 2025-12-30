@@ -189,9 +189,9 @@ export default function CheckoutPage() {
             return;
         }
 
-        // Validate Email (Strict)
+        // Validate Email (Optional, only if filled)
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!formData.email || !emailRegex.test(formData.email)) {
+        if (formData.email.trim().length > 0 && !emailRegex.test(formData.email)) {
             setEmailError(t('validation.invalid_email') || 'Please enter a valid email');
             scrollToError('checkout-email');
             return;
