@@ -53,11 +53,20 @@ export function Navbar() {
     const mapQuery = encodeURIComponent('м. Дніпро, вул. Європейська 8');
     const mapLink = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
-    // Logo Configuration
+    // Logo Configuration - now using settings with fallbacks
     const logoConfig: Record<string, { mainSuffix: string, subtitle: string }> = {
-        uk: { mainSuffix: '.СВІТ', subtitle: 'онлайн фотолабораторія' },
-        ru: { mainSuffix: '.MIR', subtitle: 'онлайн фотолаборатория' },
-        en: { mainSuffix: '.MIR', subtitle: 'Online Photo Lab' }
+        uk: {
+            mainSuffix: getSetting('logo_suffix_uk') || '.СВІТ',
+            subtitle: getSetting('logo_subtitle_uk') || 'онлайн фотолабораторія'
+        },
+        ru: {
+            mainSuffix: getSetting('logo_suffix_ru') || '.MIR',
+            subtitle: getSetting('logo_subtitle_ru') || 'онлайн фотолаборатория'
+        },
+        en: {
+            mainSuffix: getSetting('logo_suffix_en') || '.MIR',
+            subtitle: getSetting('logo_subtitle_en') || 'Online Photo Lab'
+        }
     };
     const currentLogo = logoConfig[lang as string] || logoConfig.en;
 

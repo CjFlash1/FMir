@@ -36,6 +36,18 @@ export default function SettingsPage() {
             ]
         },
         {
+            title: t('settings.branding'),
+            description: t('settings.branding_desc'),
+            items: [
+                { key: "logo_suffix_uk", label: t('settings.logo_suffix_uk'), icon: Globe, placeholder: "FUJI-Світ" },
+                { key: "logo_suffix_ru", label: t('settings.logo_suffix_ru'), icon: Globe, placeholder: "FUJI-Мир" },
+                { key: "logo_suffix_en", label: t('settings.logo_suffix_en'), icon: Globe, placeholder: "FUJI-World" },
+                { key: "logo_subtitle_uk", label: t('settings.logo_subtitle_uk'), icon: Globe, placeholder: "ФОТОЛАБ" },
+                { key: "logo_subtitle_ru", label: t('settings.logo_subtitle_ru'), icon: Globe, placeholder: "ФОТОЛАБ" },
+                { key: "logo_subtitle_en", label: t('settings.logo_subtitle_en'), icon: Globe, placeholder: "PHOTOLAB" },
+            ]
+        },
+        {
             title: t('settings.social'),
             description: t('settings.social_desc'),
             items: [
@@ -51,6 +63,15 @@ export default function SettingsPage() {
                 { key: "telegram_link", label: t('settings.telegram'), icon: Globe, placeholder: "https://t.me/..." },
                 { key: "viber_active", label: t('settings.viber_active'), icon: Globe, type: 'boolean' as const },
                 { key: "telegram_active", label: t('settings.telegram_active'), icon: Globe, type: 'boolean' as const },
+            ]
+        },
+        {
+            title: t('settings.analytics'),
+            description: t('settings.analytics_desc'),
+            items: [
+                { key: "ga4_measurement_id", label: t('settings.ga4_measurement_id'), icon: Search, placeholder: "G-XXXXXXXXXX" },
+                { key: "yandex_metrica_id", label: t('settings.yandex_metrica_id'), icon: Search, placeholder: "12345678" },
+                { key: "facebook_pixel_id", label: t('settings.facebook_pixel_id'), icon: Search, placeholder: "1234567890" },
             ]
         },
         {

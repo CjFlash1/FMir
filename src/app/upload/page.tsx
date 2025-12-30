@@ -13,6 +13,7 @@ import { useSettings } from "@/lib/settings-context";
 import { ImageOptionsModal } from "@/components/image-options";
 
 import { useCartStore, type PrintOptions, type CartItem, calculateItemPrice } from "@/lib/store";
+import { useUploadProgress, uploadWithProgress } from "@/lib/hooks/use-upload-progress";
 
 const DEFAULT_OPTIONS: PrintOptions = {
     quantity: 1,
@@ -57,24 +58,35 @@ export default function UploadPage() {
             .catch(console.error);
     }, [setConfig]);
 
+    // Upload Progress Tracking
+    const { uploads, addUpload, setProgress, setStatus } = useUploadProgress();
+
     const onDrop = useCallback((acceptedFiles: File[]) => {
         acceptedFiles.forEach(async (file) => {
             const id = addItem(file, { ...DEFAULT_OPTIONS });
+            addUpload(id);
 
-            // Immediate Upload
+            // Immediate Upload with progress tracking
             try {
-                const formData = new FormData();
-                formData.append("file", file);
-                const res = await fetch("/api/upload", { method: "POST", body: formData });
-                if (res.ok) {
-                    const data = await res.json();
-                    setItemServerFile(id, data.fileName);
-                }
+                await uploadWithProgress(
+                    id,
+                    file,
+                    (progress) => setProgress(id, progress),
+                    (serverFileName) => {
+                        setItemServerFile(id, serverFileName);
+                        setStatus(id, 'done');
+                    },
+                    (error) => {
+                        console.error("Upload failed", error);
+                        setStatus(id, 'error', error);
+                    }
+                );
             } catch (e) {
                 console.error("Auto-upload failed", e);
+                setStatus(id, 'error', 'Upload failed');
             }
         });
-    }, [addItem, setItemServerFile]);
+    }, [addItem, setItemServerFile, addUpload, setProgress, setStatus]);
 
     const { getRootProps, getInputProps, isDragAccept: _isDragAccept, open } = useDropzone({
         onDrop,
@@ -266,18 +278,41 @@ export default function UploadPage() {
                                     {/* Checkbox is at top-3 left-3 (checked via view_file line 280), so we start around top-11 */}
                                     <div className="absolute top-11 left-3 flex flex-col items-start gap-1 pointer-events-none z-10 w-full pr-12">
 
-                                        {/* Upload Status */}
-                                        {!file.serverFileName && file.file && (
-                                            <div className="bg-blue-500/80 backdrop-blur text-white text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1">
-                                                <Loader2 className="w-3 h-3 animate-spin" />
-                                            </div>
-                                        )}
+                                        {/* Upload Status with Progress */}
+                                        {(() => {
+                                            const uploadInfo = uploads[file.id];
+                                            const isUploading = uploadInfo && (uploadInfo.status === 'pending' || uploadInfo.status === 'uploading');
+                                            const hasError = uploadInfo?.status === 'error';
 
-                                        {!file.serverFileName && !file.file && (
-                                            <div className="bg-red-500/80 backdrop-blur text-white text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1" title={t("Lost File")}>
-                                                <AlertCircle className="w-3 h-3" />
-                                            </div>
-                                        )}
+                                            if (!file.serverFileName && file.file) {
+                                                return (
+                                                    <div className="flex items-center gap-1.5">
+                                                        {isUploading && (
+                                                            <div className="flex items-center gap-1.5 bg-blue-500/90 backdrop-blur text-white text-[10px] px-2 py-0.5 rounded shadow-sm">
+                                                                <Loader2 className="w-3 h-3 animate-spin" />
+                                                                <span className="font-medium">{uploadInfo?.progress || 0}%</span>
+                                                            </div>
+                                                        )}
+                                                        {hasError && (
+                                                            <div className="flex items-center gap-1.5 bg-red-500/90 backdrop-blur text-white text-[10px] px-2 py-0.5 rounded shadow-sm cursor-pointer hover:bg-red-600" title="Click to retry">
+                                                                <AlertCircle className="w-3 h-3" />
+                                                                <span className="font-medium">Error</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                );
+                                            }
+
+                                            if (!file.serverFileName && !file.file) {
+                                                return (
+                                                    <div className="bg-red-500/80 backdrop-blur text-white text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1" title={t("Lost File")}>
+                                                        <AlertCircle className="w-3 h-3" />
+                                                    </div>
+                                                );
+                                            }
+
+                                            return null;
+                                        })()}
 
                                         {/* Synced Icon (Optional, keeping it subtle if needed, or removing as requested before. User said remove it, so skipping) */}
 

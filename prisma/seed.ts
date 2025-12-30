@@ -448,6 +448,52 @@ async function main() {
         { key: 'image_options.fit_in', val: { uk: 'Не обрізати (FIT-IN)', en: 'FIT-IN (No Crop)', ru: 'Не обрезать (FIT-IN)' } },
         { key: 'image_options.no_resize', val: { uk: 'Без масштабування (NO-RESIZE)', en: 'NO-RESIZE', ru: 'Без масштабирования (NO-RESIZE)' } },
         { key: 'image_options.crop_std_default', val: { uk: '', en: '', ru: '' } }, // Empty default
+
+        // ===== NEW TRANSLATIONS (Admin Actions) =====
+        { key: 'admin.status_updated', val: { uk: 'Статус оновлено', en: 'Status updated', ru: 'Статус обновлен' } },
+        { key: 'admin.order_deleted', val: { uk: 'Замовлення видалено', en: 'Order deleted', ru: 'Заказ удален' } },
+        { key: 'admin.orders_deleted', val: { uk: 'Замовлення видалено', en: 'Orders deleted', ru: 'Заказы удалены' } },
+        { key: 'admin.delivery_carrier', val: { uk: 'За тарифами перевізника', en: 'By carrier tariffs', ru: 'По тарифам перевозчика' } },
+        { key: 'admin.print_order', val: { uk: 'Друк замовлення', en: 'Print Order', ru: 'Печать заказа' } },
+        { key: 'admin.download_zip', val: { uk: 'Завантажити ZIP', en: 'Download ZIP', ru: 'Скачать ZIP' } },
+
+        // ===== Analytics Settings =====
+        { key: 'settings.analytics', val: { uk: 'Аналітика', en: 'Analytics', ru: 'Аналитика' } },
+        { key: 'settings.analytics_desc', val: { uk: 'Налаштування Google Analytics та інших систем аналітики', en: 'Configure Google Analytics and other analytics systems', ru: 'Настройка Google Analytics и других систем аналитики' } },
+        { key: 'settings.ga4_measurement_id', val: { uk: 'Google Analytics 4 (Measurement ID)', en: 'Google Analytics 4 (Measurement ID)', ru: 'Google Analytics 4 (Measurement ID)' } },
+        { key: 'settings.yandex_metrica_id', val: { uk: 'Яндекс.Метрика (ID лічильника)', en: 'Yandex.Metrica (Counter ID)', ru: 'Яндекс.Метрика (ID счётчика)' } },
+        { key: 'settings.facebook_pixel_id', val: { uk: 'Facebook Pixel ID', en: 'Facebook Pixel ID', ru: 'Facebook Pixel ID' } },
+
+        // ===== Logo & Branding Settings =====
+        { key: 'settings.branding', val: { uk: 'Брендинг', en: 'Branding', ru: 'Брендинг' } },
+        { key: 'settings.branding_desc', val: { uk: 'Налаштування логотипу та назви сайту для різних мов', en: 'Configure site logo and name for different languages', ru: 'Настройка логотипа и названия сайта для разных языков' } },
+        { key: 'settings.logo_suffix_uk', val: { uk: 'Назва бренду (UK)', en: 'Brand Name (UK)', ru: 'Название бренда (UK)' } },
+        { key: 'settings.logo_suffix_ru', val: { uk: 'Назва бренду (RU)', en: 'Brand Name (RU)', ru: 'Название бренда (RU)' } },
+        { key: 'settings.logo_suffix_en', val: { uk: 'Назва бренду (EN)', en: 'Brand Name (EN)', ru: 'Название бренда (EN)' } },
+        { key: 'settings.logo_subtitle_uk', val: { uk: 'Підзаголовок (UK)', en: 'Subtitle (UK)', ru: 'Подзаголовок (UK)' } },
+        { key: 'settings.logo_subtitle_ru', val: { uk: 'Підзаголовок (RU)', en: 'Subtitle (RU)', ru: 'Подзаголовок (RU)' } },
+        { key: 'settings.logo_subtitle_en', val: { uk: 'Підзаголовок (EN)', en: 'Subtitle (EN)', ru: 'Подзаголовок (EN)' } },
+
+        // ===== Upload Progress =====
+        { key: 'upload.uploading', val: { uk: 'Завантаження...', en: 'Uploading...', ru: 'Загрузка...' } },
+        { key: 'upload.uploaded', val: { uk: 'Завантажено', en: 'Uploaded', ru: 'Загружено' } },
+        { key: 'upload.failed', val: { uk: 'Помилка', en: 'Failed', ru: 'Ошибка' } },
+        { key: 'upload.retry', val: { uk: 'Повторити', en: 'Retry', ru: 'Повторить' } },
+        { key: 'upload.add_more', val: { uk: 'Додати ще', en: 'Add more', ru: 'Добавить еще' } },
+
+        // ===== Error messages =====
+        { key: 'error.missing_files_refresh', val: { uk: 'Деякі файли втрачені через оновлення сторінки. Поверніться та додайте їх знову.', en: 'Some files were lost due to page refresh. Please go back and re-add them.', ru: 'Некоторые файлы потеряны из-за обновления страницы. Вернитесь и добавьте их снова.' } },
+
+        // ===== Common UI =====
+        { key: 'common.save', val: { uk: 'Зберегти', en: 'Save', ru: 'Сохранить' } },
+        { key: 'common.cancel', val: { uk: 'Скасувати', en: 'Cancel', ru: 'Отмена' } },
+        { key: 'common.delete', val: { uk: 'Видалити', en: 'Delete', ru: 'Удалить' } },
+        { key: 'common.edit', val: { uk: 'Редагувати', en: 'Edit', ru: 'Редактировать' } },
+        { key: 'common.close', val: { uk: 'Закрити', en: 'Close', ru: 'Закрыть' } },
+        { key: 'common.confirm', val: { uk: 'Підтвердити', en: 'Confirm', ru: 'Подтвердить' } },
+        { key: 'common.yes', val: { uk: 'Так', en: 'Yes', ru: 'Да' } },
+        { key: 'common.no', val: { uk: 'Ні', en: 'No', ru: 'Нет' } },
+        { key: 'currency', val: { uk: 'грн', en: 'UAH', ru: 'грн' } },
     ]
 
     for (const t of translations) {
