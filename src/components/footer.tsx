@@ -33,17 +33,19 @@ export function Footer() {
                         </a>
                     )}
                     {viberActive && viberLink && (
-                        <a href={viberLink} className="text-[#4c4c4c]/70 hover:text-white transition-colors" title="Viber">
+                        <a href={viberLink} className="w-7 h-7 flex items-center justify-center hover:scale-110 transition-transform" title="Viber">
                             <span className="sr-only">Viber</span>
-                            <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
-                                <path d="M17.57 1.54C16.94.88 15.9 0 14.54 0c-1.37 0-1.8.88-2.54 2-1.12 1.63-.44 2.82-.44 2.82l1.39 1.34s-.45 1.5-1.54 3.19C10.32 10.95 9 12.06 9 12.06l-1.4-1.34s-1.19-.68-2.82.44c-1.12.75-2 1.18-2 2.54 0 1.36.88 2.4 1.54 3.03 2.14 2.14 5.75 3.39 9.38 3.39 4.3 0 7.31-2.12 9.38-4.22.66-.64 1.54-1.68 1.54-3.04 0-1.36-.88-1.79-2-2.54-1.63-1.12-2.82-.44-2.82-.44l-1.34 1.4s-1.5-.45-3.19-1.54c-1.61-1.04-2.73-2.35-2.73-2.35l1.34-1.39s.68-1.2-.44-2.83C12.35 1.74 11.9.89 10.54.89c-1.36 0-1.79.88-2.54 2-.75 1.12-1.18 2.54-1.18 2.54s0 1.94.89 3.88c.89 1.93 2.12 3.81 3.56 5.25 1.44 1.44 3.32 2.67 5.25 3.56 1.94.89 3.88.89 3.88.89s1.42-.43 2.54-1.18c1.12-.75 2-1.18 2-2.54s-.88-1.8-2-2.54l-2.82-1.39s-1.22-.44-.45 1.12c.75 1.63-.44 2.82-.44 2.82z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-full h-full">
+                                <rect width="512" height="512" rx="15%" fill="#665ca7" className="opacity-70 hover:opacity-100 transition-opacity" />
+                                <path fill="none" stroke="#fff" strokeLinecap="round" strokeWidth="10" d="M269 186a30 30 0 0 1 31 31m-38-58a64 64 0 0 1 64 67m-73-93a97 97 0 0 1 99 104" />
+                                <path fill="#fff" fillRule="evenodd" d="M95 232c0-91 17-147 161-147s161 56 161 147-17 147-161 147l-26-1-53 63c-4 4-8 1-8-3v-69c-6 0-31-12-38-19-22-23-36-40-36-118zm-30 0c0-126 55-177 191-177s191 51 191 177-55 177-191 177c-10 0-18 0-32-2l-38 43c-7 8-28 11-28-13v-42c-6 0-20-6-39-18-19-13-54-44-54-145zm223 42q10-13 24-4l36 27q8 10-7 28t-28 15q-53-12-102-60t-61-104q0-20 25-34 13-9 22 5l25 35q6 12-7 22c-39 15 51 112 73 70z" />
                             </svg>
                         </a>
                     )}
                     {telegramActive && telegramLink && (
-                        <a href={telegramLink} target="_blank" rel="noopener noreferrer" className="text-[#4c4c4c]/70 hover:text-white transition-colors" title="Telegram">
+                        <a href={telegramLink} target="_blank" rel="noopener noreferrer" className="w-7 h-7 rounded-full bg-[#0088cc]/70 hover:bg-[#0088cc] flex items-center justify-center hover:scale-110 transition-all" title="Telegram">
                             <span className="sr-only">Telegram</span>
-                            <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
+                            <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
                                 <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.3.26-.54.26l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z" />
                             </svg>
                         </a>

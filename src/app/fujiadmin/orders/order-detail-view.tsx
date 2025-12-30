@@ -608,28 +608,41 @@ export function OrderDetailView({ order }: { order: any }) {
                                 return (
                                     <tr key={item.id} className="hover:bg-slate-50/50 transition-colors">
                                         <td className="px-3 md:px-6 py-4">
-                                            {firstFile ? (
-                                                <div
-                                                    className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden relative cursor-pointer group"
-                                                    onClick={() => setPreviewIndex(startGlobalIndex !== -1 ? startGlobalIndex : null)}
-                                                >
-                                                    <img
-                                                        src={`/api/uploads/${firstFile.server}`}
-                                                        alt="Preview"
-                                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-                                                    />
-                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-                                                    {files.length > 1 && (
-                                                        <div className="absolute bottom-0 right-0 bg-slate-900/80 text-white text-[10px] px-1 rounded-tl">
-                                                            +{files.length - 1}
+                                            {(() => {
+                                                const fileName = firstFile?.original || firstFile?.server || "";
+                                                const isArchive = /\.(zip|rar|7z)$/i.test(fileName);
+
+                                                if (isArchive) {
+                                                    return (
+                                                        <div className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center">
+                                                            <Archive className="w-6 h-6 md:w-8 md:h-8 text-slate-400" />
                                                         </div>
-                                                    )}
-                                                </div>
-                                            ) : (
-                                                <div className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center">
-                                                    <FileImage className="w-6 h-6 md:w-8 md:h-8 text-slate-300" />
-                                                </div>
-                                            )}
+                                                    );
+                                                }
+
+                                                return firstFile ? (
+                                                    <div
+                                                        className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden relative cursor-pointer group"
+                                                        onClick={() => setPreviewIndex(startGlobalIndex !== -1 ? startGlobalIndex : null)}
+                                                    >
+                                                        <img
+                                                            src={`/api/uploads/${firstFile.server}`}
+                                                            alt="Preview"
+                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                                                        />
+                                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+                                                        {files.length > 1 && (
+                                                            <div className="absolute bottom-0 right-0 bg-slate-900/80 text-white text-[10px] px-1 rounded-tl">
+                                                                +{files.length - 1}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ) : (
+                                                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center">
+                                                        <FileImage className="w-6 h-6 md:w-8 md:h-8 text-slate-300" />
+                                                    </div>
+                                                );
+                                            })()}
                                         </td>
                                         <td className="px-3 md:px-6 py-4">
                                             <div className="font-medium text-slate-900 truncate max-w-[120px] md:max-w-[200px]" title={firstFile?.original || item.fileName || "Unknown"}>
@@ -647,47 +660,70 @@ export function OrderDetailView({ order }: { order: any }) {
                                             )}
                                         </td>
                                         <td className="px-3 md:px-6 py-4">
-                                            <div className="flex flex-col gap-1">
-                                                <span className="font-bold text-slate-700 text-xs md:text-sm">
-                                                    {item.options?.size || item.size} • {t(item.options?.paper || item.paper)}
-                                                </span>
-                                                <span className="text-slate-500 text-xs">
-                                                    {t('Quantity')}: <span className="font-medium text-slate-900">{item.options?.quantity || 1}</span>
-                                                </span>
-                                                <div className="flex gap-1 md:gap-2 mt-1 flex-wrap">
-                                                    {item.options?.options?.magnetic && (
-                                                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-700 uppercase tracking-wide">
-                                                            {t('badge.mag')}
+                                            {(() => {
+                                                const fileName = firstFile?.original || firstFile?.server || "";
+                                                const isArchive = /\.(zip|rar|7z)$/i.test(fileName);
+
+                                                if (isArchive) {
+                                                    return (
+                                                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-bold bg-gray-100 text-gray-700 uppercase tracking-wide">
+                                                            АРХІВ
                                                         </span>
-                                                    )}
-                                                    {item.options?.options?.border && (
-                                                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700 uppercase tracking-wide">
-                                                            {t('badge.border')}
+                                                    );
+                                                }
+
+                                                return (
+                                                    <div className="flex flex-col gap-1">
+                                                        <span className="font-bold text-slate-700 text-xs md:text-sm">
+                                                            {item.options?.size || item.size} • {t(item.options?.paper || item.paper)}
                                                         </span>
-                                                    )}
-                                                    {item.options?.options?.cropping === 'fit' && (
-                                                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-700 uppercase tracking-wide shadow-sm border border-indigo-200">
-                                                            FIT-IN
+                                                        <span className="text-slate-500 text-xs">
+                                                            {t('Quantity')}: <span className="font-medium text-slate-900">{item.options?.quantity || 1}</span>
                                                         </span>
-                                                    )}
-                                                    {item.options?.options?.cropping === 'no_resize' && (
-                                                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-700 uppercase tracking-wide shadow-sm border border-purple-200">
-                                                            NO-RESIZE
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </div>
+                                                        <div className="flex gap-1 md:gap-2 mt-1 flex-wrap">
+                                                            {item.options?.options?.magnetic && (
+                                                                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-700 uppercase tracking-wide">
+                                                                    {t('badge.mag')}
+                                                                </span>
+                                                            )}
+                                                            {item.options?.options?.border && (
+                                                                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700 uppercase tracking-wide">
+                                                                    {t('badge.border')}
+                                                                </span>
+                                                            )}
+                                                            {item.options?.options?.cropping === 'fit' && (
+                                                                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-700 uppercase tracking-wide shadow-sm border border-indigo-200">
+                                                                    FIT-IN
+                                                                </span>
+                                                            )}
+                                                            {item.options?.options?.cropping === 'no_resize' && (
+                                                                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-700 uppercase tracking-wide shadow-sm border border-purple-200">
+                                                                    NO-RESIZE
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })()}
                                         </td>
                                         <td className="px-3 md:px-6 py-4 text-right">
                                             {firstFile && (
                                                 <a
                                                     href={`/api/uploads/${firstFile.server}`}
-                                                    download={(firstFile.original || 'photo.jpg').replace(/\.[^/.]+$/, "") + ".jpg"}
+                                                    download={(() => {
+                                                        const fileName = firstFile.original || 'file';
+                                                        const isArchive = /\.(zip|rar|7z)$/i.test(fileName);
+                                                        if (isArchive) return fileName;
+                                                        return fileName.replace(/\.[^/.]+$/, "") + ".jpg";
+                                                    })()}
                                                     target="_blank"
                                                     className="inline-flex items-center justify-center px-2 md:px-4 py-2 border border-slate-200 shadow-sm text-xs md:text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                                                 >
                                                     <Download className="w-4 h-4 md:mr-2" />
-                                                    <span className="hidden md:inline">{t('admin.download')} (JPG)</span>
+                                                    <span className="hidden md:inline">
+                                                        {t('admin.download')}
+                                                        {/\.(zip|rar|7z)$/i.test(firstFile.original || "") ? "" : " (JPG)"}
+                                                    </span>
                                                 </a>
                                             )}
                                         </td>

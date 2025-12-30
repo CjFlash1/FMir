@@ -1,7 +1,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { unlink } from "fs/promises";
+import { unlink, rm } from "fs/promises";
 import { join } from "path";
 
 export async function DELETE(
@@ -28,7 +28,18 @@ export async function DELETE(
         // 1. Delete associated files from filesystem
         const uploadsDir = join(process.cwd(), "public", "uploads");
 
-        // Collect all server filenames
+        // A. Delete Order Directory (New Structure)
+        if (order.orderNumber) {
+            const orderFolderPath = join(uploadsDir, order.orderNumber);
+            try {
+                // Recursive force delete
+                await rm(orderFolderPath, { recursive: true, force: true });
+            } catch (e) {
+                console.warn(`Failed to delete folder ${orderFolderPath}:`, e);
+            }
+        }
+
+        // B. Delete individual files (Old Structure / Flat files compatibility)
         const serverFiles: string[] = [];
         for (const item of order.items) {
             if (item.files) {
@@ -36,6 +47,9 @@ export async function DELETE(
                     const parsed = JSON.parse(item.files);
                     if (Array.isArray(parsed)) {
                         parsed.forEach((f: any) => {
+                            // Only try to delete if it looks like a flat file (no slashes)
+                            // or if we want to be safe, just try delete all. 
+                            // If folder was deleted above, file won't exist -> unlink error -> ignored.
                             if (f.server) serverFiles.push(f.server);
                         });
                     }
@@ -47,7 +61,7 @@ export async function DELETE(
             serverFiles.map(file => unlink(join(uploadsDir, file)))
         );
 
-        // Log failures but don't stop process
+        // Log failures logic... existing code...
         results.forEach((result, idx) => {
             if (result.status === 'rejected') {
                 console.warn(`Failed to delete file ${serverFiles[idx]}:`, result.reason);

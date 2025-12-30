@@ -2,7 +2,7 @@
 
 import { useCallback, useState, useMemo, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import { Upload, X, FileImage, Settings, ArrowRight, Copy, Plus, Trash2, Sparkles, Cloud, AlertCircle, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Upload, X, FileImage, Settings, ArrowRight, Copy, Plus, Trash2, Sparkles, Cloud, AlertCircle, Loader2, ChevronLeft, ChevronRight, Archive } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -92,6 +92,11 @@ export default function UploadPage() {
         onDrop,
         accept: {
             "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp", ".avif", ".bmp", ".tiff", ".tif", ".heic", ".heif", ".svg", ".ico"],
+            "application/zip": [".zip"],
+            "application/x-zip-compressed": [".zip"],
+            "application/x-rar-compressed": [".rar"],
+            "application/vnd.rar": [".rar"],
+            "application/x-7z-compressed": [".7z"],
         },
         noClick: files.length > 0, // Disable click on the *container* when files exist, relying on the 'Add' button to avoid confusion, or keep it? User said "no ability to add". I'll keep it clickable?
         // Actually, if files > 0, the dropzone is usually hidden or minimized in many apps. 
@@ -233,163 +238,175 @@ export default function UploadPage() {
                         </div>
 
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                            {files.slice(0, photosToShow).map((file) => (
-                                <div
-                                    key={file.id}
-                                    onClick={() => setLightboxFile(file)}
-                                    className={cn(
-                                        "group relative aspect-square bg-[#f3f1e9] rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-md",
-                                        selectedIds.includes(file.id) ? "border-[#e31e24] ring-4 ring-[#e31e24]/10 transform scale-95" : "border-transparent hover:border-[#c5b98e]/50"
-                                    )}
-                                >
-                                    <img
-                                        src={file.preview}
-                                        alt={file.name || file.file?.name || "Photo"}
-                                        className="w-full h-full object-cover transition-transform group-hover:scale-110"
-                                        onError={(e) => {
-                                            // Handle broken blob URLs by hiding msg and showing placeholder background
-                                            e.currentTarget.style.opacity = '0';
-                                            // Ideally we'd show an icon, but CSS-only fallback is tricky with existing layout. 
-                                            // The bg color will show through.
-                                        }}
-                                    />
-
-                                    {/* Constant Filename Display */}
-
-
-                                    {/* --- NEW OVERLAY SYSTEM --- */}
-
-                                    {/* Top-Right: Print Settings Badges (Stacked) */}
-                                    <div className="absolute top-2 right-2 flex flex-col items-end gap-1 pointer-events-none z-10">
-                                        <span className="bg-black/60 backdrop-blur text-white text-[10px] px-1.5 py-0.5 rounded font-medium shadow-sm">
-                                            {file.options.size}
-                                        </span>
-                                        <span className="bg-black/60 backdrop-blur text-white/90 text-[10px] px-1.5 py-0.5 rounded shadow-sm">
-                                            {t(file.options.paper)}
-                                        </span>
-                                        {file.options.quantity > 1 && (
-                                            <span className="bg-yellow-400 text-black text-[10px] px-1.5 py-0.5 rounded font-bold shadow-sm">
-                                                x{file.options.quantity}
-                                            </span>
-                                        )}
-                                    </div>
-
-                                    {/* Top-Left: Status & Extra Options (Vertical Stack below Checkbox) */}
-                                    {/* Checkbox is at top-3 left-3 (checked via view_file line 280), so we start around top-11 */}
-                                    <div className="absolute top-11 left-3 flex flex-col items-start gap-1 pointer-events-none z-10 w-full pr-12">
-
-                                        {/* Upload Status with Progress */}
-                                        {(() => {
-                                            const uploadInfo = uploads[file.id];
-                                            const isUploading = uploadInfo && (uploadInfo.status === 'pending' || uploadInfo.status === 'uploading');
-                                            const hasError = uploadInfo?.status === 'error';
-
-                                            if (!file.serverFileName && file.file) {
-                                                return (
-                                                    <div className="flex items-center gap-1.5">
-                                                        {isUploading && (
-                                                            <div className="flex items-center gap-1.5 bg-blue-500/90 backdrop-blur text-white text-[10px] px-2 py-0.5 rounded shadow-sm">
-                                                                <Loader2 className="w-3 h-3 animate-spin" />
-                                                                <span className="font-medium">{uploadInfo?.progress || 0}%</span>
-                                                            </div>
-                                                        )}
-                                                        {hasError && (
-                                                            <div className="flex items-center gap-1.5 bg-red-500/90 backdrop-blur text-white text-[10px] px-2 py-0.5 rounded shadow-sm cursor-pointer hover:bg-red-600" title="Click to retry">
-                                                                <AlertCircle className="w-3 h-3" />
-                                                                <span className="font-medium">Error</span>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                );
-                                            }
-
-                                            if (!file.serverFileName && !file.file) {
-                                                return (
-                                                    <div className="bg-red-500/80 backdrop-blur text-white text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1" title={t("Lost File")}>
-                                                        <AlertCircle className="w-3 h-3" />
-                                                    </div>
-                                                );
-                                            }
-
-                                            return null;
-                                        })()}
-
-                                        {/* Synced Icon (Optional, keeping it subtle if needed, or removing as requested before. User said remove it, so skipping) */}
-
-                                        {/* Cropping Badge */}
-                                        {file.options.cropping === 'fit' && (
-                                            <span className="bg-indigo-500/90 backdrop-blur text-white text-[10px] px-1.5 py-0.5 rounded font-bold shadow-sm border border-white/20">
-                                                FIT-IN
-                                            </span>
-                                        )}
-                                        {file.options.cropping === 'no_resize' && (
-                                            <span className="bg-purple-500/90 backdrop-blur text-white text-[10px] px-1.5 py-0.5 rounded font-bold shadow-sm border border-white/20">
-                                                NO-RESIZE
-                                            </span>
-                                        )}
-
-                                        {/* Extra Badges (Magnet, Border) */}
-                                        <div className="flex flex-wrap gap-1">
-                                            {file.options.options?.magnetic && (
-                                                <span className="bg-red-500/80 text-white text-[10px] px-1.5 py-0.5 rounded uppercase">Mag</span>
-                                            )}
-                                            {file.options.options?.border && (
-                                                <span className="bg-green-500/80 text-white text-[10px] px-1.5 py-0.5 rounded uppercase">Brdr</span>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    {/* Selection Checkbox */}
+                            {files.slice(0, photosToShow).map((file) => {
+                                const isArchive = file.isArchive || /\.(zip|rar|7z)$/i.test(file.name || "");
+                                return (
                                     <div
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            toggleSelection(file.id);
-                                        }}
+                                        key={file.id}
+                                        onClick={() => !isArchive && setLightboxFile(file)}
                                         className={cn(
-                                            "absolute top-3 left-3 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all z-10 hover:scale-110 active:scale-95 cursor-pointer",
-                                            selectedIds.includes(file.id) ? "bg-[#e31e24] border-[#e31e24] scale-110 shadow-lg" : "bg-white/90 border-[#c5b98e]/40"
-                                        )}>
-                                        {selectedIds.includes(file.id) && <div className="w-2.5 h-2.5 bg-white rounded-full" />}
-                                    </div>
-
-                                    {/* Hover Actions */}
-                                    {/* Action Buttons & Filename - Always visible for better mobile UX */}
-                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-2 pt-12 flex flex-col items-center justify-end gap-2 z-20">
-
-                                        {/* Buttons Row */}
-                                        <div className="flex items-center gap-3">
-                                            {/* Settings */}
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setEditingFileId(file.id);
+                                            "group relative aspect-square bg-[#f3f1e9] rounded-2xl overflow-hidden border-2 transition-all cursor-pointer shadow-md",
+                                            selectedIds.includes(file.id) ? "border-[#e31e24] ring-4 ring-[#e31e24]/10 transform scale-95" : "border-transparent hover:border-[#c5b98e]/50",
+                                            isArchive ? "cursor-default" : "cursor-pointer"
+                                        )}
+                                    >
+                                        {isArchive ? (
+                                            <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-gray-100 text-gray-400">
+                                                <Archive className="w-16 h-16 mb-2 text-gray-300" />
+                                                <span className="text-[10px] font-bold uppercase tracking-wider">Archive</span>
+                                            </div>
+                                        ) : (
+                                            <img
+                                                src={file.preview}
+                                                alt={file.name || file.file?.name || "Photo"}
+                                                className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                                                onError={(e) => {
+                                                    e.currentTarget.style.opacity = '0';
                                                 }}
-                                                className="w-9 h-9 flex items-center justify-center bg-white/90 hover:bg-white text-[#009846] rounded-full shadow-xl backdrop-blur-sm transition-transform active:scale-95 border border-white/50"
-                                                title={t('Settings')}
-                                            >
-                                                <Settings className="w-5 h-5" />
-                                            </button>
+                                            />
+                                        )}
 
-                                            {/* Delete */}
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    removeItem(file.id);
-                                                }}
-                                                className="w-9 h-9 flex items-center justify-center bg-white/90 hover:bg-white text-[#e31e24] rounded-full shadow-xl backdrop-blur-sm transition-transform active:scale-95 border border-white/50"
-                                                title={t('Remove')}
-                                            >
-                                                <X className="w-5 h-5" />
-                                            </button>
+                                        {/* Constant Filename Display */}
+
+
+                                        {/* --- NEW OVERLAY SYSTEM --- */}
+
+                                        {/* Top-Right: Print Settings Badges (Stacked) - HIDE FOR ARCHIVES */}
+                                        {!isArchive && (
+                                            <div className="absolute top-2 right-2 flex flex-col items-end gap-1 pointer-events-none z-10">
+                                                <span className="bg-black/60 backdrop-blur text-white text-[10px] px-1.5 py-0.5 rounded font-medium shadow-sm">
+                                                    {file.options.size}
+                                                </span>
+                                                <span className="bg-black/60 backdrop-blur text-white/90 text-[10px] px-1.5 py-0.5 rounded shadow-sm">
+                                                    {t(file.options.paper)}
+                                                </span>
+                                                {file.options.quantity > 1 && (
+                                                    <span className="bg-yellow-400 text-black text-[10px] px-1.5 py-0.5 rounded font-bold shadow-sm">
+                                                        x{file.options.quantity}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        )}
+
+                                        {/* Top-Left: Status & Extra Options (Vertical Stack below Checkbox) */}
+                                        {/* Checkbox is at top-3 left-3 (checked via view_file line 280), so we start around top-11 */}
+                                        <div className="absolute top-11 left-3 flex flex-col items-start gap-1 pointer-events-none z-10 w-full pr-12">
+
+                                            {/* Upload Status with Progress */}
+                                            {(() => {
+                                                const uploadInfo = uploads[file.id];
+                                                const isUploading = uploadInfo && (uploadInfo.status === 'pending' || uploadInfo.status === 'uploading');
+                                                const hasError = uploadInfo?.status === 'error';
+
+                                                if (!file.serverFileName && file.file) {
+                                                    return (
+                                                        <div className="flex items-center gap-1.5">
+                                                            {isUploading && (
+                                                                <div className="flex items-center gap-1.5 bg-blue-500/90 backdrop-blur text-white text-[10px] px-2 py-0.5 rounded shadow-sm">
+                                                                    <Loader2 className="w-3 h-3 animate-spin" />
+                                                                    <span className="font-medium">{uploadInfo?.progress || 0}%</span>
+                                                                </div>
+                                                            )}
+                                                            {hasError && (
+                                                                <div className="flex items-center gap-1.5 bg-red-500/90 backdrop-blur text-white text-[10px] px-2 py-0.5 rounded shadow-sm cursor-pointer hover:bg-red-600" title="Click to retry">
+                                                                    <AlertCircle className="w-3 h-3" />
+                                                                    <span className="font-medium">Error</span>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                }
+
+                                                if (!file.serverFileName && !file.file) {
+                                                    return (
+                                                        <div className="bg-red-500/80 backdrop-blur text-white text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1" title={t("Lost File")}>
+                                                            <AlertCircle className="w-3 h-3" />
+                                                        </div>
+                                                    );
+                                                }
+
+                                                return null;
+                                            })()}
+
+                                            {/* Synced Icon (Optional, keeping it subtle if needed, or removing as requested before. User said remove it, so skipping) */}
+
+                                            {/* Cropping Badge */}
+                                            {!isArchive && file.options.cropping === 'fit' && (
+                                                <span className="bg-indigo-500/90 backdrop-blur text-white text-[10px] px-1.5 py-0.5 rounded font-bold shadow-sm border border-white/20">
+                                                    FIT-IN
+                                                </span>
+                                            )}
+                                            {!isArchive && file.options.cropping === 'no_resize' && (
+                                                <span className="bg-purple-500/90 backdrop-blur text-white text-[10px] px-1.5 py-0.5 rounded font-bold shadow-sm border border-white/20">
+                                                    NO-RESIZE
+                                                </span>
+                                            )}
+
+                                            {/* Extra Badges (Magnet, Border) */}
+                                            <div className="flex flex-wrap gap-1">
+                                                {!isArchive && file.options.options?.magnetic && (
+                                                    <span className="bg-red-500/80 text-white text-[10px] px-1.5 py-0.5 rounded uppercase">Mag</span>
+                                                )}
+                                                {!isArchive && file.options.options?.border && (
+                                                    <span className="bg-green-500/80 text-white text-[10px] px-1.5 py-0.5 rounded uppercase">Brdr</span>
+                                                )}
+                                            </div>
                                         </div>
 
-                                        {/* Filename */}
-                                        <p className="text-white/80 text-[10px] truncate max-w-full font-medium px-2 pb-1 opacity-80" onClick={(e) => e.stopPropagation()}>
-                                            {file.name || file.file?.name}
-                                        </p>
+                                        {/* Selection Checkbox */}
+                                        <div
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                toggleSelection(file.id);
+                                            }}
+                                            className={cn(
+                                                "absolute top-3 left-3 w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all z-10 hover:scale-110 active:scale-95 cursor-pointer",
+                                                selectedIds.includes(file.id) ? "bg-[#e31e24] border-[#e31e24] scale-110 shadow-lg" : "bg-white/90 border-[#c5b98e]/40"
+                                            )}>
+                                            {selectedIds.includes(file.id) && <div className="w-2.5 h-2.5 bg-white rounded-full" />}
+                                        </div>
+
+                                        {/* Hover Actions */}
+                                        {/* Action Buttons & Filename - Always visible for better mobile UX */}
+                                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-2 pt-12 flex flex-col items-center justify-end gap-2 z-20">
+
+                                            {/* Buttons Row */}
+                                            <div className="flex items-center gap-3">
+                                                {/* Settings - Hide for archives */}
+                                                {!isArchive && (
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setEditingFileId(file.id);
+                                                        }}
+                                                        className="w-9 h-9 flex items-center justify-center bg-white/90 hover:bg-white text-[#009846] rounded-full shadow-xl backdrop-blur-sm transition-transform active:scale-95 border border-white/50"
+                                                        title={t('Settings')}
+                                                    >
+                                                        <Settings className="w-5 h-5" />
+                                                    </button>
+                                                )}
+
+                                                {/* Delete */}
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        removeItem(file.id);
+                                                    }}
+                                                    className="w-9 h-9 flex items-center justify-center bg-white/90 hover:bg-white text-[#e31e24] rounded-full shadow-xl backdrop-blur-sm transition-transform active:scale-95 border border-white/50"
+                                                    title={t('Remove')}
+                                                >
+                                                    <X className="w-5 h-5" />
+                                                </button>
+                                            </div>
+
+                                            {/* Filename */}
+                                            <p className="text-white/80 text-[10px] truncate max-w-full font-medium px-2 pb-1 opacity-80" onClick={(e) => e.stopPropagation()}>
+                                                {file.name || file.file?.name}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
 
                         {/* Show More Button for pagination */}

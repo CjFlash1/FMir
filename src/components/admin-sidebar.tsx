@@ -176,7 +176,7 @@ export function AdminSidebar() {
                 {!isMobile && (
                     <div
                         onMouseDown={startResizing}
-                        className={`absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-primary-500 transition-colors z-50 ${isResizing ? 'bg-primary-600 w-1.5' : 'bg-slate-800/50'}`}
+                        className={`absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-primary-500 transition-colors z-30 ${isResizing ? 'bg-primary-600 w-1.5' : 'bg-slate-800/50'}`}
                     />
                 )}
             </div>

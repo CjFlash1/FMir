@@ -1,0 +1,97 @@
+[
+  {
+    "key": "contact_address",
+    "value": "м. Дніпро, вул. Європейська (Миронова), 8",
+    "description": "contact address"
+  },
+  {
+    "key": "contact_address_en",
+    "value": "8 Yevropeiska St, Dnipro, Ukraine",
+    "description": null
+  },
+  {
+    "key": "contact_address_ru",
+    "value": "г. Днепр, ул. Европейская, 8",
+    "description": null
+  },
+  {
+    "key": "contact_address_uk",
+    "value": "м. Дніпро, вул. Європейська, 8",
+    "description": null
+  },
+  {
+    "key": "contact_email",
+    "value": "fujimir@ukr.net",
+    "description": null
+  },
+  {
+    "key": "contact_phone",
+    "value": "+380992150317",
+    "description": "contact phone"
+  },
+  {
+    "key": "contact_phone1",
+    "value": "+380992150317",
+    "description": null
+  },
+  {
+    "key": "contact_phone2",
+    "value": "+380984927387",
+    "description": null
+  },
+  {
+    "key": "contact_schedule_en",
+    "value": "Mon-Sat 9:30-18:30 (Sun closed)",
+    "description": null
+  },
+  {
+    "key": "contact_schedule_ru",
+    "value": "Пн-Сб 9:30-18:30 (Вс - выходной)",
+    "description": null
+  },
+  {
+    "key": "contact_schedule_uk",
+    "value": "Пн-Сб 9:30-18:30 (Нд - вихідний)",
+    "description": null
+  },
+  {
+    "key": "logo_subtitle_ru",
+    "value": "ФОТОЛАБОРАТОРИЯ",
+    "description": null
+  },
+  {
+    "key": "logo_subtitle_uk",
+    "value": "ФОТОЛАБОРАТОРІЯ",
+    "description": null
+  },
+  {
+    "key": "logo_suffix_en",
+    "value": "FUJIMIR",
+    "description": null
+  },
+  {
+    "key": "polaroid_frame_price",
+    "value": "10.00",
+    "description": "polaroid frame_price"
+  },
+  {
+    "key": "telegram_active",
+    "value": "true",
+    "description": null
+  },
+  {
+    "key": "telegram_link",
+    "value": "https://t.me/+380992150317",
+    "description": null
+  },
+  {
+    "key": "viber_active",
+    "value": "true",
+    "description": null
+  },
+  {
+    "key": "viber_link",
+    "value": "viber://chat?number=%2B380992150317",
+    "description": null
+  }
+]

@@ -53,6 +53,7 @@ export default function CheckoutPage() {
     const [lastNameError, setLastNameError] = useState<string | null>(null);
     const [addressError, setAddressError] = useState<string | null>(null);
     const [giftError, setGiftError] = useState<string | null>(null);
+    const [emailError, setEmailError] = useState<string | null>(null);
 
     // Gift selection state
     const [giftChoice, setGiftChoice] = useState<GiftChoice | null>(null);
@@ -162,7 +163,9 @@ export default function CheckoutPage() {
         setLastNameError(null);
         setPhoneError(null);
         setAddressError(null);
+        setAddressError(null);
         setGiftError(null);
+        setEmailError(null);
 
         // Custom validation
         const isNP = formData.deliveryMethod === 'novaposhta';
@@ -183,6 +186,14 @@ export default function CheckoutPage() {
         if (phoneDigits.length < 10) {
             setPhoneError(t('checkout.phone_error'));
             scrollToError('checkout-phone');
+            return;
+        }
+
+        // Validate Email (Strict)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!formData.email || !emailRegex.test(formData.email)) {
+            setEmailError(t('validation.invalid_email') || 'Please enter a valid email');
+            scrollToError('checkout-email');
             return;
         }
 
@@ -484,11 +495,17 @@ export default function CheckoutPage() {
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium">{t('checkout.email')}</label>
                                         <Input
+                                            id="checkout-email"
                                             type="email"
                                             placeholder="email@example.com"
                                             value={formData.email}
-                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                            onChange={(e) => {
+                                                setFormData({ ...formData, email: e.target.value });
+                                                if (emailError) setEmailError(null);
+                                            }}
+                                            className={emailError ? "border-red-500 focus-visible:ring-red-500" : ""}
                                         />
+                                        {emailError && <p className="text-sm text-red-500 mt-1">{emailError}</p>}
                                     </div>
 
                                     <div className="space-y-3">

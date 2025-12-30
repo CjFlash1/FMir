@@ -20,6 +20,7 @@ export type PrintOptions = {
     quantity: number;
     cropping?: 'fill' | 'fit' | 'no_resize';
     options: Record<string, boolean>; // e.g., { border: true, magnetic: false }
+    isArchive?: boolean; // Flag for archive files
 }
 
 export type CartItem = {
@@ -29,6 +30,7 @@ export type CartItem = {
     preview: string; // Blob URL
     serverFileName?: string; // Name of the file on the server after upload
     options: PrintOptions;
+    isArchive?: boolean; // Redundant but useful for quick checks
 }
 
 interface CheckoutFormState {
@@ -139,6 +141,15 @@ const debouncedSyncDraft = (items: CartItem[], config: ProductConfig | null, cur
 // Helper: Generate Base64 Thumbnail (Max 300px)
 const createThumbnail = (file: File): Promise<string> => {
     return new Promise((resolve) => {
+        // Skip for archives
+        const isArchive = /\.(zip|rar|7z)$/i.test(file.name) ||
+            ['application/zip', 'application/x-zip-compressed', 'application/x-rar-compressed', 'application/vnd.rar', 'application/x-7z-compressed'].includes(file.type);
+
+        if (isArchive) {
+            resolve(""); // No thumbnail for archives
+            return;
+        }
+
         const img = new Image();
         const url = URL.createObjectURL(file);
         img.src = url;
@@ -187,16 +198,23 @@ export const useCartStore = create<CartState>()(
                 })),
             addItem: (file, options) => {
                 const id = `${file.name}-${Date.now()}`;
+
+                // Check if archive
+                const isArchive = /\.(zip|rar|7z)$/i.test(file.name) ||
+                    ['application/zip', 'application/x-zip-compressed', 'application/x-rar-compressed', 'application/vnd.rar', 'application/x-7z-compressed'].includes(file.type);
+
                 // 1. Set immediate preview with Blob URL for responsiveness
-                const blobUrl = URL.createObjectURL(file);
+                // For archives, we can use a static placeholder in UI, or a specific string here.
+                const blobUrl = isArchive ? "/images/archive-icon.png" : URL.createObjectURL(file);
 
                 const newItem: CartItem = {
                     id,
                     file,
                     name: file.name,
                     preview: blobUrl,
-                    options: options,
+                    options: { ...options, isArchive },
                     serverFileName: undefined, // serverFileName is undefined initially
+                    isArchive
                 };
 
                 set((state) => {
@@ -206,9 +224,11 @@ export const useCartStore = create<CartState>()(
                 });
 
                 // 2. Async: Create permanent Base64 thumbnail for persistence
-                createThumbnail(file).then((base64) => {
-                    if (base64) get().setItemPreview(id, base64);
-                });
+                if (!isArchive) {
+                    createThumbnail(file).then((base64) => {
+                        if (base64) get().setItemPreview(id, base64);
+                    });
+                }
 
                 return id; // Return ID so component can use it for async upload association
             },
@@ -236,6 +256,24 @@ export const useCartStore = create<CartState>()(
                 set((state) => {
                     const itemToClone = state.items.find((item) => item.id === id);
                     if (!itemToClone) return state;
+
+                    // Don't clone archives ideally, but if user wants...
+                    if (itemToClone.isArchive) {
+                        // Shallow copy
+                        newId = `${itemToClone.id}-copy-${Math.random().toString(36).substring(7)}`;
+                        const clonedItem = {
+                            ...itemToClone,
+                            id: newId,
+                            file: itemToClone.file,
+                            serverFileName: itemToClone.serverFileName,
+                            preview: itemToClone.preview,
+                            options: { ...itemToClone.options }
+                        };
+                        const newItems = [...state.items, clonedItem];
+                        debouncedSyncDraft(newItems, state.config, state.draftOrderId, (id) => set({ draftOrderId: id }));
+                        return { items: newItems };
+                    }
+
                     newId = `${itemToClone.id}-copy-${Math.random().toString(36).substring(7)}`;
                     const clonedItem = {
                         ...itemToClone,
@@ -251,21 +289,24 @@ export const useCartStore = create<CartState>()(
                 });
                 return newId;
             },
-            bulkCloneItems: (ids) =>
+            bulkCloneItems: (ids) => {
                 set((state) => {
-                    const itemsToClone = state.items.filter((item) => ids.includes(item.id));
-                    const clonedItems = itemsToClone.map((item) => ({
-                        ...item,
-                        id: `${item.id}-copy-${Math.random().toString(36).substring(7)}`,
-                        file: item.file,
-                        serverFileName: item.serverFileName, // Inherit server file
-                        preview: item.preview,
-                        options: { ...DEFAULT_CLONE_OPTIONS } // Reset options
-                    }));
-                    const newItems = [...state.items, ...clonedItems];
+                    const newItems = [...state.items];
+                    ids.forEach(id => {
+                        const itemToClone = state.items.find(i => i.id === id);
+                        if (itemToClone && !itemToClone.isArchive) { // Skip archives for bulk clone? Or allow? Let's skip to keep it simple or allow.
+                            const newId = `${itemToClone.id}-copy-${Math.random().toString(36).substring(7)}`;
+                            newItems.push({
+                                ...itemToClone,
+                                id: newId,
+                                options: { ...DEFAULT_CLONE_OPTIONS }
+                            });
+                        }
+                    });
                     debouncedSyncDraft(newItems, state.config, state.draftOrderId, (id) => set({ draftOrderId: id }));
                     return { items: newItems };
-                }),
+                });
+            },
             removeItem: (id) =>
                 set((state) => {
                     // Check if item has server file
@@ -289,14 +330,20 @@ export const useCartStore = create<CartState>()(
                 draftOrderId: state.draftOrderId,
                 items: state.items.map(item => ({
                     ...item,
-                    file: undefined,
+                    file: undefined, // Don't persist File object
+                    preview: item.preview?.startsWith('blob:') ? '' : item.preview // Only persist base64
                 }))
             }),
         }
     )
 );
 
-export const calculateItemPrice = (options: PrintOptions, config: ProductConfig) => {
+export const calculateItemPrice = (options: PrintOptions, config: ProductConfig): { unitPrice: number, total: number, savings: number } => {
+    // Archives have 0 price
+    if (options.isArchive) {
+        return { unitPrice: 0, total: 0, savings: 0 };
+    }
+
     const sizeObj = config.sizes.find(s => s.name === options.size);
     if (!sizeObj) return { unitPrice: 0, total: 0, savings: 0 };
 

@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import { Loader2, Save, Globe, Phone, Mail, Instagram, Facebook, Search } from "lucide-react";
+import { Loader2, Save, Globe, Phone, Mail, Instagram, Facebook, Search, Trash2, Clock } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
+import { toast } from "sonner";
 
 interface SettingItem {
     key: string;
@@ -21,6 +22,30 @@ export default function SettingsPage() {
     const [settings, setSettings] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState<string | null>(null);
+    const [cleaning, setCleaning] = useState(false);
+
+    const handleCleanup = async () => {
+        if (!confirm(t('confirm_cleanup') || "Видалити старі файли? Ця дія незворотня.")) return;
+        setCleaning(true);
+        try {
+            const res = await fetch("/api/fujiadmin/cleanup", { method: "POST" });
+            const data = await res.json();
+            if (data.success) {
+                if (data.deletedCount > 0) {
+                    toast.success(`Успішно! Видалено ${data.deletedCount} файлів. Звільнено ${data.freedSpaceMB} MB.`);
+                } else {
+                    toast.info("Система чиста. Старих файлів не знайдено.");
+                }
+            } else {
+                toast.error(`Помилка: ${data.message || 'Unknown error'}`);
+            }
+        } catch (e) {
+            console.error(e);
+            toast.error("Помилка з'єднання");
+        } finally {
+            setCleaning(false);
+        }
+    };
 
     const SETTING_GROUPS = [
         {
@@ -31,8 +56,16 @@ export default function SettingsPage() {
                 { key: "contact_email", label: t('settings.support_email'), icon: Mail, placeholder: "contact@fujimir.com.ua" },
                 { key: "contact_phone1", label: t('settings.contact_phone1'), icon: Phone, placeholder: "+380..." },
                 { key: "contact_phone2", label: t('settings.contact_phone2'), icon: Phone, placeholder: "+380..." },
-                { key: "contact_address", label: t('settings.contact_address'), icon: Globe, placeholder: "Address..." },
-                { key: "contact_schedule", label: t('settings.contact_schedule'), icon: Globe, placeholder: "Schedule..." },
+
+                // Address (Multilingual)
+                { key: "contact_address_uk", label: t('settings.contact_address') + " (UA)", icon: Globe, placeholder: "вул. Соборна..." },
+                { key: "contact_address_ru", label: t('settings.contact_address') + " (RU)", icon: Globe, placeholder: "ул. Соборная..." },
+                { key: "contact_address_en", label: t('settings.contact_address') + " (EN)", icon: Globe, placeholder: "Soborna St..." },
+
+                // Schedule (Multilingual)
+                { key: "contact_schedule_uk", label: t('settings.contact_schedule') + " (UA)", icon: Clock, placeholder: "Пн-Пт 9-18..." },
+                { key: "contact_schedule_ru", label: t('settings.contact_schedule') + " (RU)", icon: Clock, placeholder: "Пн-Пт 9-18..." },
+                { key: "contact_schedule_en", label: t('settings.contact_schedule') + " (EN)", icon: Clock, placeholder: "Mon-Fri 9-18..." },
             ]
         },
         {
@@ -191,6 +224,47 @@ export default function SettingsPage() {
                     </CardContent>
                 </Card>
             ))}
+
+            {/* Maintenance Section */}
+            <Card className="border-red-100 bg-red-50/10">
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-red-900">
+                        <Trash2 className="w-5 h-5" />
+                        {t('settings.maintenance') || "Обслуговування системи"}
+                    </CardTitle>
+                    <CardDescription>
+                        {t('settings.maintenance_desc') || "Видалення тимчасових файлів, які не були прив'язані до замовлень"}
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="flex items-center justify-between p-4 bg-white rounded-lg border border-red-100">
+                        <div>
+                            <h3 className="font-semibold text-sm mb-1">{t('settings.cleanup_files') || "Очистка покинутих файлів"}</h3>
+                            <p className="text-xs text-slate-500 max-w-md">
+                                {t('settings.cleanup_files_desc') || "Видаляє файли з кореневої папки завантажень, які старше 24 годин і не знаходяться в папках замовлень."}
+                            </p>
+                        </div>
+                        <Button
+                            variant="destructive"
+                            onClick={handleCleanup}
+                            disabled={cleaning}
+                            className="shrink-0"
+                        >
+                            {cleaning ? (
+                                <>
+                                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                    Scanning...
+                                </>
+                            ) : (
+                                <>
+                                    <Trash2 className="w-4 h-4 mr-2" />
+                                    {t('settings.run_cleanup') || "Запустити очистку"}
+                                </>
+                            )}
+                        </Button>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 }

@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { writeFile, mkdir } from "fs/promises";
+import { createWriteStream } from "fs";
+import { pipeline } from "stream/promises";
+import { Readable } from "stream";
 import { join } from "path";
 import crypto from "crypto";
 import sharp from "sharp";
@@ -28,6 +31,12 @@ const ALLOWED_MIME_TYPES = [
     // Icons
     'image/x-icon',
     'image/vnd.microsoft.icon',
+    // Archives
+    'application/zip',
+    'application/x-zip-compressed',
+    'application/x-rar-compressed',
+    'application/vnd.rar',
+    'application/x-7z-compressed',
 ];
 
 const ALLOWED_EXTENSIONS = [
@@ -41,6 +50,17 @@ const ALLOWED_EXTENSIONS = [
     '.svg',
     // Icons
     '.ico',
+    // Archives
+    '.zip', '.rar', '.7z',
+];
+
+const ARCHIVE_EXTENSIONS = ['.zip', '.rar', '.7z'];
+const ARCHIVE_MIME_TYPES = [
+    'application/zip',
+    'application/x-zip-compressed',
+    'application/x-rar-compressed',
+    'application/vnd.rar',
+    'application/x-7z-compressed',
 ];
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100 MB
@@ -120,7 +140,7 @@ function sanitizeFilename(name: string): string {
         'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'ts',
         'ч': 'ch', 'ш': 'sh', 'щ': 'sch', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu',
         'я': 'ya', 'і': 'i', 'ї': 'yi', 'є': 'ye', 'ґ': 'g',
-        'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'Yo', 'Ж': 'Zh',
+        'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'G', 'Е': 'E', 'Ё': 'Yo', 'Ж': 'Zh',
         'З': 'Z', 'И': 'I', 'Й': 'Y', 'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N', 'О': 'O',
         'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U', 'Ф': 'F', 'Х': 'H', 'Ц': 'Ts',
         'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Sch', 'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Yu',
@@ -142,29 +162,60 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
         }
 
+        const mimeType = file.type.toLowerCase();
+        const extension = '.' + (file.name.split('.').pop()?.toLowerCase() || '');
+
+        // Determine if it is an archive
+        const isArchive = ARCHIVE_EXTENSIONS.includes(extension) || ARCHIVE_MIME_TYPES.includes(mimeType);
+
         // === VALIDATION 1: File size ===
-        if (file.size > MAX_FILE_SIZE) {
+        // Archives: No strict limit (or use huge limit). Images: 100MB
+        if (!isArchive && file.size > MAX_FILE_SIZE) {
             return NextResponse.json({
                 error: `File too large. Maximum size is ${MAX_FILE_SIZE / 1024 / 1024}MB`
             }, { status: 400 });
         }
 
         // === VALIDATION 2: MIME type ===
-        const mimeType = file.type.toLowerCase();
-        if (!ALLOWED_MIME_TYPES.includes(mimeType)) {
+        if (!ALLOWED_MIME_TYPES.includes(mimeType) && !isArchive) {
             return NextResponse.json({
-                error: `Invalid file type: ${file.type}. Please upload an image file.`
+                error: `Invalid file type: ${file.type}.`
             }, { status: 400 });
         }
 
         // === VALIDATION 3: File extension ===
-        const extension = '.' + (file.name.split('.').pop()?.toLowerCase() || '');
         if (!ALLOWED_EXTENSIONS.includes(extension)) {
             return NextResponse.json({
-                error: `Invalid file extension: ${extension}. Please upload an image file.`
+                error: `Invalid file extension: ${extension}.`
             }, { status: 400 });
         }
 
+        const uploadsDir = join(process.cwd(), "public", "uploads");
+        await mkdir(uploadsDir, { recursive: true });
+
+        // === HANDLING ARCHIVES (STREAMING to avoid RAM usage) ===
+        if (isArchive) {
+            const fileName = `${crypto.randomUUID()}${extension}`;
+            const path = join(uploadsDir, fileName);
+
+            // Create write stream
+            const writeStream = createWriteStream(path);
+
+            // Convert WebStream (file.stream()) to Node Readable for pipeline
+            // @ts-ignore - Readable.fromWeb requires Node 18+ types which might not be picked up correctly in some envs
+            const readable = Readable.fromWeb(file.stream());
+
+            await pipeline(readable, writeStream);
+
+            return NextResponse.json({
+                success: true,
+                fileName: fileName,
+                originalName: sanitizeFilename(file.name),
+                wasConverted: false
+            });
+        }
+
+        // === HANDLING IMAGES (BUFFERING for processing) ===
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
@@ -175,31 +226,35 @@ export async function POST(req: Request) {
             }, { status: 400 });
         }
 
-        const fileName = `${crypto.randomUUID()}.jpg`;
-        const uploadsDir = join(process.cwd(), "public", "uploads");
-        const path = join(uploadsDir, fileName);
-
-        // Ensure directory exists
-        await mkdir(uploadsDir, { recursive: true });
-
+        // Generate filename
+        let fileName: string;
         let finalBuffer: Buffer;
+
+        // Image Logic
+        fileName = `${crypto.randomUUID()}.jpg`; // Force .jpg for images
 
         // === CHECK IF ORIGINAL JPEG ===
         if (isJpegFile(buffer)) {
             // JPG files: save original without any processing
             finalBuffer = buffer;
-            console.log(`JPEG file saved as-is (original quality): ${path}`);
         } else {
             // Non-JPG files: convert to JPEG with 100% quality
-            finalBuffer = await sharp(buffer)
-                .flatten({ background: { r: 255, g: 255, b: 255 } }) // Handle transparency
-                .rotate() // Auto-rotate based on EXIF
-                .toColorspace('srgb') // Ensure standard RGB color space
-                .toFormat('jpeg', { quality: 100, progressive: true })
-                .toBuffer();
-            console.log(`Image converted to JPEG (100% quality): ${path}`);
+            try {
+                finalBuffer = await sharp(buffer)
+                    .flatten({ background: { r: 255, g: 255, b: 255 } }) // Handle transparency
+                    .rotate() // Auto-rotate based on EXIF
+                    .toColorspace('srgb') // Ensure standard RGB color space
+                    .toFormat('jpeg', { quality: 100, progressive: true })
+                    .toBuffer();
+            } catch (e) {
+                console.error("Sharp conversion failed:", e);
+                return NextResponse.json({ error: "Failed to process image file." }, { status: 500 });
+            }
         }
 
+        const path = join(uploadsDir, fileName);
+
+        // Write file
         await writeFile(path, finalBuffer);
 
         return NextResponse.json({
@@ -211,7 +266,7 @@ export async function POST(req: Request) {
     } catch (error: any) {
         console.error("Upload/Processing error:", error);
 
-        // Check if it's a sharp processing error (invalid image data)
+        // Check if it's a sharp processing error
         if (error.message?.includes('Input buffer') || error.message?.includes('unsupported image format')) {
             return NextResponse.json({
                 error: "Could not process image. The file may be corrupted or in an unsupported format. RAW camera files require additional system libraries."

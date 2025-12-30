@@ -4,12 +4,15 @@ import path from "path";
 
 export async function GET(
     request: NextRequest,
-    context: { params: Promise<{ filename: string }> }
+    context: { params: Promise<{ filename: string[] }> }
 ) {
     const { filename } = await context.params;
 
+    // Join path segments
+    const filePathRel = filename.join('/');
+
     // Security check to prevent path traversal
-    if (filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
+    if (filePathRel.includes('..') || filePathRel.includes('\\')) {
         return new NextResponse("Invalid filename", { status: 400 });
     }
 
@@ -17,20 +20,22 @@ export async function GET(
     // 1. Standard public/uploads (local dev or symlink)
     // 2. Direct volume path (Railway production override)
     const pathsToTry = [
-        path.join(process.cwd(), 'public', 'uploads', filename),
-        '/app/data/uploads/' + filename
+        path.join(process.cwd(), 'public', 'uploads', ...filename),
+        '/app/data/uploads/' + filePathRel
     ];
 
     for (const filePath of pathsToTry) {
         try {
             const fileBuffer = await fs.readFile(filePath);
-            const ext = path.extname(filename).toLowerCase();
+            const ext = path.extname(filePathRel).toLowerCase();
             let contentType = 'application/octet-stream';
 
             if (ext === '.jpg' || ext === '.jpeg') contentType = 'image/jpeg';
             else if (ext === '.png') contentType = 'image/png';
             else if (ext === '.pdf') contentType = 'application/pdf';
             else if (ext === '.zip') contentType = 'application/zip';
+            else if (ext === '.rar') contentType = 'application/x-rar-compressed';
+            else if (ext === '.7z') contentType = 'application/x-7z-compressed';
 
             return new NextResponse(fileBuffer, {
                 headers: {

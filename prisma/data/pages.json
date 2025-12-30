@@ -1,0 +1,68 @@
+[
+  {
+    "id": 3,
+    "lang": "en",
+    "title": "About Us",
+    "slug": "about",
+    "content": "\n<div class=\"prose max-w-none text-slate-800\">\n    <div class=\"flex flex-col md:flex-row gap-8 items-start mb-8\">\n        <div class=\"flex-1\">\n            <p class=\"mb-4\">\n                <b>FUJI-Mir</b> is one of the best enterprises providing digital photo printing services for both amateurs and professional photographers.\n            </p>\n            <p class=\"mb-4\">You can order a range of design services such as:</p>\n            <ul class=\"list-disc pl-5 mb-4 space-y-1\">\n                <li>scanning photos and films;</li>\n                <li>restoration and computer processing of photos;</li>\n                <li>red-eye removal;</li>\n                <li>development of various layouts and collages;</li>\n                <li>and also ID photos.</li>\n            </ul>\n            <p class=\"mb-4\">\n                Printing is done on professional equipment from <b>FUJI</b> - digital minilab <b>Frontier 500</b>.\n            </p>\n            <p class=\"mb-4\">\n                The highest quality of your photos is guaranteed because all files are reviewed by an operator before printing, and in most cases, we perform necessary color and tone corrections, eliminating potential errors made during shooting.\n            </p>\n            <p class=\"font-bold text-[#009846] text-lg\">\n                We look forward to seeing you among our clients and will try to meet your expectations.\n            </p>\n        </div>\n        <div class=\"w-full md:w-1/3 flex flex-col gap-6\">\n             <div class=\"rounded-xl overflow-hidden shadow-md bg-white border p-2\">\n                <img src=\"/images/about/real_map.gif\" alt=\"Map Fujimir\" class=\"w-full h-auto\" />\n             </div>\n             <div class=\"rounded-xl overflow-hidden shadow-md bg-white border p-2\">\n                <img src=\"/images/about/refined_magazin.png\" alt=\"Fujimir Shop\" class=\"w-full h-auto\" />\n             </div>\n        </div>\n    </div>\n</div>\n        ",
+    "description": "About Fujimir",
+    "isActive": true,
+    "createdAt": "2025-12-25T23:15:03.470Z",
+    "updatedAt": "2025-12-30T15:40:19.047Z"
+  },
+  {
+    "id": 1,
+    "lang": "ru",
+    "title": "О нас",
+    "slug": "about",
+    "content": "\n<div class=\"prose max-w-none text-slate-800\">\n    <div class=\"flex flex-col md:flex-row gap-8 items-start mb-8\">\n        <div class=\"flex-1\">\n            <p class=\"mb-4\">\n                <b>FUJI-Мир</b> - одно из лучших предприятий предоставляющих услуги цифровой печати фотографий как для фотолюбителей, так и для профессиональных фотографов.\n            </p>\n            <p class=\"mb-4\">У нас вы можете заказать ряд дизайнерских услуг таких как:</p>\n            <ul class=\"list-disc pl-5 mb-4 space-y-1\">\n                <li>сканирование фотографий и пленок;</li>\n                <li>реставрация и компьютерная обработка фотографий;</li>\n                <li>устранение эффекта красных глаз;</li>\n                <li>разработка различных макетов и коллажей;</li>\n                <li>а так же сделать фотографию на документы.</li>\n            </ul>\n            <p class=\"mb-4\">\n                Печать производится на профессиональном оборудовании фирмы <b>FUJI</b> - цифровой фотолаборатории <b>Frontier 500</b>.\n            </p>\n            <p class=\"mb-4\">\n                Высочайшее качество ваших фотографий гарантировано тем, что перед печатью все файлы просматриваются оператором и в большинстве случаев мы проводим необходимую цветовую и тоновую коррекцию изображения, устраняя таким образом возможные ошибки допущеные при съемке.\n            </p>\n            <p class=\"font-bold text-[#009846] text-lg\">\n                Будем рады всегда Вас видеть в числе наших клиентов, и постараемся оправдать Ваши ожидания.\n            </p>\n        </div>\n        <div class=\"w-full md:w-1/3 flex flex-col gap-6\">\n             <div class=\"rounded-xl overflow-hidden shadow-md bg-white border p-2\">\n                <img src=\"/images/about/real_map.gif\" alt=\"Карта Фуджи Мир\" class=\"w-full h-auto\" />\n             </div>\n             <div class=\"rounded-xl overflow-hidden shadow-md bg-white border p-2\">\n                <img src=\"/images/about/refined_magazin.png\" alt=\"Вход в магазин Фуджи Мир\" class=\"w-full h-auto\" />\n             </div>\n        </div>\n    </div>\n</div>\n        ",
+    "description": "О фотоцентре Fujimir",
+    "isActive": true,
+    "createdAt": "2025-12-25T23:15:03.452Z",
+    "updatedAt": "2025-12-30T15:40:19.055Z"
+  },
+  {
+    "id": 2,
+    "lang": "uk",
+    "title": "Про нас",
+    "slug": "about",
+    "content": "\n<div class=\"prose max-w-none text-slate-800\">\n    <div class=\"flex flex-col md:flex-row gap-8 items-start mb-8\">\n        <div class=\"flex-1\">\n            <p class=\"mb-4\">\n                <b>FUJI-Світ</b> - одне з найкращих підприємств, що надають послуги цифрового друку фотографій як для фотолюбителів, так і для професійних фотографів.\n            </p>\n            <p class=\"mb-4\">У нас ви можете замовити ряд дизайнерських послуг, таких як:</p>\n            <ul class=\"list-disc pl-5 mb-4 space-y-1\">\n                <li>сканування фотографій та плівок;</li>\n                <li>реставрація та комп'ютерна обробка фотографій;</li>\n                <li>усунення ефекту червоних очей;</li>\n                <li>розробка різноманітних макетів та колажів;</li>\n                <li>а також зробити фотографію на документи.</li>\n            </ul>\n            <p class=\"mb-4\">\n                Друк проводиться на професійному обладнанні фірми <b>FUJI</b> - цифровій фотолабораторії <b>Frontier 500</b>.\n            </p>\n            <p class=\"mb-4\">\n                Найвища якість ваших фотографій гарантована тим, що перед друком всі файли переглядаються оператором і в більшості випадків ми проводимо необхідну кольорову та тонову корекцію зображення, усуваючи таким чином можливі помилки допущені при зйомці.\n            </p>\n            <p class=\"font-bold text-[#009846] text-lg\">\n                Будемо раді завжди Вас бачити серед наших клієнтів, і намагатимемося виправдати Ваші очікування.\n            </p>\n        </div>\n        <div class=\"w-full md:w-1/3 flex flex-col gap-6\">\n             <div class=\"rounded-xl overflow-hidden shadow-md bg-white border p-2\">\n                <img src=\"/images/about/real_map.gif\" alt=\"Карта Fuji-Світ\" class=\"w-full h-auto\" />\n             </div>\n             <div class=\"rounded-xl overflow-hidden shadow-md bg-white border p-2\">\n                <img src=\"/images/about/refined_magazin.png\" alt=\"Магазин Fuji-Світ\" class=\"w-full h-auto\" />\n             </div>\n        </div>\n    </div>\n</div>\n        ",
+    "description": "Про фотоцентр Fujimir",
+    "isActive": true,
+    "createdAt": "2025-12-25T23:15:03.462Z",
+    "updatedAt": "2025-12-30T15:40:19.063Z"
+  },
+  {
+    "id": 6,
+    "lang": "en",
+    "title": "Contact",
+    "slug": "contact",
+    "content": "\n                <h1 class=\"text-2xl font-bold text-[#009846] mb-4\">Our Contacts</h1>\n                <p class=\"mb-2\"><strong>Address:</strong> 8 Yevropeiska St, Dnipro, Ukraine</p>\n                <p class=\"mb-2\"><strong>Working Hours:</strong> 9:30 to 18:30 daily</p>\n                <div class=\"mt-4\">\n                    <p class=\"mb-1\"><strong>Phones:</strong> (099) 215-03-17, (098) 492-73-87</p>\n                    <p class=\"mb-1\"><strong>Email:</strong> fujimir@ukr.net</p>\n                </div>\n            ",
+    "description": "Contact Fujimir",
+    "isActive": true,
+    "createdAt": "2025-12-25T23:15:03.496Z",
+    "updatedAt": "2025-12-30T15:40:19.071Z"
+  },
+  {
+    "id": 4,
+    "lang": "ru",
+    "title": "Контакты",
+    "slug": "contact",
+    "content": "\n                <h1 class=\"text-2xl font-bold text-[#009846] mb-4\">Наши контакты</h1>\n                <p class=\"mb-2\"><strong>Адрес:</strong> г. Днепр, ул. Европейская (Миронова), д.8</p>\n                <p class=\"mb-2\"><strong>Время работы:</strong> с 9:30 до 18:30 без выходных</p>\n                <div class=\"mt-4\">\n                    <p class=\"mb-1\"><strong>Телефоны:</strong> (099) 215-03-17, (098) 492-73-87</p>\n                    <p class=\"mb-1\"><strong>Email:</strong> fujimir@ukr.net</p>\n                </div>\n            ",
+    "description": "Контакты Fujimir",
+    "isActive": true,
+    "createdAt": "2025-12-25T23:15:03.479Z",
+    "updatedAt": "2025-12-30T15:40:19.078Z"
+  },
+  {
+    "id": 5,
+    "lang": "uk",
+    "title": "Контакти",
+    "slug": "contact",
+    "content": "\n                <h1 class=\"text-2xl font-bold text-[#009846] mb-4\">Наші контакти</h1>\n                <p class=\"mb-2\"><strong>Адреса:</strong> м. Дніпро, вул. Європейська (Миронова), буд.8</p>\n                <p class=\"mb-2\"><strong>Час роботи:</strong> з 9:30 до 18:30 без вихідних</p>\n                <div class=\"mt-4\">\n                    <p class=\"mb-1\"><strong>Телефони:</strong> (099) 215-03-17, (098) 492-73-87</p>\n                    <p class=\"mb-1\"><strong>Email:</strong> fujimir@ukr.net</p>\n                </div>\n            ",
+    "description": "Контакти Fujimir",
+    "isActive": true,
+    "createdAt": "2025-12-25T23:15:03.487Z",
+    "updatedAt": "2025-12-30T15:40:19.084Z"
+  }
+]

@@ -13,6 +13,11 @@ export function Navbar() {
     const { t, lang, setLang } = useTranslation();
     const { getSetting } = useSettings();
 
+    // Helper for multilingual settings
+    const tSetting = (key: string) => {
+        return getSetting(`${key}_${lang}`) || getSetting(`${key}_en`) || getSetting(key);
+    };
+
     // Dynamic Menu Fetching
     const [dynamicPages, setDynamicPages] = useState<{ slug: string, title: string }[]>([]);
 
@@ -40,17 +45,21 @@ export function Navbar() {
     };
     const currentLabels = labels[lang as string] || labels.en;
 
-    // Contact Data (Source: Original Site / Seed Data)
+    // Contact Data Fallbacks
     const addresses: Record<string, string> = {
         uk: 'м. Дніпро, вул. Європейська 8',
         ru: 'г. Днепр, ул. Европейская 8',
         en: 'Dnipro, Yevropeyska St, 8'
     };
-    const address = addresses[lang as string] || addresses.uk;
-    const phone = '(099) 215-03-17'; // Primary phone
+    const defaultAddress = addresses[lang as string] || addresses.uk;
+    const phone = '(099) 215-03-17'; // Primary phone fallback
+
+    // Dynamic Values
+    const displayAddress = tSetting('contact_address') || defaultAddress;
+    const displaySchedule = tSetting('contact_schedule') || t('header.schedule_default');
 
     // Google Maps Query
-    const mapQuery = encodeURIComponent('м. Дніпро, вул. Європейська 8');
+    const mapQuery = encodeURIComponent(displayAddress);
     const mapLink = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
     // Logo Configuration - now using settings with fallbacks
@@ -98,16 +107,16 @@ export function Navbar() {
                         {/* Info Block */}
                         <div className="flex flex-col items-end text-right gap-1 text-sm leading-tight text-white/90">
                             <a
-                                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(getSetting('contact_address') || address)}`}
+                                href={mapLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 hover:text-white transition-colors group/addr"
                             >
-                                <span className="font-medium max-w-[250px] border-b border-transparent group-hover/addr:border-white/50">{getSetting('contact_address') || address}</span>
+                                <span className="font-medium max-w-[250px] border-b border-transparent group-hover/addr:border-white/50">{displayAddress}</span>
                                 <span className="text-lg">📍</span>
                             </a>
                             <div className="flex items-center gap-2 text-xs opacity-90">
-                                <span>{getSetting('contact_schedule') || t('header.schedule_default')}</span>
+                                <span>{displaySchedule}</span>
                                 <span className="text-sm">🕒</span>
                             </div>
                         </div>

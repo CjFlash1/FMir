@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { copyFile, rename, mkdir } from "fs/promises";
+import { join, basename } from "path";
 
 export const dynamic = "force-dynamic";
 
@@ -37,6 +39,46 @@ export async function POST(request: Request) {
             if (!a.isGiftMagnet && b.isGiftMagnet) return 1;
             return 0;
         });
+
+        // === MOVE/COPY FILES TO ORDER FOLDER ===
+        const uploadsDir = join(process.cwd(), "public", "uploads");
+        const orderDir = join(uploadsDir, orderNumber);
+
+        try {
+            await mkdir(orderDir, { recursive: true });
+
+            for (const item of sortedItems) {
+                if (item.serverFileName) {
+                    const originalPath = join(uploadsDir, item.serverFileName);
+                    const fileNameOnly = basename(item.serverFileName);
+                    const newPath = join(orderDir, fileNameOnly);
+
+                    // Skip if paths are identical (though unlikely unless re-processing)
+                    if (originalPath === newPath) continue;
+
+                    try {
+                        const isSubDir = item.serverFileName.includes('/') || item.serverFileName.includes('\\');
+
+                        if (isSubDir) {
+                            // Already in a subfolder (e.g. from previous order), COPY it to new order folder
+                            // Check if source exists before copying
+                            await copyFile(originalPath, newPath);
+                        } else {
+                            // Flat file (new upload), MOVE it
+                            await rename(originalPath, newPath);
+                        }
+
+                        // Update the item's server path to be relative to uploads dir (e.g. "1001/file.jpg")
+                        item.serverFileName = `${orderNumber}/${fileNameOnly}`;
+                    } catch (fileErr) {
+                        console.error(`Failed to move/copy file ${item.serverFileName}:`, fileErr);
+                        // Continue processing other items/order even if file move fails (don't block order)
+                    }
+                }
+            }
+        } catch (err) {
+            console.error("Failed to setup order directory:", err);
+        }
 
         // PREPARE ITEM DATA GENERATOR
         const createItemData = (item: any) => ({
