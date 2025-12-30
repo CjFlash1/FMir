@@ -32,7 +32,8 @@ export type CartItem = {
 }
 
 interface CheckoutFormState {
-    name: string;
+    firstName: string;
+    lastName: string;
     phone: string;
     email: string;
     deliveryAddress: string;
@@ -167,7 +168,8 @@ export const useCartStore = create<CartState>()(
             items: [],
             config: null,
             checkoutForm: {
-                name: "",
+                firstName: "",
+                lastName: "",
                 phone: "",
                 email: "",
                 deliveryAddress: "",
