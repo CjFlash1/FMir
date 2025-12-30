@@ -493,18 +493,35 @@ export default function UploadPage() {
                                 />
                             </div>
 
-                            <div className="absolute bottom-6 left-0 right-0 text-center px-4 pointer-events-none">
-                                <div className="inline-block bg-black/60 backdrop-blur-md rounded-xl px-6 py-3 border border-white/10">
-                                    <p className="text-white/95 font-medium text-lg leading-tight truncate max-w-[80vw]">
+
+                            <div className="absolute bottom-0 left-0 right-0 text-center px-4 pointer-events-none">
+                                <div className="w-full bg-black/80 backdrop-blur-md rounded-t-xl px-6 py-4 border-t border-white/10">
+                                    {/* File name and index */}
+                                    <p className="text-white/95 font-medium text-lg leading-tight truncate max-w-full mb-2">
                                         {lightboxFile.name}
                                         <span className="opacity-50 text-sm ml-2 font-normal">
                                             ({files.findIndex(f => f.id === lightboxFile.id) + 1} / {files.length})
                                         </span>
                                     </p>
-                                    <div className="text-white/70 text-sm mt-1 flex items-center justify-center gap-3">
-                                        <span className="bg-white/10 px-2 py-0.5 rounded">{lightboxFile.options.size}</span>
-                                        <span>{t(lightboxFile.options.paper)}</span>
-                                        {lightboxFile.options.quantity > 1 && <span className="text-yellow-400 font-bold">x{lightboxFile.options.quantity}</span>}
+                                    {/* Parameters row */}
+                                    <div className="text-white/80 text-sm flex flex-wrap items-center justify-center gap-2">
+                                        <span className="bg-white/15 px-2.5 py-1 rounded-lg font-medium">{lightboxFile.options.size}</span>
+                                        <span className="bg-white/15 px-2.5 py-1 rounded-lg">{t(lightboxFile.options.paper)}</span>
+                                        {lightboxFile.options.quantity > 1 && (
+                                            <span className="bg-yellow-500/80 text-black px-2.5 py-1 rounded-lg font-bold">x{lightboxFile.options.quantity}</span>
+                                        )}
+                                        {lightboxFile.options.cropping === 'fit' && (
+                                            <span className="bg-indigo-500 text-white px-2.5 py-1 rounded-lg font-bold text-xs">FIT-IN</span>
+                                        )}
+                                        {lightboxFile.options.cropping === 'no_resize' && (
+                                            <span className="bg-purple-500 text-white px-2.5 py-1 rounded-lg font-bold text-xs">NO-RESIZE</span>
+                                        )}
+                                        {lightboxFile.options.options?.magnetic && (
+                                            <span className="bg-red-500 text-white px-2.5 py-1 rounded-lg font-bold text-xs uppercase">Mag</span>
+                                        )}
+                                        {lightboxFile.options.options?.border && (
+                                            <span className="bg-green-500 text-white px-2.5 py-1 rounded-lg font-bold text-xs uppercase">Border</span>
+                                        )}
                                     </div>
                                 </div>
                             </div>

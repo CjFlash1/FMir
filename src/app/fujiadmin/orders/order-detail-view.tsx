@@ -218,7 +218,7 @@ export function OrderDetailView({ order }: { order: any }) {
     const deliveryCostDisplay = useMemo(() => {
         if (order.deliveryMethod === 'local') return '150.00 грн';
         if (order.deliveryMethod === 'pickup') return '0.00 грн';
-        if (order.deliveryMethod === 'novaposhta') return t('admin.delivery_carrier');
+        if (order.deliveryMethod === 'novaposhta') return 'За тарифами перевізника';
         return '-';
     }, [order.deliveryMethod, t]);
 
@@ -303,9 +303,9 @@ export function OrderDetailView({ order }: { order: any }) {
         <div className="space-y-6 max-w-5xl mx-auto relative">
             {/* Gallery Modal */}
             {previewIndex !== null && allImages[previewIndex] && (
-                <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center" onClick={() => setPreviewIndex(null)}>
+                <div className="fixed inset-0 z-50 bg-black/95 flex flex-col" onClick={() => setPreviewIndex(null)}>
                     {/* Top Bar */}
-                    <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center text-white/80 z-20 bg-gradient-to-b from-black/50 to-transparent">
+                    <div className="shrink-0 p-4 flex justify-between items-center text-white/80 bg-gradient-to-b from-black/50 to-transparent">
                         <div className="text-sm font-medium">
                             {previewIndex + 1} / {allImages.length}
                         </div>
@@ -315,7 +315,7 @@ export function OrderDetailView({ order }: { order: any }) {
                     </div>
 
                     {/* Main Image */}
-                    <div className="flex-1 w-full flex items-center justify-center relative px-2 md:px-12 py-12" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex-1 min-h-0 w-full flex items-center justify-center relative px-2 md:px-12" onClick={(e) => e.stopPropagation()}>
 
                         {/* Prev Arrow */}
                         <button
@@ -331,7 +331,7 @@ export function OrderDetailView({ order }: { order: any }) {
                         <img
                             src={allImages[previewIndex].src}
                             alt="Preview"
-                            className="max-w-full max-h-full object-contain shadow-2xl"
+                            className="max-w-full max-h-[calc(100vh-200px)] object-contain shadow-2xl rounded-lg"
                         />
 
                         {/* Next Arrow */}
@@ -347,8 +347,8 @@ export function OrderDetailView({ order }: { order: any }) {
                     </div>
 
                     {/* Bottom Info Bar */}
-                    <div className="w-full bg-slate-900/90 text-white p-4 md:p-6 backdrop-blur-sm border-t border-white/10" onClick={(e) => e.stopPropagation()}>
-                        <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-sm">
+                    <div className="shrink-0 w-full bg-slate-900/95 text-white p-4 md:p-5 backdrop-blur-md border-t border-white/10" onClick={(e) => e.stopPropagation()}>
+                        <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 text-sm">
                             <div>
                                 <div className="text-white/40 text-xs uppercase tracking-wider mb-1">Файл</div>
                                 <div className="font-medium truncate" title={allImages[previewIndex].originalName}>
