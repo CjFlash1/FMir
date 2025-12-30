@@ -22,7 +22,7 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    const ip = request.ip || request.headers.get('x-forwarded-for') || '127.0.0.1';
+    const ip = request.headers.get('x-forwarded-for') || '127.0.0.1';
 
     // Specific Limits (requests per minute)
     let limit = 60; // default generic POST limit
