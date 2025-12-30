@@ -11,8 +11,7 @@ export async function POST(req: Request) {
 
         const order = await prisma.order.findFirst({
             where: {
-                orderNumber: orderNumber.trim(),
-                customerEmail: { equals: email.trim(), mode: 'insensitive' }
+                orderNumber: orderNumber.trim()
             },
             include: {
                 items: {
@@ -26,7 +25,9 @@ export async function POST(req: Request) {
             }
         });
 
-        if (!order) {
+        const isEmailMatch = order?.customerEmail?.trim().toLowerCase() === email.trim().toLowerCase();
+
+        if (!order || !isEmailMatch) {
             return NextResponse.json({ error: "Order not found" }, { status: 404 });
         }
 
