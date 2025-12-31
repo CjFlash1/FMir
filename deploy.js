@@ -2,50 +2,85 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-// === MANUAL BUILD STRATEGY ===
-// This script ONLY Handles basic sync tasks.
-// YOU MUST RUN 'npm run build' MANUALLY ON SERVER IF NEEDED.
+// === ROBUST DEPLOY SCRIPT (AUTO-HEALING) ===
+// 1. Sets paths
+// 2. Cleans corrupted node_modules if install fails
+// 3. Hand-off for manual build
 
-console.log("=== DEPLOY START (MANUAL BUILD MODE) ===");
+const LOG_FILE = path.join(process.cwd(), 'deploy_output.txt');
+
+function log(msg) {
+    if (typeof msg !== 'string') msg = JSON.stringify(msg, null, 2);
+    console.log(msg); // To stdout
+}
+
+function run(cmd, ignoreErrors = false) {
+    log(`> ${cmd}`);
+    try {
+        execSync(cmd, { stdio: 'inherit', env: process.env });
+    } catch (e) {
+        if (!ignoreErrors) throw e;
+        log(`Warning: Command failed but ignored: ${e.message}`);
+    }
+}
+
+console.log("\n=== DEPLOYMENT RESET ===");
 
 try {
-    // 1. PATH SETUP (Server specific)
+    // 1. PATH CONFIG
+    // We determined Node 21 is correct for this server
     const PLESK_DIRS = ['/opt/plesk/node/21/bin', '/opt/plesk/node/20/bin'];
     const localBin = path.join(process.cwd(), 'node_modules', '.bin');
     process.env.PATH = `${PLESK_DIRS.join(':')}:${localBin}:${process.env.PATH}`;
 
-    function run(cmd) {
-        console.log(`> ${cmd}`);
-        try {
-            execSync(cmd, { stdio: 'inherit', env: process.env });
-        } catch (e) {
-            console.error(`Error: ${e.message} (Continuing...)`);
-        }
+    // 2. CHECK ENVIRONMENT
+    run('node -v');
+    run('npm -v');
+
+    // 3. INSTALLATION WITH AUTO-HEAL
+    console.log("\n--- INSTALLING DEPENDENCIES ---");
+    try {
+        // Try normal install first
+        run('npm install --no-audit');
+    } catch (e) {
+        console.error("\n!!! INSTALL FAILED. STARTING AUTO-HEAL !!!");
+        console.error("Error was: " + e.message);
+
+        // Nuking node_modules to fix 'Permission Denied' errors
+        console.log("Deleting node_modules and package-lock.json...");
+        const nm = path.join(process.cwd(), 'node_modules');
+        const pl = path.join(process.cwd(), 'package-lock.json');
+
+        if (fs.existsSync(nm)) fs.rmSync(nm, { recursive: true, force: true });
+        if (fs.existsSync(pl)) fs.unlinkSync(pl);
+
+        console.log("Cleaning cache...");
+        run('npm cache clean --force', true);
+
+        console.log("Retrying install from scratch...");
+        run('npm install --no-audit');
     }
 
-    // 2. INSTALL ONLY
-    console.log("\n--- NPM INSTALL ---");
-    run('npm install --no-audit --omit=dev'); // Fast production install
+    // 4. DATABASE
+    console.log("\n--- DB SETUP ---");
+    try {
+        process.env.PRISMA_CLI_BINARY_TARGETS = 'native,debian-openssl-1.1.x,debian-openssl-3.0.x';
+        run('npx prisma generate');
+    } catch (e) {
+        log(`Prisma warning (non-fatal): ${e.message}`);
+    }
 
-    // 3. DATABASE
-    console.log("\n--- DB SYNC ---");
-    // run('npx prisma generate'); 
-    // run('npx prisma db push --accept-data-loss');
-
-    // 4. NO BUILD - USER HANDLES MANUALLY
-    console.log("\n--- SKIPPING BUILD ---");
-    console.log("REMINDER: Run 'npm run build' manually via SSH/Terminal if code changed!");
-
-    // 5. RESTART APPLICATION
-    console.log("\n--- RESTART ---");
+    // 5. RESTART
+    console.log("\n--- RESTARTING SERVICE ---");
     const tmp = path.join(process.cwd(), 'tmp');
     if (!fs.existsSync(tmp)) fs.mkdirSync(tmp);
     fs.writeFileSync(path.join(tmp, 'restart.txt'), new Date().toISOString());
-    console.log("Restart trigger created.");
 
-    console.log("=== SUCCESS ===");
+    console.log("\n=== DEPLOY SUCCESS (Install Only) ===");
+    console.log("NOTE: If you changed code, please run 'npm run build' manually via terminal.");
 
 } catch (e) {
-    console.error("DEPLOY FAILED:", e.message);
-    process.exit(0); // Exit clean so Plesk doesn't yell
+    console.error("\n!!! DEPLOY CRITICAL FAILURE !!!");
+    console.error(e.message);
+    process.exit(1);
 }
