@@ -40,6 +40,10 @@ jobs:
           local-dir: ./.next/
           server-dir: /.next/
           dangerous-clean-slate: true # Removes old .next files on server (safe for this folder)
+          exclude: |
+            **/.next/cache/**
+            .next/cache/**
+            cache/**
 
       - name: 🔄 Trigger Restart (Create restart.txt)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
