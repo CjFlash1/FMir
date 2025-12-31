@@ -2,7 +2,28 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-console.log('=== DEPLOYMENT STARTED (PATH PREPEND STRATEGY) ===');
+// === LOGGING SETUP ===
+const LOG_FILE = path.join(process.cwd(), 'deploy_log.txt');
+
+// Initialize log file
+try {
+    fs.writeFileSync(LOG_FILE, `=== DEPLOYMENT STARTED AT ${new Date().toISOString()} ===\n`);
+} catch (e) {
+    console.error('Failed to create log file:', e);
+}
+
+// Helper to write to both Console and File
+function log(message) {
+    try {
+        console.log(message); // Show in Plesk UI
+        if (typeof message !== 'string') message = JSON.stringify(message, null, 2);
+        fs.appendFileSync(LOG_FILE, message + '\n');
+    } catch (e) {
+        // silently fail logging if FS permissions are bad
+    }
+}
+
+log('=== CONFIGURING PATHS ===');
 
 // 1. Force-feed common Plesk paths into PATH
 const PLESK_DIRS = [
@@ -13,84 +34,92 @@ const PLESK_DIRS = [
 ];
 const LOCAL_BIN = path.join(process.cwd(), 'node_modules', '.bin');
 
-// Put Plesk dirs FIRST, then local bin, then existing PATH
+// Put Plesk dirs FIRST
 process.env.PATH = `${PLESK_DIRS.join(':')}:${LOCAL_BIN}:${process.env.PATH}`;
 
-console.log('Modified PATH length:', process.env.PATH.length);
+log(`Modified PATH length: ${process.env.PATH.length}`);
 
-// 2. Command Runner Helper
+// 2. Command Runner Helper (Captures Output)
 function run(cmd) {
-    console.log(`\n> ${cmd}`);
+    log(`\n> ${cmd}`);
     try {
-        execSync(cmd, { stdio: 'inherit', env: process.env });
+        // Use 'pipe' to capture output instead of 'inherit' so we can log it
+        const output = execSync(cmd, {
+            encoding: 'utf8',
+            env: process.env,
+            stdio: 'pipe' // capture stdout/stderr
+        });
+        log(output);
     } catch (e) {
-        throw new Error(`Failed: ${cmd}`);
+        log(`\n!!! COMMAND FAILED: ${cmd}`);
+        if (e.stdout) log(`STDOUT:\n${e.stdout.toString()}`);
+        if (e.stderr) log(`STDERR:\n${e.stderr.toString()}`);
+        throw new Error(`Command failed: ${cmd}`);
     }
 }
 
+log('=== STARTING ACTIONS ===');
+
 try {
     // 3. Verify Node Version
-    console.log('\nChecking "node" version in new PATH...');
+    log('\nChecking "node" version in new PATH...');
     try {
-        run('node -v'); // Should print v20.x
-        run('which node'); // Should print /opt/plesk/...
-    } catch (e) { console.log('Could not verify node version (minor issue)'); }
+        run('node -v');
+        run('which node');
+    } catch (e) { log('Could not verify node version (minor issue)'); }
 
     // 4. Clean Locks
-    console.log('\nCleaning locks...');
+    log('\nCleaning locks...');
     try {
         const nextDir = path.join(process.cwd(), '.next');
         const lock = path.join(nextDir, 'lock');
         const dev = path.join(nextDir, 'dev');
         if (fs.existsSync(lock)) fs.unlinkSync(lock);
         if (fs.existsSync(dev)) fs.rmSync(dev, { recursive: true, force: true });
-    } catch (e) { }
+        log('Locks cleaned.');
+    } catch (e) { log(`Lock cleaning error: ${e.message}`); }
 
     // 5. Install
+    log('\nRunning npm install...');
     run('npm install');
 
-    // 6. DB
+    // 6. DB (Re-enabled for full test, looking at logs if it fails)
     try {
-        console.log('\nDB Setup...');
-        /* 
-           TEMPORARILY DISABLED TO ISOLATE BUILD ERROR
-           run('prisma generate');
-           run('prisma db push --accept-data-loss');
-        */
-        console.log('Skipping Prisma DB push for debugging...');
-    } catch (e) { console.warn('DB Setup Warning:', e.message); }
+        log('\nDB Setup...');
+        process.env.PRISMA_CLI_BINARY_TARGETS = 'native,debian-openssl-1.1.x,debian-openssl-3.0.x'; // Try to help Prisma
+        run('npx prisma generate');
+        // run('npx prisma db push --accept-data-loss'); // Still risky, uncomment if build passes
+        log('Skipping db push for safety, verify build first.');
+    } catch (e) { log(`DB Setup Warning: ${e.message}`); }
 
     // 7. Build
-    console.log('\nBuilding...');
+    log('\nBuilding...');
 
-    // Debug: Check exactly what 'node' is right now
-    run('node -v');
-    run('which node');
-
-    const nextJsFile = path.join(process.cwd(), 'node_modules', 'next', 'dist', 'bin', 'next');
-
-    // Set env to disable telemetry and potential memory tracking issues
+    // Set env to disable telemetry
     process.env.NEXT_TELEMETRY_DISABLED = '1';
 
-    // Try running build
+    // Explicitly find Next binary
+    const nextJsFile = path.join(process.cwd(), 'node_modules', 'next', 'dist', 'bin', 'next');
+
     if (fs.existsSync(nextJsFile)) {
-        console.log(`Found Next.js CLI at: ${nextJsFile}`);
-        run(`node "${nextJsFile}" build`);
+        log(`Found Next.js CLI at: ${nextJsFile}`);
+        // Run with increased memory limit just in case
+        run(`node --max-old-space-size=4096 "${nextJsFile}" build`);
     } else {
-        console.error('Could not find Next.js CLI at expected path:', nextJsFile);
-        run('npm run build'); // Fallback
+        log('Could not find Next.js CLI at expected path. Trying "npm run build"...');
+        run('npm run build');
     }
 
     // 8. Restart
-    console.log('\nRestarting...');
+    log('\nRestarting...');
     const tmp = path.join(process.cwd(), 'tmp');
     if (!fs.existsSync(tmp)) fs.mkdirSync(tmp);
     fs.writeFileSync(path.join(tmp, 'restart.txt'), new Date().toISOString());
 
-    console.log('=== SUCCESS ===');
+    log('=== SUCCESS ===');
 
 } catch (err) {
-    console.error('\n!!! DEPLOY FAILED !!!');
-    console.error(err.message);
+    log('\n!!! DEPLOY FAILED !!!');
+    log(err.message);
     process.exit(1);
 }
