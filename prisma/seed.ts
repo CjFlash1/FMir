@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import fs from 'fs'
 import path from 'path'
+import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
@@ -16,6 +17,20 @@ const loadJSON = (filename: string) => {
 
 async function main() {
     console.log('Start seeding ...')
+
+    // 0. Admin User
+    const passwordHash = await bcrypt.hash('admin123', 10);
+    await prisma.user.upsert({
+        where: { email: 'admin@fujimir.com.ua' },
+        update: {},
+        create: {
+            email: 'admin@fujimir.com.ua',
+            password: passwordHash,
+            name: 'Super Admin',
+            role: 'ADMIN'
+        }
+    });
+    console.log('Admin user ensured');
 
     // 1. Paper Types
     await prisma.paperType.upsert({ where: { slug: 'glossy' }, update: {}, create: { name: 'Glossy', slug: 'glossy' } })
@@ -96,12 +111,12 @@ async function main() {
         }
     }
 
-        // 6. Translations (FROM FILE)
+    // 6. Translations (FROM FILE)
     console.log('Seeding Translations from JSON...');
     const translations = loadJSON('translations.json');
     if (translations && translations.length > 0) {
         for (const t of translations) {
-             await prisma.translation.upsert({
+            await prisma.translation.upsert({
                 where: { lang_key: { lang: t.lang, key: t.key } },
                 update: { value: t.value },
                 create: { lang: t.lang, key: t.key, value: t.value }
@@ -109,7 +124,7 @@ async function main() {
         }
     }
 
-// 5. Sample Volume Discounts
+    // 5. Sample Volume Discounts
     const size10x15 = await prisma.printSize.findUnique({ where: { slug: '10x15' } });
     if (size10x15) {
         await prisma.volumeDiscount.upsert({
@@ -168,12 +183,12 @@ async function main() {
         }
     });
 
-        // 8. Pages (FROM FILE)
+    // 8. Pages (FROM FILE)
     console.log('Seeding Pages from JSON...');
     const pages = loadJSON('pages.json');
     if (pages && pages.length > 0) {
         for (const p of pages) {
-             await prisma.page.upsert({
+            await prisma.page.upsert({
                 where: { slug_lang: { slug: p.slug, lang: p.lang } },
                 update: { title: p.title, description: p.description, content: p.content },
                 create: { slug: p.slug, lang: p.lang, title: p.title, description: p.description, content: p.content }
@@ -182,7 +197,7 @@ async function main() {
     }
 
 
-// 7. Help Center Data
+    // 7. Help Center Data
     console.log('Seeding Help Center...');
 
     // CLEANUP: Remove identifying help categories/articles to ensure fresh seed without conflicts
@@ -1079,7 +1094,7 @@ async function main() {
         await prisma.orderSequence.create({ data: { currentValue: 10000 } });
     }
 
-        // 11. General Settings (FROM FILE)
+    // 11. General Settings (FROM FILE)
     console.log('Seeding Settings from JSON...');
     const settings = loadJSON('settings.json');
     if (settings && settings.length > 0) {
@@ -1092,8 +1107,8 @@ async function main() {
         }
     }
 
-    
-console.log('Seeding finished.')
+
+    console.log('Seeding finished.')
 }
 
 main()
