@@ -98,21 +98,34 @@ try {
 
     // 6. FIX DATA
     console.log("\n--- SEEDING TRANSLATIONS ---");
+    // 6. FIX DATA
+    console.log("\n--- SEEDING TRANSLATIONS ---");
     try {
-        // DEBUG: List available Prisma engines to find the correct one
-        console.log("Checking available Prisma engines:");
-        try {
-            const prismaDir = path.join(process.cwd(), 'node_modules', '.prisma', 'client');
-            if (fs.existsSync(prismaDir)) {
-                fs.readdirSync(prismaDir).forEach(file => {
-                    console.log(' - ' + file);
-                });
-            } else {
-                console.log("WARNING: .prisma/client directory does not exist!");
-            }
-        } catch (e) { console.log(e.message); }
+        // Force Prisma to use OpenSSL 3.0.x engine since auto-detect fails
+        // We prioritize Debian 3.0.x, then RHEL 3.0.x
+        const prismaClientDir = path.join(process.cwd(), 'node_modules', '.prisma', 'client');
+        const engines = [
+            'libquery_engine-debian-openssl-3.0.x.so.node',
+            'libquery_engine-linux-musl-openssl-3.0.x.so.node',
+            'libquery_engine-rhel-openssl-3.0.x.so.node'
+        ];
 
-        // Run plain JS script (safer than ts-node on server)
+        let engineFound = false;
+        for (const engineName of engines) {
+            const enginePath = path.join(prismaClientDir, engineName);
+            if (fs.existsSync(enginePath)) {
+                console.log(`Force-setting engine to: ${engineName}`);
+                process.env.PRISMA_QUERY_ENGINE_LIBRARY = enginePath;
+                engineFound = true;
+                break;
+            }
+        }
+
+        if (!engineFound) {
+            console.log("Warning: No OpenSSL 3.0.x engine found. Prisma might fail if auto-detect picks 1.1.x.");
+        }
+
+        // Run plain JS script
         run('node src/scripts/seed-missing-translations.js');
     } catch (e) {
         log(`Translation seed warning (non-fatal): ${e.message}`);
