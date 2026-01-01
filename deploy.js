@@ -12,6 +12,10 @@ const LOG_FILE = path.join(process.cwd(), 'deploy_output.txt');
 function log(msg) {
     if (typeof msg !== 'string') msg = JSON.stringify(msg, null, 2);
     console.log(msg); // To stdout
+    // Write to file for checking via File Manager
+    try {
+        fs.appendFileSync(LOG_FILE, msg + '\n');
+    } catch (e) { }
 }
 
 function run(cmd, ignoreErrors = false) {
@@ -25,6 +29,8 @@ function run(cmd, ignoreErrors = false) {
 }
 
 console.log("\n=== DEPLOYMENT RESET ===");
+// Clear previous log
+try { fs.writeFileSync(LOG_FILE, "=== DEPLOY START " + new Date().toISOString() + " ===\n"); } catch (e) { }
 
 try {
     // 1. PATH CONFIG
@@ -88,9 +94,8 @@ try {
     // 6. FIX DATA
     console.log("\n--- SEEDING TRANSLATIONS ---");
     try {
-        // Run ts-node to seed missing database entries
-        // Note: Using CommonJS module settings to avoid ESM conflicts
-        run('npx ts-node --compiler-options "{\\"module\\":\\"CommonJS\\"}" src/scripts/seed-missing-translations.ts');
+        // Run plain JS script (safer than ts-node on server)
+        run('node src/scripts/seed-missing-translations.js');
     } catch (e) {
         log(`Translation seed warning (non-fatal): ${e.message}`);
     }
