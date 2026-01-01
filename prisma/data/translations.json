@@ -39,19 +39,19 @@
     "id": 38,
     "lang": "en",
     "key": "Border",
-    "value": "White Border"
+    "value": "Border"
   },
   {
     "id": 39,
     "lang": "ru",
     "key": "Border",
-    "value": "С рамкой"
+    "value": "Рамка"
   },
   {
     "id": 37,
     "lang": "uk",
     "key": "Border",
-    "value": "З рамкою"
+    "value": "Рамка"
   },
   {
     "id": 359,
@@ -189,13 +189,13 @@
     "id": 111,
     "lang": "ru",
     "key": "Drag & drop photos here, or click to select",
-    "value": "Перетащите фотографии сюда или нажмите для выбора"
+    "value": "Перетащите фото сюда или нажмите для выбора"
   },
   {
     "id": 109,
     "lang": "uk",
     "key": "Drag & drop photos here, or click to select",
-    "value": "Перетягніть фотографії сюди або натисніть для вибору"
+    "value": "Перетягніть фото сюди або натисніть для вибору"
   },
   {
     "id": 4730,
@@ -213,7 +213,7 @@
     "id": 4729,
     "lang": "uk",
     "key": "Duplicate All",
-    "value": "Дублювати всі"
+    "value": "Дублювати все"
   },
   {
     "id": 4727,
@@ -279,7 +279,7 @@
     "id": 162,
     "lang": "ru",
     "key": "Extras",
-    "value": "Дополнительно"
+    "value": "Доп. опции"
   },
   {
     "id": 160,
@@ -387,13 +387,13 @@
     "id": 327,
     "lang": "ru",
     "key": "No orders found",
-    "value": "Заказов не найдено"
+    "value": "Заказы не найдены"
   },
   {
     "id": 325,
     "lang": "uk",
     "key": "No orders found",
-    "value": "Замовлень не знайдено"
+    "value": "Замовлення не знайдено"
   },
   {
     "id": 188,
@@ -585,13 +585,13 @@
     "id": 234,
     "lang": "ru",
     "key": "Saved",
-    "value": "Экономия"
+    "value": "Сохранено"
   },
   {
     "id": 232,
     "lang": "uk",
     "key": "Saved",
-    "value": "Економія"
+    "value": "Збережено"
   },
   {
     "id": 4718,
@@ -603,13 +603,13 @@
     "id": 4719,
     "lang": "ru",
     "key": "Select All",
-    "value": "Выбрать все"
+    "value": "Выделить все"
   },
   {
     "id": 4717,
     "lang": "uk",
     "key": "Select All",
-    "value": "Обрати всі"
+    "value": "Виділити все"
   },
   {
     "id": 107,
@@ -711,13 +711,13 @@
     "id": 96,
     "lang": "ru",
     "key": "Upload your photos to get started",
-    "value": "Загрузите фотографии чтобы начать"
+    "value": "Загрузите фото для начала"
   },
   {
     "id": 94,
     "lang": "uk",
     "key": "Upload your photos to get started",
-    "value": "Завантажте фотографії щоб почати"
+    "value": "Завантажте фото для початку"
   },
   {
     "id": 284,
@@ -1911,145 +1911,145 @@
     "id": 167,
     "lang": "en",
     "key": "badge.border",
-    "value": "Bord"
+    "value": "Border"
   },
   {
     "id": 168,
     "lang": "ru",
     "key": "badge.border",
-    "value": "Рам"
+    "value": "Рамка"
   },
   {
     "id": 166,
     "lang": "uk",
     "key": "badge.border",
-    "value": "Рам"
+    "value": "Рамка"
   },
   {
     "id": 164,
     "lang": "en",
     "key": "badge.mag",
-    "value": "Mag"
+    "value": "Magnet"
   },
   {
     "id": 165,
     "lang": "ru",
     "key": "badge.mag",
-    "value": "Маг"
+    "value": "Магнит"
   },
   {
     "id": 163,
     "lang": "uk",
     "key": "badge.mag",
-    "value": "Маг"
+    "value": "Магніт"
   },
   {
     "id": 146,
     "lang": "en",
     "key": "benefits.delivery.desc",
-    "value": "Production starts immediately after upload. Shipping across Ukraine."
+    "value": "Fast delivery across Ukraine"
   },
   {
     "id": 147,
     "lang": "ru",
     "key": "benefits.delivery.desc",
-    "value": "Производство начинается сразу после загрузки. Доставка по всей Украине."
+    "value": "Быстрая доставка по Украине"
   },
   {
     "id": 145,
     "lang": "uk",
     "key": "benefits.delivery.desc",
-    "value": "Виробництво починається відразу після завантаження. Доставка по всій Україні."
+    "value": "Швидка доставка по Україні"
   },
   {
     "id": 143,
     "lang": "en",
     "key": "benefits.delivery.title",
-    "value": "Fast Delivery"
+    "value": "Delivery"
   },
   {
     "id": 144,
     "lang": "ru",
     "key": "benefits.delivery.title",
-    "value": "Быстрая Доставка"
+    "value": "Доставка"
   },
   {
     "id": 142,
     "lang": "uk",
     "key": "benefits.delivery.title",
-    "value": "Швидка Доставка"
+    "value": "Доставка"
   },
   {
     "id": 140,
     "lang": "en",
     "key": "benefits.discounts.desc",
-    "value": "Order more, pay less. Discounts are applied automatically in your cart."
+    "value": "Discounts for large orders"
   },
   {
     "id": 141,
     "lang": "ru",
     "key": "benefits.discounts.desc",
-    "value": "Заказывайте больше, платите меньше. Скидки применяются автоматически в корзине."
+    "value": "Скидки на большие заказы"
   },
   {
     "id": 139,
     "lang": "uk",
     "key": "benefits.discounts.desc",
-    "value": "Замовляйте більше, платіть менше. Знижки застосовуються автоматично в кошику."
+    "value": "Знижки на великі замовлення"
   },
   {
     "id": 137,
     "lang": "en",
     "key": "benefits.discounts.title",
-    "value": "Auto Discounts"
+    "value": "Discounts"
   },
   {
     "id": 138,
     "lang": "ru",
     "key": "benefits.discounts.title",
-    "value": "Авто Скидки"
+    "value": "Скидки"
   },
   {
     "id": 136,
     "lang": "uk",
     "key": "benefits.discounts.title",
-    "value": "Авто Знижки"
+    "value": "Знижки"
   },
   {
     "id": 134,
     "lang": "en",
     "key": "benefits.quality.desc",
-    "value": "Original Fuji Crystal Archive paper for brilliant colors and sharp details."
+    "value": "Professional photo printing"
   },
   {
     "id": 135,
     "lang": "ru",
     "key": "benefits.quality.desc",
-    "value": "Оригинальная бумага Fuji Crystal Archive для ярких цветов и четких деталей."
+    "value": "Профессиональная печать фото"
   },
   {
     "id": 133,
     "lang": "uk",
     "key": "benefits.quality.desc",
-    "value": "Оригінальний папір Fuji Crystal Archive для яскравих кольорів та чітких деталей."
+    "value": "Професійний друк фото"
   },
   {
     "id": 131,
     "lang": "en",
     "key": "benefits.quality.title",
-    "value": "Premium Quality"
+    "value": "Quality"
   },
   {
     "id": 132,
     "lang": "ru",
     "key": "benefits.quality.title",
-    "value": "Премиум Качество"
+    "value": "Качество"
   },
   {
     "id": 130,
     "lang": "uk",
     "key": "benefits.quality.title",
-    "value": "Преміум Якість"
+    "value": "Якість"
   },
   {
     "id": 173,
@@ -2109,19 +2109,19 @@
     "id": 224,
     "lang": "en",
     "key": "checkout.back",
-    "value": "Back to Upload"
+    "value": "Back"
   },
   {
     "id": 225,
     "lang": "ru",
     "key": "checkout.back",
-    "value": "Назад к загрузке"
+    "value": "Назад"
   },
   {
     "id": 223,
     "lang": "uk",
     "key": "checkout.back",
-    "value": "Назад до завантаження"
+    "value": "Назад"
   },
   {
     "id": 26,
@@ -2181,37 +2181,37 @@
     "id": 206,
     "lang": "en",
     "key": "checkout.email",
-    "value": "Email Address (Optional)"
+    "value": "Email"
   },
   {
     "id": 207,
     "lang": "ru",
     "key": "checkout.email",
-    "value": "Email (необязательно)"
+    "value": "Email"
   },
   {
     "id": 205,
     "lang": "uk",
     "key": "checkout.email",
-    "value": "Email (необов'язково)"
+    "value": "Email"
   },
   {
     "id": 221,
     "lang": "en",
     "key": "checkout.empty",
-    "value": "Your cart is empty."
+    "value": "Your cart is empty"
   },
   {
     "id": 222,
     "lang": "ru",
     "key": "checkout.empty",
-    "value": "Ваша корзина пуста."
+    "value": "Ваша корзина пуста"
   },
   {
     "id": 220,
     "lang": "uk",
     "key": "checkout.empty",
-    "value": "Ваш кошик порожній."
+    "value": "Ваш кошик порожній"
   },
   {
     "id": 22292,
@@ -2253,19 +2253,19 @@
     "id": 7616,
     "lang": "en",
     "key": "checkout.fullname_hint",
-    "value": "For Nova Poshta please enter first and last name"
+    "value": "As in passport"
   },
   {
     "id": 7617,
     "lang": "ru",
     "key": "checkout.fullname_hint",
-    "value": "Для Новой Почты укажите имя и фамилию"
+    "value": "Как в паспорте"
   },
   {
     "id": 7615,
     "lang": "uk",
     "key": "checkout.fullname_hint",
-    "value": "Для Нової Пошти вкажіть ім'я та прізвище"
+    "value": "Як у паспорті"
   },
   {
     "id": 22295,
@@ -2289,19 +2289,19 @@
     "id": 6929,
     "lang": "en",
     "key": "checkout.local",
-    "value": "Local Delivery"
+    "value": "Local Pickup"
   },
   {
     "id": 6930,
     "lang": "ru",
     "key": "checkout.local",
-    "value": "Местная доставка"
+    "value": "Самовывоз"
   },
   {
     "id": 6928,
     "lang": "uk",
     "key": "checkout.local",
-    "value": "Місцева доставка"
+    "value": "Самовивіз"
   },
   {
     "id": 200,
@@ -2361,7 +2361,7 @@
     "id": 203,
     "lang": "en",
     "key": "checkout.phone",
-    "value": "Phone Number"
+    "value": "Phone"
   },
   {
     "id": 204,
@@ -2379,19 +2379,19 @@
     "id": 332,
     "lang": "en",
     "key": "checkout.phone_error",
-    "value": "Please enter a valid phone number (at least 10 digits)"
+    "value": "Invalid phone number"
   },
   {
     "id": 333,
     "lang": "ru",
     "key": "checkout.phone_error",
-    "value": "Пожалуйста, введите корректный номер телефона (минимум 10 цифр)"
+    "value": "Неверный номер телефона"
   },
   {
     "id": 331,
     "lang": "uk",
     "key": "checkout.phone_error",
-    "value": "Будь ласка, введіть коректний номер телефону (мінімум 10 цифр)"
+    "value": "Невірний номер телефону"
   },
   {
     "id": 212,
@@ -2433,19 +2433,19 @@
     "id": 230,
     "lang": "en",
     "key": "checkout.return_home",
-    "value": "Return Home"
+    "value": "Return to Home"
   },
   {
     "id": 231,
     "lang": "ru",
     "key": "checkout.return_home",
-    "value": "На главную"
+    "value": "Вернуться на главную"
   },
   {
     "id": 229,
     "lang": "uk",
     "key": "checkout.return_home",
-    "value": "На головну"
+    "value": "Повернутися на головну"
   },
   {
     "id": 197,
@@ -2457,13 +2457,13 @@
     "id": 198,
     "lang": "ru",
     "key": "checkout.shipping_contact",
-    "value": "Доставка и Контакты"
+    "value": "Доставка и контакты"
   },
   {
     "id": 196,
     "lang": "uk",
     "key": "checkout.shipping_contact",
-    "value": "Доставка та Контакти"
+    "value": "Доставка та контакти"
   },
   {
     "id": 20,
@@ -2475,7 +2475,7 @@
     "id": 21,
     "lang": "ru",
     "key": "checkout.summary",
-    "value": "Итог заказа"
+    "value": "Итого заказа"
   },
   {
     "id": 19,
@@ -2493,13 +2493,13 @@
     "id": 24,
     "lang": "ru",
     "key": "checkout.total",
-    "value": "Всего"
+    "value": "Итого"
   },
   {
     "id": 22,
     "lang": "uk",
     "key": "checkout.total",
-    "value": "Всього"
+    "value": "Разом"
   },
   {
     "id": 26450,
@@ -2691,13 +2691,13 @@
     "id": 17568,
     "lang": "ru",
     "key": "config.add_tier",
-    "value": "Добавить порог"
+    "value": "Добавить уровень"
   },
   {
     "id": 17566,
     "lang": "uk",
     "key": "config.add_tier",
-    "value": "Додати поріг"
+    "value": "Додати рівень"
   },
   {
     "id": 16742,
@@ -2739,55 +2739,55 @@
     "id": 4697,
     "lang": "en",
     "key": "config.delivery_desc",
-    "value": "Manage delivery options and pricing"
+    "value": "Delivery settings"
   },
   {
     "id": 4698,
     "lang": "ru",
     "key": "config.delivery_desc",
-    "value": "Управление опциями и ценами на доставку"
+    "value": "Настройки доставки"
   },
   {
     "id": 4696,
     "lang": "uk",
     "key": "config.delivery_desc",
-    "value": "Управління опціями та цінами на доставку"
+    "value": "Налаштування доставки"
   },
   {
     "id": 89,
     "lang": "en",
     "key": "config.discounts",
-    "value": "Sizes & Discounts"
+    "value": "Discounts"
   },
   {
     "id": 90,
     "lang": "ru",
     "key": "config.discounts",
-    "value": "Размеры и скидки"
+    "value": "Скидки"
   },
   {
     "id": 88,
     "lang": "uk",
     "key": "config.discounts",
-    "value": "Розміри та знижки"
+    "value": "Знижки"
   },
   {
     "id": 16748,
     "lang": "en",
     "key": "config.drag_to_sort",
-    "value": "Drag rows to reorder"
+    "value": "Drag to sort"
   },
   {
     "id": 16749,
     "lang": "ru",
     "key": "config.drag_to_sort",
-    "value": "Перетащите строки для изменения порядка"
+    "value": "Перетащите для сортировки"
   },
   {
     "id": 16747,
     "lang": "uk",
     "key": "config.drag_to_sort",
-    "value": "Перетягніть рядки для зміни порядку"
+    "value": "Перетягніть для сортування"
   },
   {
     "id": 86,
@@ -2829,61 +2829,61 @@
     "id": 4691,
     "lang": "en",
     "key": "config.magnets_desc",
-    "value": "Manage photo magnet pricing"
+    "value": "Magnet settings"
   },
   {
     "id": 4692,
     "lang": "ru",
     "key": "config.magnets_desc",
-    "value": "Управление ценами на фотомагниты"
+    "value": "Настройки магнитов"
   },
   {
     "id": 4690,
     "lang": "uk",
     "key": "config.magnets_desc",
-    "value": "Управління цінами на фотомагніти"
+    "value": "Налаштування магнітів"
   },
   {
     "id": 17573,
     "lang": "en",
     "key": "config.min_qty",
-    "value": "From qty"
+    "value": "Minimum Quantity"
   },
   {
     "id": 17574,
     "lang": "ru",
     "key": "config.min_qty",
-    "value": "От шт."
+    "value": "Минимальное количество"
   },
   {
     "id": 17572,
     "lang": "uk",
     "key": "config.min_qty",
-    "value": "Від шт."
+    "value": "Мінімальна кількість"
   },
   {
     "id": 16745,
     "lang": "en",
     "key": "config.no_sizes",
-    "value": "No sizes added"
+    "value": "No sizes configured"
   },
   {
     "id": 16746,
     "lang": "ru",
     "key": "config.no_sizes",
-    "value": "Размеры не добавлены"
+    "value": "Размеры не настроены"
   },
   {
     "id": 16744,
     "lang": "uk",
     "key": "config.no_sizes",
-    "value": "Розміри не додані"
+    "value": "Розміри не налаштовані"
   },
   {
     "id": 83,
     "lang": "en",
     "key": "config.options",
-    "value": "Extra Options"
+    "value": "Options"
   },
   {
     "id": 84,
@@ -2901,19 +2901,19 @@
     "id": 419,
     "lang": "en",
     "key": "config.paper",
-    "value": "Paper Types"
+    "value": "Paper"
   },
   {
     "id": 420,
     "lang": "ru",
     "key": "config.paper",
-    "value": "Типы Бумаги"
+    "value": "Бумага"
   },
   {
     "id": 418,
     "lang": "uk",
     "key": "config.paper",
-    "value": "Типи Паперу"
+    "value": "Папір"
   },
   {
     "id": 80,
@@ -2997,31 +2997,31 @@
     "id": 414,
     "lang": "ru",
     "key": "config.system_title",
-    "value": "Конфигурация Системы"
+    "value": "Конфигурация системы"
   },
   {
     "id": 412,
     "lang": "uk",
     "key": "config.system_title",
-    "value": "Конфігурація Системи"
+    "value": "Конфігурація системи"
   },
   {
     "id": 17570,
     "lang": "en",
     "key": "config.tier_label",
-    "value": "Label"
+    "value": "Tier"
   },
   {
     "id": 17571,
     "lang": "ru",
     "key": "config.tier_label",
-    "value": "Название"
+    "value": "Уровень"
   },
   {
     "id": 17569,
     "lang": "uk",
     "key": "config.tier_label",
-    "value": "Назва"
+    "value": "Рівень"
   },
   {
     "id": 26471,
@@ -3045,19 +3045,19 @@
     "id": 26444,
     "lang": "en",
     "key": "error.missing_files_refresh",
-    "value": "Some files were lost due to page refresh. Please go back and re-add them."
+    "value": "Some files are missing. Please refresh."
   },
   {
     "id": 26445,
     "lang": "ru",
     "key": "error.missing_files_refresh",
-    "value": "Некоторые файлы потеряны из-за обновления страницы. Вернитесь и добавьте их снова."
+    "value": "Некоторые файлы отсутствуют. Обновите страницу."
   },
   {
     "id": 26443,
     "lang": "uk",
     "key": "error.missing_files_refresh",
-    "value": "Деякі файли втрачені через оновлення сторінки. Поверніться та додайте їх знову."
+    "value": "Деякі файли відсутні. Оновіть сторінку."
   },
   {
     "id": 446,
@@ -3069,121 +3069,121 @@
     "id": 447,
     "lang": "ru",
     "key": "general.currency",
-    "value": "ГРН"
+    "value": "грн"
   },
   {
     "id": 445,
     "lang": "uk",
     "key": "general.currency",
-    "value": "ГРН"
+    "value": "грн"
   },
   {
     "id": 539,
     "lang": "en",
     "key": "gift.choose",
-    "value": "Choose your gift:"
+    "value": "Choose your gift"
   },
   {
     "id": 540,
     "lang": "ru",
     "key": "gift.choose",
-    "value": "Выберите ваш подарок:"
+    "value": "Выберите подарок"
   },
   {
     "id": 538,
     "lang": "uk",
     "key": "gift.choose",
-    "value": "Оберіть ваш подарунок:"
+    "value": "Оберіть подарунок"
   },
   {
     "id": 542,
     "lang": "en",
     "key": "gift.free_delivery",
-    "value": "🚚 Free Delivery"
+    "value": "Free Delivery"
   },
   {
     "id": 543,
     "lang": "ru",
     "key": "gift.free_delivery",
-    "value": "🚚 Бесплатная доставка"
+    "value": "Бесплатная доставка"
   },
   {
     "id": 541,
     "lang": "uk",
     "key": "gift.free_delivery",
-    "value": "🚚 Безкоштовна доставка"
+    "value": "Безкоштовна доставка"
   },
   {
     "id": 545,
     "lang": "en",
     "key": "gift.free_magnet",
-    "value": "🧲 Free 10x15 Magnet"
+    "value": "Free Magnet"
   },
   {
     "id": 546,
     "lang": "ru",
     "key": "gift.free_magnet",
-    "value": "🧲 Бесплатный магнит 10x15"
+    "value": "Бесплатный магнит"
   },
   {
     "id": 544,
     "lang": "uk",
     "key": "gift.free_magnet",
-    "value": "🧲 Безкоштовний магніт 10x15"
+    "value": "Безкоштовний магніт"
   },
   {
     "id": 554,
     "lang": "en",
     "key": "gift.magnet_comment",
-    "value": "Leave a comment"
+    "value": "Magnet comment"
   },
   {
     "id": 555,
     "lang": "ru",
     "key": "gift.magnet_comment",
-    "value": "Оставить комментарий"
+    "value": "Комментарий к магниту"
   },
   {
     "id": 553,
     "lang": "uk",
     "key": "gift.magnet_comment",
-    "value": "Залишити коментар"
+    "value": "Коментар до магніту"
   },
   {
     "id": 551,
     "lang": "en",
     "key": "gift.magnet_existing",
-    "value": "Choose from uploaded"
+    "value": "Use existing photo"
   },
   {
     "id": 552,
     "lang": "ru",
     "key": "gift.magnet_existing",
-    "value": "Выбрать из загруженных"
+    "value": "Использовать загруженное фото"
   },
   {
     "id": 550,
     "lang": "uk",
     "key": "gift.magnet_existing",
-    "value": "Обрати з завантажених"
+    "value": "Використати завантажене фото"
   },
   {
     "id": 557,
     "lang": "en",
     "key": "gift.magnet_photo_placeholder",
-    "value": "E.g.: \"Photo #5\" or describe your wishes"
+    "value": "Select photo for magnet"
   },
   {
     "id": 558,
     "lang": "ru",
     "key": "gift.magnet_photo_placeholder",
-    "value": "Например: \"Фото №5\" или опишите пожелания"
+    "value": "Выберите фото для магнита"
   },
   {
     "id": 556,
     "lang": "uk",
     "key": "gift.magnet_photo_placeholder",
-    "value": "Наприклад: \"Фото №5\" або опис побажань"
+    "value": "Оберіть фото для магніту"
   },
   {
     "id": 548,
@@ -3207,55 +3207,55 @@
     "id": 1658,
     "lang": "en",
     "key": "gift.promo_text",
-    "value": "Orders over {amount} UAH get a free magnet or free delivery!"
+    "value": "Get a free gift!"
   },
   {
     "id": 1659,
     "lang": "ru",
     "key": "gift.promo_text",
-    "value": "При заказе от {amount} грн — магнит или бесплатная доставка в подарок!"
+    "value": "Получите бесплатный подарок!"
   },
   {
     "id": 1657,
     "lang": "uk",
     "key": "gift.promo_text",
-    "value": "При замовленні від {amount} грн — магніт або безкоштовна доставка у подарунок!"
+    "value": "Отримайте безкоштовний подарунок!"
   },
   {
     "id": 2252,
     "lang": "en",
     "key": "gift.select_photo",
-    "value": "Select photo"
+    "value": "Select Photo"
   },
   {
     "id": 2253,
     "lang": "ru",
     "key": "gift.select_photo",
-    "value": "Выберите фото"
+    "value": "Выбрать фото"
   },
   {
     "id": 2251,
     "lang": "uk",
     "key": "gift.select_photo",
-    "value": "Оберіть фото"
+    "value": "Обрати фото"
   },
   {
     "id": 3413,
     "lang": "en",
     "key": "gift.select_required",
-    "value": "Please select your gift"
+    "value": "Please select a photo"
   },
   {
     "id": 3414,
     "lang": "ru",
     "key": "gift.select_required",
-    "value": "Выберите ваш подарок"
+    "value": "Пожалуйста, выберите фото"
   },
   {
     "id": 3412,
     "lang": "uk",
     "key": "gift.select_required",
-    "value": "Оберіть ваш подарунок"
+    "value": "Будь ласка, оберіть фото"
   },
   {
     "id": 560,
@@ -3279,19 +3279,19 @@
     "id": 1655,
     "lang": "en",
     "key": "gift.step2_desc",
-    "value": "After uploading photos, choose size, quantity and other options. Bulk discounts available."
+    "value": "Customize your gift"
   },
   {
     "id": 1656,
     "lang": "ru",
     "key": "gift.step2_desc",
-    "value": "После того как фотографии загружены, выберите размер, количество и другие параметры. При печати большого количества фотографий предоставляется скидка."
+    "value": "Настройте свой подарок"
   },
   {
     "id": 1654,
     "lang": "uk",
     "key": "gift.step2_desc",
-    "value": "Після того як фотографії завантажені, оберіть розмір, кількість та інші параметри. При друку великої кількості фотографій надається знижка."
+    "value": "Налаштуйте свій подарунок"
   },
   {
     "id": 533,
@@ -3315,91 +3315,91 @@
     "id": 536,
     "lang": "en",
     "key": "gift.title",
-    "value": "🎁 You qualify for a gift!"
+    "value": "Gift"
   },
   {
     "id": 537,
     "lang": "ru",
     "key": "gift.title",
-    "value": "🎁 Вам доступен подарок!"
+    "value": "Подарок"
   },
   {
     "id": 535,
     "lang": "uk",
     "key": "gift.title",
-    "value": "🎁 Вам доступний подарунок!"
+    "value": "Подарунок"
   },
   {
     "id": 443,
     "lang": "en",
     "key": "header.schedule_default",
-    "value": "Mon-Sat 9:30-18:30 (Sun closed)"
+    "value": "Mon-Sat 9:00-18:00"
   },
   {
     "id": 444,
     "lang": "ru",
     "key": "header.schedule_default",
-    "value": "Пн-Сб 9:30-18:30 (Вс - выходной)"
+    "value": "Пн-Сб 9:00-18:00"
   },
   {
     "id": 442,
     "lang": "uk",
     "key": "header.schedule_default",
-    "value": "Пн-Сб 9:30-18:30 (Нд - вихідний)"
+    "value": "Пн-Сб 9:00-18:00"
   },
   {
     "id": 128,
     "lang": "en",
     "key": "hero.subtitle",
-    "value": "Professional printing of your memories"
+    "value": "Professional photo printing online"
   },
   {
     "id": 129,
     "lang": "ru",
     "key": "hero.subtitle",
-    "value": "Профессиональная печать ваших воспоминаний"
+    "value": "Профессиональная печать фото онлайн"
   },
   {
     "id": 127,
     "lang": "uk",
     "key": "hero.subtitle",
-    "value": "Професійний друк ваших спогадів"
+    "value": "Професійний друк фото онлайн"
   },
   {
     "id": 125,
     "lang": "en",
     "key": "hero.title",
-    "value": "Online Photo Lab"
+    "value": "Print Your Memories"
   },
   {
     "id": 126,
     "lang": "ru",
     "key": "hero.title",
-    "value": "Онлайн Фотолаб"
+    "value": "Напечатайте ваши воспоминания"
   },
   {
     "id": 124,
     "lang": "uk",
     "key": "hero.title",
-    "value": "Онлайн Фотолаб"
+    "value": "Надрукуйте ваші спогади"
   },
   {
     "id": 13571,
     "lang": "en",
     "key": "image_options.additional",
-    "value": "Additional (Cropping)"
+    "value": "Additional Options"
   },
   {
     "id": 13572,
     "lang": "ru",
     "key": "image_options.additional",
-    "value": "Дополнительно"
+    "value": "Дополнительные опции"
   },
   {
     "id": 13570,
     "lang": "uk",
     "key": "image_options.additional",
-    "value": "Додатково (Обрізка)"
+    "value": "Додаткові опції"
   },
   {
     "id": 13583,
@@ -3423,55 +3423,55 @@
     "id": 13577,
     "lang": "en",
     "key": "image_options.fit_in",
-    "value": "FIT-IN (No Crop)"
+    "value": "Fit in frame"
   },
   {
     "id": 13578,
     "lang": "ru",
     "key": "image_options.fit_in",
-    "value": "Не обрезать (FIT-IN)"
+    "value": "Вписать в рамку"
   },
   {
     "id": 13576,
     "lang": "uk",
     "key": "image_options.fit_in",
-    "value": "Не обрізати (FIT-IN)"
+    "value": "Вписати в рамку"
   },
   {
     "id": 13574,
     "lang": "en",
     "key": "image_options.free_cropping",
-    "value": "Free Cropping (Standard)"
+    "value": "Free cropping"
   },
   {
     "id": 13575,
     "lang": "ru",
     "key": "image_options.free_cropping",
-    "value": "Free Cropping (Произвольная обрезка)"
+    "value": "Свободная обрезка"
   },
   {
     "id": 13573,
     "lang": "uk",
     "key": "image_options.free_cropping",
-    "value": "Free Cropping (Вільна обрізка)"
+    "value": "Вільна обрізка"
   },
   {
     "id": 13580,
     "lang": "en",
     "key": "image_options.no_resize",
-    "value": "NO-RESIZE"
+    "value": "Do not resize"
   },
   {
     "id": 13581,
     "lang": "ru",
     "key": "image_options.no_resize",
-    "value": "Без масштабирования (NO-RESIZE)"
+    "value": "Не изменять размер"
   },
   {
     "id": 13579,
     "lang": "uk",
     "key": "image_options.no_resize",
-    "value": "Без масштабування (NO-RESIZE)"
+    "value": "Не змінювати розмір"
   },
   {
     "id": 314,
@@ -3495,7 +3495,7 @@
     "id": 8,
     "lang": "en",
     "key": "nav.about",
-    "value": "About US"
+    "value": "About"
   },
   {
     "id": 9,
@@ -3585,19 +3585,19 @@
     "id": 2,
     "lang": "en",
     "key": "nav.upload",
-    "value": "Upload Photos"
+    "value": "Upload"
   },
   {
     "id": 3,
     "lang": "ru",
     "key": "nav.upload",
-    "value": "Закачать фотографии"
+    "value": "Загрузить"
   },
   {
     "id": 1,
     "lang": "uk",
     "key": "nav.upload",
-    "value": "Завантажити фотографії"
+    "value": "Завантажити"
   },
   {
     "id": 7622,
@@ -3621,19 +3621,19 @@
     "id": 7625,
     "lang": "en",
     "key": "np.city_placeholder",
-    "value": "Enter city name..."
+    "value": "Enter city name"
   },
   {
     "id": 7626,
     "lang": "ru",
     "key": "np.city_placeholder",
-    "value": "Введите название города..."
+    "value": "Введите название города"
   },
   {
     "id": 7624,
     "lang": "uk",
     "key": "np.city_placeholder",
-    "value": "Введіть назву міста..."
+    "value": "Введіть назву міста"
   },
   {
     "id": 7634,
@@ -3657,37 +3657,37 @@
     "id": 7628,
     "lang": "en",
     "key": "np.warehouse",
-    "value": "Branch / Postamat"
+    "value": "Warehouse"
   },
   {
     "id": 7629,
     "lang": "ru",
     "key": "np.warehouse",
-    "value": "Отделение / Почтомат"
+    "value": "Отделение"
   },
   {
     "id": 7627,
     "lang": "uk",
     "key": "np.warehouse",
-    "value": "Відділення / Поштомат"
+    "value": "Відділення"
   },
   {
     "id": 7631,
     "lang": "en",
     "key": "np.warehouse_placeholder",
-    "value": "Search branch or postamat..."
+    "value": "Select warehouse"
   },
   {
     "id": 7632,
     "lang": "ru",
     "key": "np.warehouse_placeholder",
-    "value": "Поиск отделения или почтомата..."
+    "value": "Выберите отделение"
   },
   {
     "id": 7630,
     "lang": "uk",
     "key": "np.warehouse_placeholder",
-    "value": "Пошук відділення або поштомату..."
+    "value": "Оберіть відділення"
   },
   {
     "id": 5429,
@@ -3729,55 +3729,55 @@
     "id": 4025,
     "lang": "en",
     "key": "pricing.by_tariff",
-    "value": "by tariff"
+    "value": "By carrier tariff"
   },
   {
     "id": 4026,
     "lang": "ru",
     "key": "pricing.by_tariff",
-    "value": "по тарифам"
+    "value": "По тарифу перевозчика"
   },
   {
     "id": 4024,
     "lang": "uk",
     "key": "pricing.by_tariff",
-    "value": "за тарифами"
+    "value": "За тарифом перевізника"
   },
   {
     "id": 4043,
     "lang": "en",
     "key": "pricing.contact_for_services",
-    "value": "Contact us for pricing details"
+    "value": "Contact us for services"
   },
   {
     "id": 4044,
     "lang": "ru",
     "key": "pricing.contact_for_services",
-    "value": "Свяжитесь с нами для уточнения стоимости"
+    "value": "Свяжитесь с нами"
   },
   {
     "id": 4042,
     "lang": "uk",
     "key": "pricing.contact_for_services",
-    "value": "Зв'яжіться з нами для уточнення вартості"
+    "value": "Зв'яжіться з нами"
   },
   {
     "id": 4019,
     "lang": "en",
     "key": "pricing.currency_note",
-    "value": "Prices in UAH per photo"
+    "value": "All prices in UAH"
   },
   {
     "id": 4020,
     "lang": "ru",
     "key": "pricing.currency_note",
-    "value": "Цены указаны в гривнах за 1 фото"
+    "value": "Все цены в гривнях"
   },
   {
     "id": 4018,
     "lang": "uk",
     "key": "pricing.currency_note",
-    "value": "Ціни вказані в гривнях за 1 фото"
+    "value": "Всі ціни в гривнях"
   },
   {
     "id": 4007,
@@ -3819,55 +3819,55 @@
     "id": 4022,
     "lang": "en",
     "key": "pricing.magnet_note",
-    "value": "Magnet price includes photo + magnetic base"
+    "value": "Magnet with your photo"
   },
   {
     "id": 4023,
     "lang": "ru",
     "key": "pricing.magnet_note",
-    "value": "Магнит — это полная стоимость (фото + магнитная основа)"
+    "value": "Магнит с вашим фото"
   },
   {
     "id": 4021,
     "lang": "uk",
     "key": "pricing.magnet_note",
-    "value": "Фотомагніт — це повна вартість (фото + магнітна основа)"
+    "value": "Магніт з вашим фото"
   },
   {
     "id": 4004,
     "lang": "en",
     "key": "pricing.magnets",
-    "value": "Fridge Magnets"
+    "value": "Magnets"
   },
   {
     "id": 4005,
     "lang": "ru",
     "key": "pricing.magnets",
-    "value": "Магниты на холодильник"
+    "value": "Магниты"
   },
   {
     "id": 4003,
     "lang": "uk",
     "key": "pricing.magnets",
-    "value": "Магніти на холодильник"
+    "value": "Магніти"
   },
   {
     "id": 4001,
     "lang": "en",
     "key": "pricing.photo_print",
-    "value": "Photo Printing"
+    "value": "Photo Print"
   },
   {
     "id": 4002,
     "lang": "ru",
     "key": "pricing.photo_print",
-    "value": "Фотопечать"
+    "value": "Печать фото"
   },
   {
     "id": 4000,
     "lang": "uk",
     "key": "pricing.photo_print",
-    "value": "Фотодрук"
+    "value": "Друк фото"
   },
   {
     "id": 4016,
@@ -3909,43 +3909,43 @@
     "id": 4046,
     "lang": "en",
     "key": "pricing.promo_title",
-    "value": "🎁 Special Offer"
+    "value": "Special Offer"
   },
   {
     "id": 4047,
     "lang": "ru",
     "key": "pricing.promo_title",
-    "value": "🎁 Специальное предложение"
+    "value": "Специальное предложение"
   },
   {
     "id": 4045,
     "lang": "uk",
     "key": "pricing.promo_title",
-    "value": "🎁 Спеціальна пропозиція"
+    "value": "Спеціальна пропозиція"
   },
   {
     "id": 4037,
     "lang": "en",
     "key": "pricing.service_collage",
-    "value": "Layout and collage design"
+    "value": "Collage"
   },
   {
     "id": 4038,
     "lang": "ru",
     "key": "pricing.service_collage",
-    "value": "Разработка макетов и коллажей"
+    "value": "Коллаж"
   },
   {
     "id": 4036,
     "lang": "uk",
     "key": "pricing.service_collage",
-    "value": "Розробка макетів та колажів"
+    "value": "Колаж"
   },
   {
     "id": 4040,
     "lang": "en",
     "key": "pricing.service_documents",
-    "value": "ID photos"
+    "value": "Document Photo"
   },
   {
     "id": 4041,
@@ -3963,109 +3963,109 @@
     "id": 4034,
     "lang": "en",
     "key": "pricing.service_redeye",
-    "value": "Red-eye removal"
+    "value": "Red Eye Removal"
   },
   {
     "id": 4035,
     "lang": "ru",
     "key": "pricing.service_redeye",
-    "value": "Устранение эффекта красных глаз"
+    "value": "Удаление красных глаз"
   },
   {
     "id": 4033,
     "lang": "uk",
     "key": "pricing.service_redeye",
-    "value": "Усунення ефекту червоних очей"
+    "value": "Видалення червоних очей"
   },
   {
     "id": 4031,
     "lang": "en",
     "key": "pricing.service_restore",
-    "value": "Photo restoration and editing"
+    "value": "Photo Restoration"
   },
   {
     "id": 4032,
     "lang": "ru",
     "key": "pricing.service_restore",
-    "value": "Реставрация и обработка фотографий"
+    "value": "Реставрация фото"
   },
   {
     "id": 4030,
     "lang": "uk",
     "key": "pricing.service_restore",
-    "value": "Реставрація та обробка фотографій"
+    "value": "Реставрація фото"
   },
   {
     "id": 4028,
     "lang": "en",
     "key": "pricing.service_scan",
-    "value": "Photo and film scanning"
+    "value": "Photo Scanning"
   },
   {
     "id": 4029,
     "lang": "ru",
     "key": "pricing.service_scan",
-    "value": "Сканирование фотографий и плёнок"
+    "value": "Сканирование фото"
   },
   {
     "id": 4027,
     "lang": "uk",
     "key": "pricing.service_scan",
-    "value": "Сканування фотографій та плівок"
+    "value": "Сканування фото"
   },
   {
     "id": 4010,
     "lang": "en",
     "key": "pricing.services",
-    "value": "Additional Services"
+    "value": "Services"
   },
   {
     "id": 4011,
     "lang": "ru",
     "key": "pricing.services",
-    "value": "Дополнительные услуги"
+    "value": "Услуги"
   },
   {
     "id": 4009,
     "lang": "uk",
     "key": "pricing.services",
-    "value": "Додаткові послуги"
+    "value": "Послуги"
   },
   {
     "id": 3998,
     "lang": "en",
     "key": "pricing.subtitle",
-    "value": "Transparent pricing with no hidden fees"
+    "value": "Transparent pricing"
   },
   {
     "id": 3999,
     "lang": "ru",
     "key": "pricing.subtitle",
-    "value": "Прозрачные цены без скрытых комиссий"
+    "value": "Прозрачные цены"
   },
   {
     "id": 3997,
     "lang": "uk",
     "key": "pricing.subtitle",
-    "value": "Прозорі ціни без прихованих комісій"
+    "value": "Прозорі ціни"
   },
   {
     "id": 3995,
     "lang": "en",
     "key": "pricing.title",
-    "value": "Prices & Services"
+    "value": "Pricing"
   },
   {
     "id": 3996,
     "lang": "ru",
     "key": "pricing.title",
-    "value": "Цены и услуги"
+    "value": "Цены"
   },
   {
     "id": 3994,
     "lang": "uk",
     "key": "pricing.title",
-    "value": "Ціни та послуги"
+    "value": "Ціни"
   },
   {
     "id": 50,
@@ -4107,37 +4107,37 @@
     "id": 26393,
     "lang": "en",
     "key": "settings.analytics_desc",
-    "value": "Configure Google Analytics and other analytics systems"
+    "value": "Tracking and analytics settings"
   },
   {
     "id": 26394,
     "lang": "ru",
     "key": "settings.analytics_desc",
-    "value": "Настройка Google Analytics и других систем аналитики"
+    "value": "Настройки отслеживания и аналитики"
   },
   {
     "id": 26392,
     "lang": "uk",
     "key": "settings.analytics_desc",
-    "value": "Налаштування Google Analytics та інших систем аналітики"
+    "value": "Налаштування відстеження та аналітики"
   },
   {
     "id": 530,
     "lang": "en",
     "key": "settings.bing_verification",
-    "value": "Bing Webmaster"
+    "value": "Bing Verification"
   },
   {
     "id": 531,
     "lang": "ru",
     "key": "settings.bing_verification",
-    "value": "Bing Webmaster"
+    "value": "Верификация Bing"
   },
   {
     "id": 529,
     "lang": "uk",
     "key": "settings.bing_verification",
-    "value": "Bing Webmaster"
+    "value": "Верифікація Bing"
   },
   {
     "id": 26405,
@@ -4161,19 +4161,19 @@
     "id": 26408,
     "lang": "en",
     "key": "settings.branding_desc",
-    "value": "Configure site logo and name for different languages"
+    "value": "Logo and brand settings"
   },
   {
     "id": 26409,
     "lang": "ru",
     "key": "settings.branding_desc",
-    "value": "Настройка логотипа и названия сайта для разных языков"
+    "value": "Настройки логотипа и бренда"
   },
   {
     "id": 26407,
     "lang": "uk",
     "key": "settings.branding_desc",
-    "value": "Налаштування логотипу та назви сайту для різних мов"
+    "value": "Налаштування логотипу та бренду"
   },
   {
     "id": 28305,
@@ -4347,31 +4347,31 @@
     "id": 441,
     "lang": "ru",
     "key": "settings.contact_schedule",
-    "value": "График работы"
+    "value": "Расписание"
   },
   {
     "id": 439,
     "lang": "uk",
     "key": "settings.contact_schedule",
-    "value": "Графік роботи"
+    "value": "Розклад"
   },
   {
     "id": 392,
     "lang": "en",
     "key": "settings.facebook",
-    "value": "Facebook URL"
+    "value": "Facebook"
   },
   {
     "id": 393,
     "lang": "ru",
     "key": "settings.facebook",
-    "value": "Facebook URL"
+    "value": "Facebook"
   },
   {
     "id": 391,
     "lang": "uk",
     "key": "settings.facebook",
-    "value": "Facebook URL"
+    "value": "Facebook"
   },
   {
     "id": 26402,
@@ -4395,199 +4395,199 @@
     "id": 26396,
     "lang": "en",
     "key": "settings.ga4_measurement_id",
-    "value": "Google Analytics 4 (Measurement ID)"
+    "value": "GA4 Measurement ID"
   },
   {
     "id": 26397,
     "lang": "ru",
     "key": "settings.ga4_measurement_id",
-    "value": "Google Analytics 4 (Measurement ID)"
+    "value": "GA4 Measurement ID"
   },
   {
     "id": 26395,
     "lang": "uk",
     "key": "settings.ga4_measurement_id",
-    "value": "Google Analytics 4 (Measurement ID)"
+    "value": "GA4 Measurement ID"
   },
   {
     "id": 368,
     "lang": "en",
     "key": "settings.general",
-    "value": "General Information"
+    "value": "General"
   },
   {
     "id": 369,
     "lang": "ru",
     "key": "settings.general",
-    "value": "Общая информация"
+    "value": "Общие"
   },
   {
     "id": 367,
     "lang": "uk",
     "key": "settings.general",
-    "value": "Загальна інформація"
+    "value": "Загальні"
   },
   {
     "id": 371,
     "lang": "en",
     "key": "settings.general_desc",
-    "value": "Basic site configuration and metadata."
+    "value": "General site settings"
   },
   {
     "id": 372,
     "lang": "ru",
     "key": "settings.general_desc",
-    "value": "Базовая конфигурация сайта и метаданные."
+    "value": "Общие настройки сайта"
   },
   {
     "id": 370,
     "lang": "uk",
     "key": "settings.general_desc",
-    "value": "Базові налаштування сайту та метадані."
+    "value": "Загальні налаштування сайту"
   },
   {
     "id": 524,
     "lang": "en",
     "key": "settings.google_verification",
-    "value": "Google Search Console"
+    "value": "Google Verification"
   },
   {
     "id": 525,
     "lang": "ru",
     "key": "settings.google_verification",
-    "value": "Google Search Console"
+    "value": "Верификация Google"
   },
   {
     "id": 523,
     "lang": "uk",
     "key": "settings.google_verification",
-    "value": "Google Search Console"
+    "value": "Верифікація Google"
   },
   {
     "id": 389,
     "lang": "en",
     "key": "settings.instagram",
-    "value": "Instagram URL"
+    "value": "Instagram"
   },
   {
     "id": 390,
     "lang": "ru",
     "key": "settings.instagram",
-    "value": "Instagram URL"
+    "value": "Instagram"
   },
   {
     "id": 388,
     "lang": "uk",
     "key": "settings.instagram",
-    "value": "Instagram URL"
+    "value": "Instagram"
   },
   {
     "id": 26426,
     "lang": "en",
     "key": "settings.logo_subtitle_en",
-    "value": "Subtitle (EN)"
+    "value": "Subtitle EN"
   },
   {
     "id": 26427,
     "lang": "ru",
     "key": "settings.logo_subtitle_en",
-    "value": "Подзаголовок (EN)"
+    "value": "Подзаголовок EN"
   },
   {
     "id": 26425,
     "lang": "uk",
     "key": "settings.logo_subtitle_en",
-    "value": "Підзаголовок (EN)"
+    "value": "Підзаголовок EN"
   },
   {
     "id": 26423,
     "lang": "en",
     "key": "settings.logo_subtitle_ru",
-    "value": "Subtitle (RU)"
+    "value": "Subtitle RU"
   },
   {
     "id": 26424,
     "lang": "ru",
     "key": "settings.logo_subtitle_ru",
-    "value": "Подзаголовок (RU)"
+    "value": "Подзаголовок RU"
   },
   {
     "id": 26422,
     "lang": "uk",
     "key": "settings.logo_subtitle_ru",
-    "value": "Підзаголовок (RU)"
+    "value": "Підзаголовок RU"
   },
   {
     "id": 26420,
     "lang": "en",
     "key": "settings.logo_subtitle_uk",
-    "value": "Subtitle (UK)"
+    "value": "Subtitle UK"
   },
   {
     "id": 26421,
     "lang": "ru",
     "key": "settings.logo_subtitle_uk",
-    "value": "Подзаголовок (UK)"
+    "value": "Подзаголовок UK"
   },
   {
     "id": 26419,
     "lang": "uk",
     "key": "settings.logo_subtitle_uk",
-    "value": "Підзаголовок (UK)"
+    "value": "Підзаголовок UK"
   },
   {
     "id": 26417,
     "lang": "en",
     "key": "settings.logo_suffix_en",
-    "value": "Brand Name (EN)"
+    "value": "Suffix EN"
   },
   {
     "id": 26418,
     "lang": "ru",
     "key": "settings.logo_suffix_en",
-    "value": "Название бренда (EN)"
+    "value": "Суффикс EN"
   },
   {
     "id": 26416,
     "lang": "uk",
     "key": "settings.logo_suffix_en",
-    "value": "Назва бренду (EN)"
+    "value": "Суфікс EN"
   },
   {
     "id": 26414,
     "lang": "en",
     "key": "settings.logo_suffix_ru",
-    "value": "Brand Name (RU)"
+    "value": "Suffix RU"
   },
   {
     "id": 26415,
     "lang": "ru",
     "key": "settings.logo_suffix_ru",
-    "value": "Название бренда (RU)"
+    "value": "Суффикс RU"
   },
   {
     "id": 26413,
     "lang": "uk",
     "key": "settings.logo_suffix_ru",
-    "value": "Назва бренду (RU)"
+    "value": "Суфікс RU"
   },
   {
     "id": 26411,
     "lang": "en",
     "key": "settings.logo_suffix_uk",
-    "value": "Brand Name (UK)"
+    "value": "Suffix UK"
   },
   {
     "id": 26412,
     "lang": "ru",
     "key": "settings.logo_suffix_uk",
-    "value": "Название бренда (UK)"
+    "value": "Суффикс UK"
   },
   {
     "id": 26410,
     "lang": "uk",
     "key": "settings.logo_suffix_uk",
-    "value": "Назва бренду (UK)"
+    "value": "Суфікс UK"
   },
   {
     "id": 28287,
@@ -4647,19 +4647,19 @@
     "id": 398,
     "lang": "en",
     "key": "settings.messengers_desc",
-    "value": "Configure floating contact buttons."
+    "value": "Messenger settings"
   },
   {
     "id": 399,
     "lang": "ru",
     "key": "settings.messengers_desc",
-    "value": "Настройка кнопок быстрой связи."
+    "value": "Настройки мессенджеров"
   },
   {
     "id": 397,
     "lang": "uk",
     "key": "settings.messengers_desc",
-    "value": "Налаштування кнопок швидкого зв'язку."
+    "value": "Налаштування месенджерів"
   },
   {
     "id": 28299,
@@ -4683,37 +4683,37 @@
     "id": 518,
     "lang": "en",
     "key": "settings.seo",
-    "value": "SEO Settings"
+    "value": "SEO"
   },
   {
     "id": 519,
     "lang": "ru",
     "key": "settings.seo",
-    "value": "SEO Настройки"
+    "value": "SEO"
   },
   {
     "id": 517,
     "lang": "uk",
     "key": "settings.seo",
-    "value": "SEO Налаштування"
+    "value": "SEO"
   },
   {
     "id": 521,
     "lang": "en",
     "key": "settings.seo_desc",
-    "value": "Verification codes for search engines"
+    "value": "Search engine optimization"
   },
   {
     "id": 522,
     "lang": "ru",
     "key": "settings.seo_desc",
-    "value": "Коды верификации для поисковых систем"
+    "value": "Оптимизация для поисковиков"
   },
   {
     "id": 520,
     "lang": "uk",
     "key": "settings.seo_desc",
-    "value": "Коди верифікації для пошукових систем"
+    "value": "Оптимізація для пошуковиків"
   },
   {
     "id": 374,
@@ -4737,37 +4737,37 @@
     "id": 383,
     "lang": "en",
     "key": "settings.social",
-    "value": "Social Links"
+    "value": "Social"
   },
   {
     "id": 384,
     "lang": "ru",
     "key": "settings.social",
-    "value": "Социальные сети"
+    "value": "Соцсети"
   },
   {
     "id": 382,
     "lang": "uk",
     "key": "settings.social",
-    "value": "Соціальні мережі"
+    "value": "Соцмережі"
   },
   {
     "id": 386,
     "lang": "en",
     "key": "settings.social_desc",
-    "value": "Links to your social media profiles."
+    "value": "Social media links"
   },
   {
     "id": 387,
     "lang": "ru",
     "key": "settings.social_desc",
-    "value": "Ссылки на ваши профили."
+    "value": "Ссылки на соцсети"
   },
   {
     "id": 385,
     "lang": "uk",
     "key": "settings.social_desc",
-    "value": "Посилання на ваші профілі."
+    "value": "Посилання на соцмережі"
   },
   {
     "id": 377,
@@ -4791,109 +4791,109 @@
     "id": 404,
     "lang": "en",
     "key": "settings.telegram",
-    "value": "Telegram Username/Link"
+    "value": "Telegram"
   },
   {
     "id": 405,
     "lang": "ru",
     "key": "settings.telegram",
-    "value": "Telegram (логин/ссылка)"
+    "value": "Telegram"
   },
   {
     "id": 403,
     "lang": "uk",
     "key": "settings.telegram",
-    "value": "Telegram (логін/посилання)"
+    "value": "Telegram"
   },
   {
     "id": 410,
     "lang": "en",
     "key": "settings.telegram_active",
-    "value": "Enable Telegram (true/false)"
+    "value": "Telegram Active"
   },
   {
     "id": 411,
     "lang": "ru",
     "key": "settings.telegram_active",
-    "value": "Включить Telegram (true/false)"
+    "value": "Telegram активен"
   },
   {
     "id": 409,
     "lang": "uk",
     "key": "settings.telegram_active",
-    "value": "Увімкнути Telegram (true/false)"
+    "value": "Telegram активний"
   },
   {
     "id": 401,
     "lang": "en",
     "key": "settings.viber",
-    "value": "Viber Link/Number"
+    "value": "Viber"
   },
   {
     "id": 402,
     "lang": "ru",
     "key": "settings.viber",
-    "value": "Viber (ссылка/номер)"
+    "value": "Viber"
   },
   {
     "id": 400,
     "lang": "uk",
     "key": "settings.viber",
-    "value": "Viber (посилання/номер)"
+    "value": "Viber"
   },
   {
     "id": 407,
     "lang": "en",
     "key": "settings.viber_active",
-    "value": "Enable Viber (true/false)"
+    "value": "Viber Active"
   },
   {
     "id": 408,
     "lang": "ru",
     "key": "settings.viber_active",
-    "value": "Включить Viber (true/false)"
+    "value": "Viber активен"
   },
   {
     "id": 406,
     "lang": "uk",
     "key": "settings.viber_active",
-    "value": "Увімкнути Viber (true/false)"
+    "value": "Viber активний"
   },
   {
     "id": 26399,
     "lang": "en",
     "key": "settings.yandex_metrica_id",
-    "value": "Yandex.Metrica (Counter ID)"
+    "value": "Yandex Metrica ID"
   },
   {
     "id": 26400,
     "lang": "ru",
     "key": "settings.yandex_metrica_id",
-    "value": "Яндекс.Метрика (ID счётчика)"
+    "value": "ID Яндекс Метрики"
   },
   {
     "id": 26398,
     "lang": "uk",
     "key": "settings.yandex_metrica_id",
-    "value": "Яндекс.Метрика (ID лічильника)"
+    "value": "ID Яндекс Метрики"
   },
   {
     "id": 527,
     "lang": "en",
     "key": "settings.yandex_verification",
-    "value": "Yandex Webmaster"
+    "value": "Yandex Verification"
   },
   {
     "id": 528,
     "lang": "ru",
     "key": "settings.yandex_verification",
-    "value": "Яндекс Вебмастер"
+    "value": "Верификация Яндекс"
   },
   {
     "id": 526,
     "lang": "uk",
     "key": "settings.yandex_verification",
-    "value": "Яндекс Вебмастер"
+    "value": "Верифікація Яндекс"
   },
   {
     "id": 26441,
@@ -4917,19 +4917,19 @@
     "id": 176,
     "lang": "en",
     "key": "upload.all_default_notice",
-    "value": "Note: All uploaded photos are 10x15 Glossy (unless changed)"
+    "value": "Settings applied to all photos"
   },
   {
     "id": 177,
     "lang": "ru",
     "key": "upload.all_default_notice",
-    "value": "Внимание! Все загруженные фото: 10x15 Глянцевая (если не изменено)"
+    "value": "Настройки применены ко всем фото"
   },
   {
     "id": 175,
     "lang": "uk",
     "key": "upload.all_default_notice",
-    "value": "Увага! Всі завантажені фото: 10x15 Глянцевий (якщо не змінено)"
+    "value": "Налаштування застосовані до всіх фото"
   },
   {
     "id": 92,
@@ -5025,19 +5025,19 @@
     "id": 2834,
     "lang": "en",
     "key": "validation.required_field",
-    "value": "Please fill in this field"
+    "value": "Required field"
   },
   {
     "id": 2835,
     "lang": "ru",
     "key": "validation.required_field",
-    "value": "Заполните это поле"
+    "value": "Обязательное поле"
   },
   {
     "id": 2833,
     "lang": "uk",
     "key": "validation.required_field",
-    "value": "Заповніть це поле"
+    "value": "Обов'язкове поле"
   },
   {
     "id": 455,
@@ -5452,5 +5452,1103 @@
     "lang": "uk",
     "key": "фото",
     "value": "фото"
+  },
+  {
+    "id": 28309,
+    "lang": "en",
+    "key": "admin.cleanup_confirm",
+    "value": "Are you sure you want to run cleanup?"
+  },
+  {
+    "id": 28310,
+    "lang": "ru",
+    "key": "admin.cleanup_confirm",
+    "value": "Вы уверены, что хотите выполнить очистку?"
+  },
+  {
+    "id": 28311,
+    "lang": "uk",
+    "key": "admin.cleanup_confirm",
+    "value": "Ви впевнені, що хочете виконати очищення?"
+  },
+  {
+    "id": 28312,
+    "lang": "en",
+    "key": "admin.no_orphans",
+    "value": "No orphaned files found"
+  },
+  {
+    "id": 28313,
+    "lang": "ru",
+    "key": "admin.no_orphans",
+    "value": "Осиротевших файлов не найдено"
+  },
+  {
+    "id": 28314,
+    "lang": "uk",
+    "key": "admin.no_orphans",
+    "value": "Осиротілих файлів не знайдено"
+  },
+  {
+    "id": 28315,
+    "lang": "en",
+    "key": "admin.order_statistics",
+    "value": "Order Statistics"
+  },
+  {
+    "id": 28316,
+    "lang": "ru",
+    "key": "admin.order_statistics",
+    "value": "Статистика заказов"
+  },
+  {
+    "id": 28317,
+    "lang": "uk",
+    "key": "admin.order_statistics",
+    "value": "Статистика замовлень"
+  },
+  {
+    "id": 28318,
+    "lang": "en",
+    "key": "admin.storage",
+    "value": "Storage"
+  },
+  {
+    "id": 28319,
+    "lang": "ru",
+    "key": "admin.storage",
+    "value": "Хранилище"
+  },
+  {
+    "id": 28320,
+    "lang": "uk",
+    "key": "admin.storage",
+    "value": "Сховище"
+  },
+  {
+    "id": 28321,
+    "lang": "en",
+    "key": "admin.files",
+    "value": "files"
+  },
+  {
+    "id": 28322,
+    "lang": "ru",
+    "key": "admin.files",
+    "value": "файлов"
+  },
+  {
+    "id": 28323,
+    "lang": "uk",
+    "key": "admin.files",
+    "value": "файлів"
+  },
+  {
+    "id": 28324,
+    "lang": "en",
+    "key": "admin.cleanup",
+    "value": "Cleanup"
+  },
+  {
+    "id": 28325,
+    "lang": "ru",
+    "key": "admin.cleanup",
+    "value": "Очистка"
+  },
+  {
+    "id": 28326,
+    "lang": "uk",
+    "key": "admin.cleanup",
+    "value": "Очищення"
+  },
+  {
+    "id": 28327,
+    "lang": "en",
+    "key": "checkout.order_number",
+    "value": "Order Number"
+  },
+  {
+    "id": 28328,
+    "lang": "ru",
+    "key": "checkout.order_number",
+    "value": "Номер заказа"
+  },
+  {
+    "id": 28329,
+    "lang": "uk",
+    "key": "checkout.order_number",
+    "value": "Номер замовлення"
+  },
+  {
+    "id": 28330,
+    "lang": "en",
+    "key": "nav.items",
+    "value": "Items"
+  },
+  {
+    "id": 28331,
+    "lang": "ru",
+    "key": "nav.items",
+    "value": "Позиции"
+  },
+  {
+    "id": 28332,
+    "lang": "uk",
+    "key": "nav.items",
+    "value": "Позиції"
+  },
+  {
+    "id": 28333,
+    "lang": "en",
+    "key": "nav.status",
+    "value": "Order Status"
+  },
+  {
+    "id": 28334,
+    "lang": "ru",
+    "key": "nav.status",
+    "value": "Статус заказа"
+  },
+  {
+    "id": 28335,
+    "lang": "uk",
+    "key": "nav.status",
+    "value": "Статус замовлення"
+  },
+  {
+    "id": 28336,
+    "lang": "en",
+    "key": "settings.integrations",
+    "value": "Integrations"
+  },
+  {
+    "id": 28337,
+    "lang": "ru",
+    "key": "settings.integrations",
+    "value": "Интеграции"
+  },
+  {
+    "id": 28338,
+    "lang": "uk",
+    "key": "settings.integrations",
+    "value": "Інтеграції"
+  },
+  {
+    "id": 28339,
+    "lang": "en",
+    "key": "settings.integrations_desc",
+    "value": "External service integrations"
+  },
+  {
+    "id": 28340,
+    "lang": "ru",
+    "key": "settings.integrations_desc",
+    "value": "Интеграции внешних сервисов"
+  },
+  {
+    "id": 28341,
+    "lang": "uk",
+    "key": "settings.integrations_desc",
+    "value": "Інтеграції зовнішніх сервісів"
+  },
+  {
+    "id": 28342,
+    "lang": "en",
+    "key": "settings.np_api_key",
+    "value": "Nova Poshta API Key"
+  },
+  {
+    "id": 28343,
+    "lang": "ru",
+    "key": "settings.np_api_key",
+    "value": "API ключ Новой Почты"
+  },
+  {
+    "id": 28344,
+    "lang": "uk",
+    "key": "settings.np_api_key",
+    "value": "API ключ Нової Пошти"
+  },
+  {
+    "id": 28345,
+    "lang": "en",
+    "key": "status.check_btn",
+    "value": "Check Status"
+  },
+  {
+    "id": 28346,
+    "lang": "ru",
+    "key": "status.check_btn",
+    "value": "Проверить статус"
+  },
+  {
+    "id": 28347,
+    "lang": "uk",
+    "key": "status.check_btn",
+    "value": "Перевірити статус"
+  },
+  {
+    "id": 28348,
+    "lang": "en",
+    "key": "status.desc",
+    "value": "Enter your order number"
+  },
+  {
+    "id": 28349,
+    "lang": "ru",
+    "key": "status.desc",
+    "value": "Введите номер заказа"
+  },
+  {
+    "id": 28350,
+    "lang": "uk",
+    "key": "status.desc",
+    "value": "Введіть номер замовлення"
+  },
+  {
+    "id": 28351,
+    "lang": "en",
+    "key": "status.track",
+    "value": "Track Order"
+  },
+  {
+    "id": 28352,
+    "lang": "ru",
+    "key": "status.track",
+    "value": "Отследить заказ"
+  },
+  {
+    "id": 28353,
+    "lang": "uk",
+    "key": "status.track",
+    "value": "Відстежити замовлення"
+  },
+  {
+    "id": 28354,
+    "lang": "en",
+    "key": "ttn.attention_desc",
+    "value": "Please verify all data before creating TTN"
+  },
+  {
+    "id": 28355,
+    "lang": "ru",
+    "key": "ttn.attention_desc",
+    "value": "Проверьте все данные перед созданием ТТН"
+  },
+  {
+    "id": 28356,
+    "lang": "uk",
+    "key": "ttn.attention_desc",
+    "value": "Перевірте всі дані перед створенням ТТН"
+  },
+  {
+    "id": 28357,
+    "lang": "en",
+    "key": "ttn.attention_title",
+    "value": "Attention"
+  },
+  {
+    "id": 28358,
+    "lang": "ru",
+    "key": "ttn.attention_title",
+    "value": "Внимание"
+  },
+  {
+    "id": 28359,
+    "lang": "uk",
+    "key": "ttn.attention_title",
+    "value": "Увага"
+  },
+  {
+    "id": 28360,
+    "lang": "en",
+    "key": "ttn.cancel_btn",
+    "value": "Cancel"
+  },
+  {
+    "id": 28361,
+    "lang": "ru",
+    "key": "ttn.cancel_btn",
+    "value": "Отмена"
+  },
+  {
+    "id": 28362,
+    "lang": "uk",
+    "key": "ttn.cancel_btn",
+    "value": "Скасувати"
+  },
+  {
+    "id": 28363,
+    "lang": "en",
+    "key": "ttn.create_title",
+    "value": "Create TTN"
+  },
+  {
+    "id": 28364,
+    "lang": "ru",
+    "key": "ttn.create_title",
+    "value": "Создать ТТН"
+  },
+  {
+    "id": 28365,
+    "lang": "uk",
+    "key": "ttn.create_title",
+    "value": "Створити ТТН"
+  },
+  {
+    "id": 28366,
+    "lang": "en",
+    "key": "ttn.generate_btn",
+    "value": "Generate"
+  },
+  {
+    "id": 28367,
+    "lang": "ru",
+    "key": "ttn.generate_btn",
+    "value": "Сгенерировать"
+  },
+  {
+    "id": 28368,
+    "lang": "uk",
+    "key": "ttn.generate_btn",
+    "value": "Згенерувати"
+  },
+  {
+    "id": 28369,
+    "lang": "en",
+    "key": "ttn.loading",
+    "value": "Loading..."
+  },
+  {
+    "id": 28370,
+    "lang": "ru",
+    "key": "ttn.loading",
+    "value": "Загрузка..."
+  },
+  {
+    "id": 28371,
+    "lang": "uk",
+    "key": "ttn.loading",
+    "value": "Завантаження..."
+  },
+  {
+    "id": 28372,
+    "lang": "en",
+    "key": "ttn.p_cost",
+    "value": "Declared Value"
+  },
+  {
+    "id": 28373,
+    "lang": "ru",
+    "key": "ttn.p_cost",
+    "value": "Объявленная стоимость"
+  },
+  {
+    "id": 28374,
+    "lang": "uk",
+    "key": "ttn.p_cost",
+    "value": "Оголошена вартість"
+  },
+  {
+    "id": 28375,
+    "lang": "en",
+    "key": "ttn.p_height",
+    "value": "Height (cm)"
+  },
+  {
+    "id": 28376,
+    "lang": "ru",
+    "key": "ttn.p_height",
+    "value": "Высота (см)"
+  },
+  {
+    "id": 28377,
+    "lang": "uk",
+    "key": "ttn.p_height",
+    "value": "Висота (см)"
+  },
+  {
+    "id": 28378,
+    "lang": "en",
+    "key": "ttn.p_length",
+    "value": "Length (cm)"
+  },
+  {
+    "id": 28379,
+    "lang": "ru",
+    "key": "ttn.p_length",
+    "value": "Длина (см)"
+  },
+  {
+    "id": 28380,
+    "lang": "uk",
+    "key": "ttn.p_length",
+    "value": "Довжина (см)"
+  },
+  {
+    "id": 28381,
+    "lang": "en",
+    "key": "ttn.p_weight",
+    "value": "Weight (kg)"
+  },
+  {
+    "id": 28382,
+    "lang": "ru",
+    "key": "ttn.p_weight",
+    "value": "Вес (кг)"
+  },
+  {
+    "id": 28383,
+    "lang": "uk",
+    "key": "ttn.p_weight",
+    "value": "Вага (кг)"
+  },
+  {
+    "id": 28384,
+    "lang": "en",
+    "key": "ttn.p_width",
+    "value": "Width (cm)"
+  },
+  {
+    "id": 28385,
+    "lang": "ru",
+    "key": "ttn.p_width",
+    "value": "Ширина (см)"
+  },
+  {
+    "id": 28386,
+    "lang": "uk",
+    "key": "ttn.p_width",
+    "value": "Ширина (см)"
+  },
+  {
+    "id": 28387,
+    "lang": "en",
+    "key": "ttn.package_params",
+    "value": "Package Parameters"
+  },
+  {
+    "id": 28388,
+    "lang": "ru",
+    "key": "ttn.package_params",
+    "value": "Параметры посылки"
+  },
+  {
+    "id": 28389,
+    "lang": "uk",
+    "key": "ttn.package_params",
+    "value": "Параметри посилки"
+  },
+  {
+    "id": 28390,
+    "lang": "en",
+    "key": "ttn.payer",
+    "value": "Payer"
+  },
+  {
+    "id": 28391,
+    "lang": "ru",
+    "key": "ttn.payer",
+    "value": "Плательщик"
+  },
+  {
+    "id": 28392,
+    "lang": "uk",
+    "key": "ttn.payer",
+    "value": "Платник"
+  },
+  {
+    "id": 28393,
+    "lang": "en",
+    "key": "ttn.payer_recipient",
+    "value": "Recipient pays"
+  },
+  {
+    "id": 28394,
+    "lang": "ru",
+    "key": "ttn.payer_recipient",
+    "value": "Получатель"
+  },
+  {
+    "id": 28395,
+    "lang": "uk",
+    "key": "ttn.payer_recipient",
+    "value": "Отримувач"
+  },
+  {
+    "id": 28396,
+    "lang": "en",
+    "key": "ttn.payer_sender",
+    "value": "Sender pays"
+  },
+  {
+    "id": 28397,
+    "lang": "ru",
+    "key": "ttn.payer_sender",
+    "value": "Отправитель"
+  },
+  {
+    "id": 28398,
+    "lang": "uk",
+    "key": "ttn.payer_sender",
+    "value": "Відправник"
+  },
+  {
+    "id": 28399,
+    "lang": "en",
+    "key": "ttn.recipient_city",
+    "value": "Recipient City"
+  },
+  {
+    "id": 28400,
+    "lang": "ru",
+    "key": "ttn.recipient_city",
+    "value": "Город получателя"
+  },
+  {
+    "id": 28401,
+    "lang": "uk",
+    "key": "ttn.recipient_city",
+    "value": "Місто отримувача"
+  },
+  {
+    "id": 28402,
+    "lang": "en",
+    "key": "ttn.recipient_firstname",
+    "value": "First Name"
+  },
+  {
+    "id": 28403,
+    "lang": "ru",
+    "key": "ttn.recipient_firstname",
+    "value": "Имя"
+  },
+  {
+    "id": 28404,
+    "lang": "uk",
+    "key": "ttn.recipient_firstname",
+    "value": "Ім'я"
+  },
+  {
+    "id": 28405,
+    "lang": "en",
+    "key": "ttn.recipient_lastname",
+    "value": "Last Name"
+  },
+  {
+    "id": 28406,
+    "lang": "ru",
+    "key": "ttn.recipient_lastname",
+    "value": "Фамилия"
+  },
+  {
+    "id": 28407,
+    "lang": "uk",
+    "key": "ttn.recipient_lastname",
+    "value": "Прізвище"
+  },
+  {
+    "id": 28408,
+    "lang": "en",
+    "key": "ttn.recipient_phone",
+    "value": "Phone"
+  },
+  {
+    "id": 28409,
+    "lang": "ru",
+    "key": "ttn.recipient_phone",
+    "value": "Телефон"
+  },
+  {
+    "id": 28410,
+    "lang": "uk",
+    "key": "ttn.recipient_phone",
+    "value": "Телефон"
+  },
+  {
+    "id": 28411,
+    "lang": "en",
+    "key": "ttn.recipient_section",
+    "value": "Recipient"
+  },
+  {
+    "id": 28412,
+    "lang": "ru",
+    "key": "ttn.recipient_section",
+    "value": "Получатель"
+  },
+  {
+    "id": 28413,
+    "lang": "uk",
+    "key": "ttn.recipient_section",
+    "value": "Отримувач"
+  },
+  {
+    "id": 28414,
+    "lang": "en",
+    "key": "ttn.search_placeholder",
+    "value": "Search..."
+  },
+  {
+    "id": 28415,
+    "lang": "ru",
+    "key": "ttn.search_placeholder",
+    "value": "Поиск..."
+  },
+  {
+    "id": 28416,
+    "lang": "uk",
+    "key": "ttn.search_placeholder",
+    "value": "Пошук..."
+  },
+  {
+    "id": 28417,
+    "lang": "en",
+    "key": "ttn.sender_delete",
+    "value": "Delete"
+  },
+  {
+    "id": 28418,
+    "lang": "ru",
+    "key": "ttn.sender_delete",
+    "value": "Удалить"
+  },
+  {
+    "id": 28419,
+    "lang": "uk",
+    "key": "ttn.sender_delete",
+    "value": "Видалити"
+  },
+  {
+    "id": 28420,
+    "lang": "en",
+    "key": "ttn.sender_firstname",
+    "value": "First Name"
+  },
+  {
+    "id": 28421,
+    "lang": "ru",
+    "key": "ttn.sender_firstname",
+    "value": "Имя"
+  },
+  {
+    "id": 28422,
+    "lang": "uk",
+    "key": "ttn.sender_firstname",
+    "value": "Ім'я"
+  },
+  {
+    "id": 28423,
+    "lang": "en",
+    "key": "ttn.sender_from",
+    "value": "From"
+  },
+  {
+    "id": 28424,
+    "lang": "ru",
+    "key": "ttn.sender_from",
+    "value": "От"
+  },
+  {
+    "id": 28425,
+    "lang": "uk",
+    "key": "ttn.sender_from",
+    "value": "Від"
+  },
+  {
+    "id": 28426,
+    "lang": "en",
+    "key": "ttn.sender_lastname",
+    "value": "Last Name"
+  },
+  {
+    "id": 28427,
+    "lang": "ru",
+    "key": "ttn.sender_lastname",
+    "value": "Фамилия"
+  },
+  {
+    "id": 28428,
+    "lang": "uk",
+    "key": "ttn.sender_lastname",
+    "value": "Прізвище"
+  },
+  {
+    "id": 28429,
+    "lang": "en",
+    "key": "ttn.sender_phone",
+    "value": "Phone"
+  },
+  {
+    "id": 28430,
+    "lang": "ru",
+    "key": "ttn.sender_phone",
+    "value": "Телефон"
+  },
+  {
+    "id": 28431,
+    "lang": "uk",
+    "key": "ttn.sender_phone",
+    "value": "Телефон"
+  },
+  {
+    "id": 28432,
+    "lang": "en",
+    "key": "ttn.sender_save",
+    "value": "Save"
+  },
+  {
+    "id": 28433,
+    "lang": "ru",
+    "key": "ttn.sender_save",
+    "value": "Сохранить"
+  },
+  {
+    "id": 28434,
+    "lang": "uk",
+    "key": "ttn.sender_save",
+    "value": "Зберегти"
+  },
+  {
+    "id": 28435,
+    "lang": "en",
+    "key": "ttn.sender_section",
+    "value": "Sender"
+  },
+  {
+    "id": 28436,
+    "lang": "ru",
+    "key": "ttn.sender_section",
+    "value": "Отправитель"
+  },
+  {
+    "id": 28437,
+    "lang": "uk",
+    "key": "ttn.sender_section",
+    "value": "Відправник"
+  },
+  {
+    "id": 28438,
+    "lang": "en",
+    "key": "ttn.sender_select",
+    "value": "Select Sender"
+  },
+  {
+    "id": 28439,
+    "lang": "ru",
+    "key": "ttn.sender_select",
+    "value": "Выбрать отправителя"
+  },
+  {
+    "id": 28440,
+    "lang": "uk",
+    "key": "ttn.sender_select",
+    "value": "Обрати відправника"
+  },
+  {
+    "id": 28441,
+    "lang": "en",
+    "key": "ttn.validate_recipient",
+    "value": "Validate Recipient"
+  },
+  {
+    "id": 28442,
+    "lang": "ru",
+    "key": "ttn.validate_recipient",
+    "value": "Проверить получателя"
+  },
+  {
+    "id": 28443,
+    "lang": "uk",
+    "key": "ttn.validate_recipient",
+    "value": "Перевірити отримувача"
+  },
+  {
+    "id": 28444,
+    "lang": "en",
+    "key": "validation.invalid_email",
+    "value": "Invalid email"
+  },
+  {
+    "id": 28445,
+    "lang": "ru",
+    "key": "validation.invalid_email",
+    "value": "Неверный email"
+  },
+  {
+    "id": 28446,
+    "lang": "uk",
+    "key": "validation.invalid_email",
+    "value": "Невірний email"
+  },
+  {
+    "id": 28447,
+    "lang": "en",
+    "key": "Actions",
+    "value": "Actions"
+  },
+  {
+    "id": 28448,
+    "lang": "ru",
+    "key": "Actions",
+    "value": "Действия"
+  },
+  {
+    "id": 28449,
+    "lang": "uk",
+    "key": "Actions",
+    "value": "Дії"
+  },
+  {
+    "id": 28450,
+    "lang": "en",
+    "key": "Description",
+    "value": "Description"
+  },
+  {
+    "id": 28451,
+    "lang": "ru",
+    "key": "Description",
+    "value": "Описание"
+  },
+  {
+    "id": 28452,
+    "lang": "uk",
+    "key": "Description",
+    "value": "Опис"
+  },
+  {
+    "id": 28453,
+    "lang": "en",
+    "key": "Loading",
+    "value": "Loading"
+  },
+  {
+    "id": 28454,
+    "lang": "ru",
+    "key": "Loading",
+    "value": "Загрузка"
+  },
+  {
+    "id": 28455,
+    "lang": "uk",
+    "key": "Loading",
+    "value": "Завантаження"
+  },
+  {
+    "id": 28456,
+    "lang": "en",
+    "key": "Lost File",
+    "value": "Lost File"
+  },
+  {
+    "id": 28457,
+    "lang": "ru",
+    "key": "Lost File",
+    "value": "Потерянный файл"
+  },
+  {
+    "id": 28458,
+    "lang": "uk",
+    "key": "Lost File",
+    "value": "Втрачений файл"
+  },
+  {
+    "id": 28459,
+    "lang": "en",
+    "key": "Magnet",
+    "value": "Magnet"
+  },
+  {
+    "id": 28460,
+    "lang": "ru",
+    "key": "Magnet",
+    "value": "Магнит"
+  },
+  {
+    "id": 28461,
+    "lang": "uk",
+    "key": "Magnet",
+    "value": "Магніт"
+  },
+  {
+    "id": 28462,
+    "lang": "en",
+    "key": "Name",
+    "value": "Name"
+  },
+  {
+    "id": 28463,
+    "lang": "ru",
+    "key": "Name",
+    "value": "Имя"
+  },
+  {
+    "id": 28464,
+    "lang": "uk",
+    "key": "Name",
+    "value": "Ім'я"
+  },
+  {
+    "id": 28465,
+    "lang": "en",
+    "key": "Not available for this size",
+    "value": "Not available for this size"
+  },
+  {
+    "id": 28466,
+    "lang": "ru",
+    "key": "Not available for this size",
+    "value": "Недоступно для этого размера"
+  },
+  {
+    "id": 28467,
+    "lang": "uk",
+    "key": "Not available for this size",
+    "value": "Недоступно для цього розміру"
+  },
+  {
+    "id": 28468,
+    "lang": "en",
+    "key": "Page not found",
+    "value": "Page not found"
+  },
+  {
+    "id": 28469,
+    "lang": "ru",
+    "key": "Page not found",
+    "value": "Страница не найдена"
+  },
+  {
+    "id": 28470,
+    "lang": "uk",
+    "key": "Page not found",
+    "value": "Сторінку не знайдено"
+  },
+  {
+    "id": 28471,
+    "lang": "en",
+    "key": "Print",
+    "value": "Print"
+  },
+  {
+    "id": 28472,
+    "lang": "ru",
+    "key": "Print",
+    "value": "Печать"
+  },
+  {
+    "id": 28473,
+    "lang": "uk",
+    "key": "Print",
+    "value": "Друк"
+  },
+  {
+    "id": 28474,
+    "lang": "en",
+    "key": "Remove",
+    "value": "Remove"
+  },
+  {
+    "id": 28475,
+    "lang": "ru",
+    "key": "Remove",
+    "value": "Удалить"
+  },
+  {
+    "id": 28476,
+    "lang": "uk",
+    "key": "Remove",
+    "value": "Видалити"
+  },
+  {
+    "id": 28477,
+    "lang": "en",
+    "key": "Settings",
+    "value": "Settings"
+  },
+  {
+    "id": 28478,
+    "lang": "ru",
+    "key": "Settings",
+    "value": "Настройки"
+  },
+  {
+    "id": 28479,
+    "lang": "uk",
+    "key": "Settings",
+    "value": "Налаштування"
+  },
+  {
+    "id": 28480,
+    "lang": "en",
+    "key": "Status",
+    "value": "Status"
+  },
+  {
+    "id": 28481,
+    "lang": "ru",
+    "key": "Status",
+    "value": "Статус"
+  },
+  {
+    "id": 28482,
+    "lang": "uk",
+    "key": "Status",
+    "value": "Статус"
+  },
+  {
+    "id": 28483,
+    "lang": "en",
+    "key": "Uploading",
+    "value": "Uploading"
+  },
+  {
+    "id": 28484,
+    "lang": "ru",
+    "key": "Uploading",
+    "value": "Загрузка"
+  },
+  {
+    "id": 28485,
+    "lang": "uk",
+    "key": "Uploading",
+    "value": "Завантаження"
+  },
+  {
+    "id": 28486,
+    "lang": "en",
+    "key": "Wait for uploads",
+    "value": "Wait for uploads"
+  },
+  {
+    "id": 28487,
+    "lang": "ru",
+    "key": "Wait for uploads",
+    "value": "Дождитесь загрузки"
+  },
+  {
+    "id": 28488,
+    "lang": "uk",
+    "key": "Wait for uploads",
+    "value": "Дочекайтесь завантаження"
+  },
+  {
+    "id": 28489,
+    "lang": "en",
+    "key": "What is this?",
+    "value": "What is this?"
+  },
+  {
+    "id": 28490,
+    "lang": "ru",
+    "key": "What is this?",
+    "value": "Что это?"
+  },
+  {
+    "id": 28491,
+    "lang": "uk",
+    "key": "What is this?",
+    "value": "Що це?"
   }
 ]
