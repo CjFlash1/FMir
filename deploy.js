@@ -100,16 +100,29 @@ try {
     console.log("\n--- SEEDING TRANSLATIONS ---");
     try {
         // Force Prisma to use correct engine since auto-detect fails
-        // Trying OpenSSL 1.0.x variants as last resort for older systems
+        // IDENTIFIED: Ubuntu 22.04 (Kernel 5.15) -> Needs debian-openssl-3.0.x
+        // CRITICAL FIX: Add system library paths to LD_LIBRARY_PATH because Plesk environments often hide them
+
         console.log(`Kernel release: ${require('os').release()}`);
         console.log(`Platform: ${require('os').platform()}`);
 
+        const libPaths = [
+            '/usr/lib/x86_64-linux-gnu',
+            '/lib/x86_64-linux-gnu',
+            '/usr/lib64',
+            '/lib64',
+            '/usr/lib',
+            '/lib'
+        ];
+        const currentPath = process.env.LD_LIBRARY_PATH || '';
+        process.env.LD_LIBRARY_PATH = `${libPaths.join(':')}:${currentPath}`;
+        console.log(`Updated LD_LIBRARY_PATH: ${process.env.LD_LIBRARY_PATH}`);
+
         const prismaClientDir = path.join(process.cwd(), 'node_modules', '.prisma', 'client');
         const engines = [
-            'libquery_engine-rhel-openssl-1.0.x.so.node', // Old CentOS/RHEL
-            'libquery_engine-linux-musl-openssl-3.0.x.so.node', // Alpine/Musl
-            'libquery_engine-rhel-openssl-3.0.x.so.node', // New RHEL
-            'libquery_engine-debian-openssl-3.0.x.so.node' // Debian/Ubuntu
+            'libquery_engine-debian-openssl-3.0.x.so.node', // Correct for Ubuntu 22.04
+            'libquery_engine-rhel-openssl-3.0.x.so.node',
+            'libquery_engine-linux-musl-openssl-3.0.x.so.node'
         ];
 
         let engineFound = false;
