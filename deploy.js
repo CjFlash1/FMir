@@ -100,12 +100,16 @@ try {
     console.log("\n--- SEEDING TRANSLATIONS ---");
     try {
         // Force Prisma to use correct engine since auto-detect fails
-        // We prioritize RHEL (CloudLinux), then Debian, then MUSL
+        // Trying OpenSSL 1.0.x variants as last resort for older systems
+        console.log(`Kernel release: ${require('os').release()}`);
+        console.log(`Platform: ${require('os').platform()}`);
+
         const prismaClientDir = path.join(process.cwd(), 'node_modules', '.prisma', 'client');
         const engines = [
-            'libquery_engine-rhel-openssl-3.0.x.so.node',
-            'libquery_engine-debian-openssl-3.0.x.so.node',
-            'libquery_engine-linux-musl-openssl-3.0.x.so.node'
+            'libquery_engine-rhel-openssl-1.0.x.so.node', // Old CentOS/RHEL
+            'libquery_engine-linux-musl-openssl-3.0.x.so.node', // Alpine/Musl
+            'libquery_engine-rhel-openssl-3.0.x.so.node', // New RHEL
+            'libquery_engine-debian-openssl-3.0.x.so.node' // Debian/Ubuntu
         ];
 
         let engineFound = false;
