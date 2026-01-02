@@ -1,10 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        const { searchParams } = new URL(request.url);
+        const includeInactive = searchParams.get("includeInactive") === "true";
+
         const deliveryOptions = await prisma.deliveryOption.findMany({
-            where: { isActive: true },
+            where: includeInactive ? {} : { isActive: true },
             orderBy: { id: 'asc' }
         });
         return NextResponse.json(deliveryOptions);

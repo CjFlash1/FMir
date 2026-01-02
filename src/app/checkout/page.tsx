@@ -76,25 +76,22 @@ export default function CheckoutPage() {
             .then(res => res.json())
             .then(data => {
                 setDeliveryOptions(data);
-                // Set default to pickup if available, or first option
-                const pickup = data.find((d: any) => d.slug === 'pickup');
-                // Only set default if store didn't provide a method (or it's pickup anyway)
-                if (pickup && (!checkoutForm.deliveryMethod || checkoutForm.deliveryMethod === 'pickup')) {
-                    // Keep existing logic or strictly respect store? 
-                    // Since hydration happens in parallel allow setState to potentially overwrite if store was empty?
-                    // Actually, hydration is in separate useEffect.
-                    // We should only set default if formData.deliveryMethod is "pickup" (initial) AND we want to ensure valid default.
-                    // But store might have set it to "novaposhta".
-                    // Safe approach: check if formData.deliveryMethod matches pickup (initial default)
-                    // But formData is closure-captured here (it's [], so formData is initial state).
-                    // We rely on 'setFormData(prev...)'
-                    setFormData(prev => {
-                        if (prev.deliveryMethod === 'pickup' && !checkoutForm.deliveryMethod) {
-                            return { ...prev, deliveryMethod: pickup.slug };
-                        }
-                        return prev;
-                    });
-                }
+
+                // Ensure the selected method is valid (active)
+                setFormData(prev => {
+                    const isValid = data.some((d: any) => d.slug === prev.deliveryMethod);
+
+                    if (!isValid && data.length > 0) {
+                        // If invalid/inactive, fallback to 'pickup' if available, otherwise the first option
+                        const pickup = data.find((d: any) => d.slug === 'pickup');
+                        const fallback = pickup || data[0];
+                        return { ...prev, deliveryMethod: fallback.slug };
+                    }
+
+                    // If no delivery options exist at all, we might want to handle that, but let's assume at least one exists
+                    return prev;
+                });
+
                 setLoadingDelivery(false);
             })
             .catch(err => {

@@ -33,7 +33,7 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row items-center gap-16">
 
             {/* Left Content */}
-            <div className="flex-1 text-center lg:text-left">
+            <div className="flex-1 text-center lg:text-left relative z-20">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100/50 text-amber-700 font-bold text-sm mb-8 animate-fade-in-up border border-amber-200/50">
                 <Star size={16} className="fill-current" />
                 <span>{t('hero.best_quality')}</span>
@@ -68,30 +68,30 @@ export default function Home() {
             </div>
 
             {/* Right Visual - Photo Composition */}
-            <div className="flex-1 relative w-full max-w-[500px] lg:max-w-none mx-auto h-[500px] lg:h-auto">
+            <div className="flex-1 relative w-full max-w-[500px] lg:max-w-none mx-auto lg:h-auto mt-8 lg:mt-0 z-10">
               {/* Decoration blobs */}
               <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-amber-100 rounded-full blur-3xl opacity-40 mix-blend-multiply animate-blob"></div>
               <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-red-100 rounded-full blur-3xl opacity-40 mix-blend-multiply animate-blob animation-delay-2000"></div>
 
               {/* Floating Cards */}
-              <div className="relative w-full h-full perspective-1000">
-                {/* Main Photo (Family) */}
-                <div className="absolute top-10 right-0 lg:right-10 w-64 h-80 bg-white p-3 rounded-2xl shadow-2xl transform rotate-6 hover:rotate-3 transition-all duration-500 z-20 hover:z-50 hover:scale-105">
+              <div className="relative w-full lg:h-full perspective-1000">
+                {/* Main Photo (Family) - Relative on mobile, Absolute on Desktop */}
+                <div className="relative mx-auto lg:absolute lg:top-10 lg:right-10 w-64 h-80 bg-white p-3 rounded-2xl shadow-2xl transform lg:rotate-6 hover:rotate-3 transition-all duration-500 z-20 hover:z-50 hover:scale-105">
                   <img src="/images/assets/hero-1.jpg" className="w-full h-full object-cover rounded-xl" alt="Happy moments" />
                 </div>
 
-                {/* Secondary Photo (Travel) */}
-                <div className="absolute bottom-20 left-4 lg:left-10 w-60 h-72 bg-white p-3 rounded-2xl shadow-xl transform -rotate-3 hover:rotate-0 transition-all duration-500 z-10 hover:z-50 hover:scale-105">
+                {/* Secondary Photo (Travel) - Hidden on very small mobile to prevent clutter/overlap */}
+                <div className="absolute bottom-10 lg:bottom-20 left-4 lg:left-10 w-60 h-72 bg-white p-3 rounded-2xl shadow-xl transform -rotate-3 hover:rotate-0 transition-all duration-500 z-10 hover:z-50 hover:scale-105 hidden sm:block">
                   <img src="/images/assets/hero-2.jpg" className="w-full h-full object-cover rounded-xl" alt="Travel memories" />
                 </div>
 
                 {/* Small Photo (Friends) */}
-                <div className="absolute top-32 left-0 lg:-left-4 w-48 h-56 bg-white p-2 rounded-2xl shadow-lg transform -rotate-12 hover:-rotate-6 transition-all duration-500 z-0 hover:z-50 hover:scale-105 hidden sm:block">
+                <div className="absolute top-32 left-0 lg:-left-4 w-48 h-56 bg-white p-2 rounded-2xl shadow-lg transform -rotate-12 hover:-rotate-6 transition-all duration-500 z-0 hover:z-50 hover:scale-105 hidden md:block">
                   <img src="/images/assets/hero-3.jpg" className="w-full h-full object-cover rounded-xl" alt="Friends" />
                 </div>
 
                 {/* Extra Photo (Portrait) */}
-                <div className="absolute bottom-40 right-4 lg:-right-4 w-40 h-40 bg-white p-2 rounded-2xl shadow-lg transform rotate-12 hover:rotate-6 transition-all duration-500 z-30 hover:z-50 hover:scale-105">
+                <div className="absolute bottom-40 right-4 lg:-right-4 w-40 h-40 bg-white p-2 rounded-2xl shadow-lg transform rotate-12 hover:rotate-6 transition-all duration-500 z-30 hover:z-50 hover:scale-105 hidden sm:block">
                   <img src="/images/assets/hero-4.jpg" className="w-full h-full object-cover rounded-xl" alt="Portrait" />
                 </div>
               </div>
